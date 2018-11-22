@@ -1,0 +1,32 @@
+%!TEX root = main.tex
+\chapter*{Resumen}
+La verificaci\'on de que un programa \emph{Software} realiza correctamente las tareas para las cuales fue desarrollado, forma parte las tareas de mayor importancia en \emph{Ingenier\'ia de Software} y es de un inter\'es principal como tema de investigaci\'on. Claramente, un problema que no puede ser completamente resuelto, por dar un ejemplo, analizar la propiedad si un programa termina o no para una determinada entrada es un problema no computable. Dentro de las distintas t\'ecnicas para probar la correctitud de un programa, la prueba de programas \emph{Testing} es una de las m\'as utilizadas. Testing consiste en, dado un escenario, el cual se compone por entradas directas e indirectas del programa a evaluar, ejecutar el programa y comparar el resultado obtenido con el esperado.
+
+Un problema que surge, considerando que no es posible evaluar por completo un programa y que los recursos necesarios, por ejemplo tiempo, crecen junto a la cantidad de tests, es determinar la calidad de un conjunto de tests \emph{Test Suite}, esto es importante para a su vez determinar cuando un test suite es lo suficientemente "bueno" o si es necesario agregar m\'as tests. Debido a que las fallas son desconocidas hasta el momento en que son detectadas, no es posible evaluar que tan bueno es un test suite para detectarlas, y es por eso que se requiere una forma indirectamente de medir este potencial. Estos criterios de evaluaci\'on de test suites generan objetivos a cubrir y el valor asociado a cada criterio es cuantos de estos objetivos son cubiertos. Estos criterios suelen dividirse en dos \'areas principales, de \emph{caja blanca}, para aquellos cuyos objetivos est\'an centrados en el c\'odigo del programa a evaluar, ejemplos de este tipo de criterios son cobertura de sentencias y de ramas; y de \emph{caja negra}, cuando los objetivos se basan en caracter\'isticas no estructurales del programa, como particionado de clases de equivalencia, donde se definen conjuntos de entradas para cada argumento de acuerdo con la especificaci\'on del programa y se pide que haya al menos un test que utilice al menos valor por cada conjunto.
+
+Un criterio de cobertura que puede considerarse como de caja blanca es test de mutaci\'on \emph{Mutation Testing}. Este criterio consiste en generar de manera sistem\'atica copias del programa original cada una con un cambio sint\'actico simple representando una falla artificial, cada copia es llamada mutante y mutaci\'on el cambio asociado, los objetivos a cubrir en este criterio son la detecci\'on de cada mutante por parte de la test suite. El valor asociado a este criterio, \emph{Mutation Score}, es la relaci\'on de mutantes detectados, es decir aquellos para los cuales al menos un test fall\'o, sobre la cantidad total de mutantes generados.
+
+Las fallas generadas por este criterio se basan en operadores de mutaci\'on, donde cada operador encapsula una familia de cambios, un ejemplo es el operador de reemplazo de operadores relacionales que reemplaza un operador relacional binario en una expresi\'on por todos los otros disponibles en el lenguaje de programaci\'on utilizado. Los operadores de mutaci\'on utilizados impactan sobre la cantidad de mutantes generados lo que a su vez impacta en el costo de este an\'alisis, ya que en el peor caso es necesario ejecutar todos los tests para cada uno de los mutantes. El dise\~no de un operador de mutaci\'on no es una tarea trivial y responde a los siguientes criterios: Los mutantes generados no deben ser triviales, un mutante trivial se considera a aquel que solo con compilar, ejecutar o cubrir la sentencia mutada alcanza para detectarlo; No se deben generar mutantes equivalentes, un mutante se denomina equivalente si a\'un cuando es sint\'acticamente distinto al programa original, no es posible dar un test que pueda diferenciar a ambos; La detecci\'on de mutantes deber\'ia estar acoplada a la de fallas reales, es decir, si un test suite es bueno detectando ciertas fallas artificiales entonces deber\'ia serlo tambi\'en para ciertas fallas reales.
+
+Hay una gran cantidad de estudios con respecto al acoplamiento entre mutantes y fallas reales, estudios recientes, al menos para un conjunto espec\'ifico de programas y test suites asociados, y con un conjunto de bugs reales conocidos, demostr\'o el acoplamiento entre mutantes y fallas reales para cierto tipo de fallas, a la vez que puso en evidencia que para ciertos tipos de fallas reales es necesario o bien la mejora de operadores de mutaci\'on existentes, o bien la creaci\'on de nuevos operadores. Es este \'ultimo punto el que nos interesa. Las expresiones de navegaci\'on, com\'unmente encontradas en lenguajes de programaci\'on orientados a objetos, conforman una gran cantidad de fallas reales reportadas como aquellas que requieren mejorar o definir nuevos operadores de mutaci\'on.
+
+En esta tesis presentaremos un nuevo operador de mutaci\'on exclusivo para expresiones de navegaci\'on. Evaluaremos su desempe\~no con respecto a los criterios de dise\~no para operadores de mutaci\'on presentados anteriormente, su utilizaci\'on en los campos de testing, reparaci\'on autom\'atica de programas y generaci\'on autom\'atica de expresiones.
+
+\noindent
+\textbf{Palabras Claves:} Ingenier\'ia de Software, Mutaci\'on, Operadores de Mutaci\'on, Expresiones de navegaci\'on.\\
+%\textbf{PACS:} D.2.1 Requirements/Specifications, D.3.1 Formal Definitions and Theory.
+
+%\cleardoublepage%\null
+%\chapter*{Abstract}
+%\addcontentsline{toc}{chapter}{{\sc Abstract}}
+%In english
+
+%\noindent
+%\textbf{Keywords:} Software Engineering, Automated Analysis, SAT Solving, Interpolation, Model Checking.\\
+%\textbf{PACS:} D.2.1 Requirements/Specifications, D.3.1 Formal Definitions and Theory.
+
+
+
+
+
+

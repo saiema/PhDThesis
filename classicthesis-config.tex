@@ -1,0 +1,223 @@
+%!TEX root = rdegiovanni-phd-tesis.tex
+\usepackage[parts]{classicthesis} 
+
+%\usepackage[left=1.5in,right=1.5in,top=1.5in,bottom=1.5in]{geometry} %configure margins
+%\usepackage[left=3.65cm,right=3.65cm,bindingoffset=0.5cm]{geometry} %raul config
+
+%%Options: Sonny, Lenny, Glenn, Conny, Rejne, Bjarne, Bjornstrup
+%\usepackage[Bjarne]{fncychap}
+
+\usepackage[T1]{fontenc}
+% manual chapter style
+%\newcommand\mychapterNumber{\normalfont\fontfamily{pplj}\fontsize{35}{36}\selectfont}
+%\titleformat{\chapter}[block]%
+%  {\vspace*{-2cm}}{\color{halfgray}\mychapterNumber\thechapter}{1em}
+%  {\raggedright\spacedallcaps}[\normalsize\vspace*{.8\baselineskip}\color{halfgray}{\titlerule[2pt]}]%
+
+
+% General useful packages
+\usepackage[spanish, es-tabla, es-noquoting]{babel}
+\usepackage{amsmath,amsthm,amssymb,verbatim}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{alltt}
+\renewcommand{\ttdefault}{txtt}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd}
+%\usepackage[hidelinks]{hyperref}
+\usepackage{enumerate}
+\usepackage{proof}
+\usepackage{tikz}
+\usetikzlibrary{matrix,chains,positioning,calc,shadows,fit,arrows, shapes, shapes.geometric, petri} 
+\usetikzlibrary{decorations.text, decorations.markings,decorations.pathreplacing} %calc,decorations.pathmorphing}
+%\usetikzlibrary{shapes,fit,arrows,calc,positioning, decorations.pathreplacing}
+
+%citations
+\usepackage[hyperpageref]{backref}
+\usepackage{cite}
+\renewcommand\citepunct{; }
+
+%paragraph space
+\setlength{\parskip}{.2cm}%\baselineskip}
+
+% import tikz styles
+\input{LTS-style}
+
+% listings
+\usepackage{listings}
+\definecolor{lightgray}{gray}{.60}
+\definecolor{Lightgray}{gray}{.98}
+\definecolor{bordegray}{gray}{.70}
+\definecolor{gray}{gray}{.3}
+\lstdefinelanguage{FSP}
+{ keywords={assert, progress, fluent, constraint, X, W, U},
+  moredelim=[is][\bfseries]{/+}{+/},
+  morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]//,
+  morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]/*,
+  literate={->}{\ttfamily {->}} 3,
+  basicstyle= \small\ttfamily,%\fontsize{7.2}{7.3}
+  emph={=}, emphstyle=\itshape\bfseries,
+  frame=tb,
+  %frameround=tttt,
+  framerule=.5pt,
+  rulecolor=\color{black},
+  %frame=single,
+  %aboveskip= -.1 cm,
+  %belowskip= -.1 cm,
+  %rulesepcolor=\color{lightgray},
+  %backgroundcolor=\color{Lightgray},
+  columns=[l]flexible,
+  sensitive=false,
+}
+
+\lstdefinestyle{myPromela}{
+  language=Promela,
+  moredelim=[is][\bfseries]{/+}{+/},
+    %morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]\#,
+    basicstyle= \small\ttfamily, %\fontsize{8.0}{8.1}
+    emph={=}, emphstyle=\itshape\bfseries,
+    frame=tb,
+    %frameround=tttt,
+    framerule=.5pt,
+    rulecolor=\color{black},
+    %frame=single,
+    %aboveskip= -.1 cm,
+    %belowskip= -.1 cm,
+    %rulesepcolor=\color{lightgray},
+    %backgroundcolor=\color{Lightgray},
+    columns=[l]flexible,
+    sensitive=false,
+}
+
+\lstdefinelanguage{MSAT}
+{ keywords={INTEGER, BOOLEAN, WORD, REAL, OBJECT, &, |, !, ->, <->, +, -},
+  moredelim=[is][\bfseries]{/+}{+/},
+  morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]\#,
+  basicstyle= \small\ttfamily, %\fontsize{8.0}{8.1}
+  emph={=}, emphstyle=\itshape\bfseries,
+  frame=tb,
+  %frameround=tttt,
+  framerule=.5pt,
+  rulecolor=\color{black},
+  %frame=single,
+  %aboveskip= -.1 cm,
+  %belowskip= -.1 cm,
+  %rulesepcolor=\color{lightgray},
+  %backgroundcolor=\color{Lightgray},
+  columns=[l]flexible,
+  sensitive=false,
+}
+
+\lstdefinelanguage{ALV}
+{ keywords={enumerated, integer, boolean, module, endmodule, restrict, initial, main, spec} %, and, or, & |, !, ->, <->, +, -, },
+  moredelim=[is][\bfseries]{/+}{+/},
+  morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]//,
+  basicstyle= \small\ttfamily, %\fontsize{8.0}{8.1}
+  emph={=}, emphstyle=\itshape\bfseries,
+  frame=tb,
+  %frameround=tttt,
+  framerule=.5pt,
+  rulecolor=\color{black},
+  %frame=single,
+  %aboveskip= -.1 cm,
+  %belowskip= -.1 cm,
+  %rulesepcolor=\color{lightgray},
+  %backgroundcolor=\color{Lightgray},
+  columns=[l]flexible,
+  sensitive=false,
+}
+
+% Hyperreferences
+\hypersetup{%
+    %draft,	% = no hyperlinking at all (useful in b/w printouts)
+    colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,%
+    % uncomment the following line if you want to have black links (e.g., for printing)
+    %colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV,% 
+    breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
+    plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
+    hypertexnames=true, pdfhighlight=/O,%nesting=true,%frenchlinks,%
+    urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=gray!20!RoyalBlue %webgreen, %pagecolor=RoyalBlue,%
+    %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
+}
+
+
+% References
+\usepackage[spanish]{cleveref}
+\crefname{figure}{Figura}{Figuras}
+\crefname{table}{Tabla}{Tablas}
+\crefname{chapter}{Cap\'itulo}{Cap\'itulos}
+\crefname{section}{Secci\'on}{Secciones}
+\crefname{subsection}{Subsecci\'on}{Subsecciones}
+\crefname{definition}{Definici\'on}{Definiciones}
+\crefname{theorem}{Teorema}{Teoremas}
+\crefname{lemma}{Lema}{Lemas}
+\crefname{algorithm}{Algoritmo}{Algoritmos}
+%\renewcommand{\figureautorefname}{Figura}%
+%\renewcommand{\figureautorefname}{Figura}%
+%\renewcommand{\tableautorefname}{Tabla}%
+%\renewcommand{\partautorefname}{Parte}%
+%\renewcommand{\chapterautorefname}{Cap\'itulo}%
+%\renewcommand{\sectionautorefname}{Secci\'on}%
+%\renewcommand{\subsectionautorefname}{Secci\'on}%
+%\renewcommand{\subsubsectionautorefname}{Secci\'on}% 	
+%\renewcommand{\listtablename}{\'Indice de Tablas}
+% ********************************************************************
+% Using different fonts
+% ********************************************************************
+%\usepackage[oldstylenums]{kpfonts} % oldstyle notextcomp
+%\usepackage[osf]{libertine}
+%\usepackage{hfoldsty} % Computer Modern with osf
+%\usepackage[light,condensed,math]{iwona}
+%\renewcommand{\sfdefault}{iwona}
+\usepackage{lmodern} % <-- no osf support :-(
+%\usepackage[urw-garamond]{mathdesign} <-- no osf support :-(
+% ****************************************************************************************************
+
+% Personal data and user ad-hoc commands
+\newcommand{\ingles}[1]{#1}
+\newcommand{\lenguaje}[1]{{\sc#1}}
+\newcommand{\herramienta}[1]{\textsf{#1}}
+\newcommand{\codigo}[1]{\texttt{#1}}
+\newcommand{\FSPcode}[1]{\colorbox{gray!10}{\textcolor{black}{\tt #1}}}
+\newcommand{\ALVcode}[1]{\colorbox{gray!10}{\textcolor{black!80}{\tt #1}}}
+
+% Teoremas, Lemas, Definiciones y Ejemplos
+\newtheorem{theorem}{Teorema}[chapter]
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{definition}{Definici\'on}[chapter]
+\newtheorem{example}{Ejemplo}[chapter]
+
+
+\newcommand{\tituloES}{Expresiones de navegaci\'on, el mutante perdido.}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%%% 
+\newcommand{\SAT}[1]{\models_{\scriptscriptstyle{#1}}}
+\newcommand{\LTSproc}[1]{\textbf{\texttt{#1}}}
+\newcommand{\Fluent}[1]{\textit{#1}}
+
+\newcommand{\GoalDef}[1]{\fbox{\parbox{\textwidth}{#1}}}
+
+%% Algoritmos
+\usepackage[chapter]{algorithm}
+\usepackage[noend]{algpseudocode}
+% New definitions
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algnewcommand\algorithmicassert{\texttt{assert}}
+\algnewcommand\Assert[1]{\State \algorithmicassert(#1)}%
+% New "environments"
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
+\newcommand{\Break}{\State \textbf{break} }
+\newcommand{\Continue}{\textbf{continue} }
+%\algnewcommand{\LineComment}[1]{\State \algorithmicend\ right\) #1}
+\algnewcommand{\LineComment}[1]{\State {\small \(--\) #1}}
+\algnewcommand{\MyComment}[1]{{\small \(--\) #1}}
+%\newcommand{\Let}{\State \textbf{let} }
+\algblockdefx{Let}{EndLet}[1]{\textbf{let} #1 \textbf{in}}{\textbf{endlet}}
+\algtext*{EndLet}%

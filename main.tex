@@ -1,0 +1,66 @@
+%\documentclass[10pt]{report} %twoside para impresion final 
+\documentclass[11pt,a4paper]{report} %a4paper,
+
+% Note: Make all your adjustments in here
+\input{classicthesis-config}
+
+\begin{document}
+\frenchspacing
+\raggedbottom
+
+% ********************************************************************
+% Frontmatter
+\pagenumbering{roman}
+\pagestyle{plain}
+%\include{titlepage}
+\include{titlepage-famaf}
+
+\cleardoublepage\null
+\include{resumen}
+\cleardoublepage%\null
+%\include{agradecimientos}
+%\cleardoublepage
+%\tableofcontents
+%\cleardoublepage
+%\listoffigures
+%\cleardoublepage
+%\listoftables
+\pagestyle{scrheadings}
+%\cleardoublepage
+% ********************************************************************
+% Mainmatter
+%\pagestyle{headings}
+%\pagenumbering{arabic}
+%\part{?`Porqu\'e la Ingenier\'ia de los Requisitos de Software?} %\ctparttext{text}
+%\cleardoublepage
+%\include{introduccion}
+%\cleardoublepage
+%\include{preliminares}
+%\include{requisitos-software}
+
+%\part{Elaboraci\'on Formal de Requisitos de Software} %\ctparttext{text}
+%\cleardoublepage\null
+%\include{kaos-analisis}
+
+%\part{Validaci\'on y Verificaci\'on de Requisitos de Software} %\ctparttext{text}
+%\cleardoublepage\null
+%\include{scr-analisis}
+
+%\part{Conclusiones}
+%\cleardoublepage
+%\include{conclusion}
+
+% ********************************************************************
+% Backmatter
+%\cleardoublepage\null
+%\bibliographystyle{amsplain}
+%\bibliographystyle{apalike}
+%\bibliographystyle{apacite}
+%\bibliographystyle{alpha}
+%\cleardoublepage\phantomsection
+%\addcontentsline{toc}{chapter}{{\sc Bibliography}}
+%\bibliography{Bibliografia}
+%\appendix
+%\cleardoublepage
+%\part{Appendix}
+\end{document}
