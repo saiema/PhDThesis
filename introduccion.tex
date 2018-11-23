@@ -1,13 +1,14 @@
 %!TEX root = main.tex
 \chapter{Introducci\'on}
 \label{cap:introduccion}
-%Renzo, puso las siguientes cosas
-%Reconocimiento de la importancia de la ing. de requisitos en metodologías de desarrollo (mencionar crisis del software). 
+En la actualidad, el software se encuentra en todos los aspectos de la vida diaria, y en general la expectativa del usuario com\'un es confiar en que el mismo simplemente funciona. Nadie espera que el auto no arranque por un error en el software embebido que utiliza, el cajero de un banco no se espera que de pronto no retorne billetes al realizar una extracci\'on, que el reloj del celular marque un horario incorrecto, etc. Sin embargo, en 2015, se descubri\'o un bug en el modelo Boing 787 Dreamliner que pod\'ia causar el apagado de todos los generadores el\'ectricos del avi\'on si \'este permanec\'ia encendido por m\'as de 248 d\'ias; En los 80, un error en el c\'odigo del controlador para la m\'aquina de terapia de radiaci\'on, \emph{Therac-25} caus\'o la muerte de varios pacientes al administrar cantidades excesivas de radiaci\'on beta; En 2018 un bug en WhatsApp causaba que si se recib\'ia un mensaje en Unicode conteniendo una secuencia repitiendo el caract\'er especial que sobreescribe la direcci\'on del texto, la aplicaci\'on y en muchos casos el dispositivo completo dejara de responder.
+%REF: BUG AVION: https://s3.amazonaws.com/public-inspection.federalregister.gov/2015-10066.pdf
+%REF: THREAC-25, CITATION NEEDED?
+%REF: BLACK DOT OF DEATH, CITATION NEEDED?
+Claramente, el software no simplemente funciona siempre y esto demuestra la necesidad de evaluar la calidad del mismo con respecto a las tareas que debe realizar. El problema, es poder evaluar, dado un software, que el mismo realiza correctamente las tareas para las cuales fue desarrollado. Intuitivamente y algo que se realiza en la actualidad, es ejecutar el software bajo ciertos escenarios, los cuales consisten de entradas directas e indirectas, y comprobar que el resultado es el esperado, para evaluar que el software es correcto. Un problema con este enfoque es que salvo que se prueben todos los escenarios posibles, la evaluaci\'on no es completa. Evidentemente, salvo para programas triviales, evaluar bajo todos los escenarios posibles es inviable por lo cual un subconjunto de \'estos es necesario. Cuantos y cuales de todos los escenarios se seleccionan est\'a directamente relacionado con la confianza de que, en caso de no encontrar fallas, el software sea correcto.
 
-%Qué son los requisitos. 
-%En qué consiste la captura, elaboración y especificación de requisitos.
-%Por qué es importante?
-%Por qué es arduo/complejo/costoso capturar requisitos?
+No solamente es necesario un conjunto de escenarios, sin\'o que hasta ahora siempre se hizo referencia al comportamiento esperado sin definir a que se refiere esto.
+
 
 %Metodológicamente, explicar en qué consiste tener una etapa de captura y especificación de requisitos concreta en el proceso de desarrollo.
 
