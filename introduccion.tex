@@ -95,8 +95,12 @@ va a ser suficiente para lograr una cobertura (ramas) del 100\%, y cubrir de man
 
 En otro tipo de programas, en donde encadenamiento de m\'etodos (\emph{Method Chaining}) es muy utilizado, por ejemplo en el desarrollo de interfaces fluentes (\emph{Fluent Interfaces}). En donde se utiliza la jerarqu\'ia de clases, asociadas a los lenguajes orientados a objetos, para determinar una gram\'atica. Para entre otras cosas, poder definir un lenguaje de dominio espec\'ifico, como por ejemplo:
 \begin{center}
-	\begin{lstlisting}[frame=tlrb, mathescape=true]
-	dbconnector.from("Songs").select().where().attribute("year").ge().value(1980).and().attribute("year").lt().value(1990).ejecute()
+	\begin{lstlisting}[mathescape=true]
+	dbconnector.from("Songs").select().where()
+	.attribute("year").ge().value(1980)
+	.and()
+	.attribute("year").lt().value(1990)
+	.ejecute()
 	\end{lstlisting}
 \end{center}
 En donde se muestra el uso de method chaining para escribir una consulta a la tabla "Songs" de la cual se van a seleccionar aquellas en donde el atributo "year" sea mayor o igual a 1980 y menor que 1990.
@@ -116,13 +120,28 @@ Esto nos lleva a nuestros objetivos:
 	Incluso si es cierto que existe una necesidad por la generaci\'on de mutantes para expresiones de navegaci\'on, si el o los operadores que los generan, no cumplen con las propiedades anteriormente descriptas, entonces su utilidad se ve muy reducida. Por eso es necesario evaluar el desempe\~no de \'estos para demostrar su utilidad.
 \end{enumerate}
 
-Como objetivos secundarios nos interesa el aporte que puede tener la mutaci\'on de expresiones de navegaci\'on en campos como la reparaci\'on autom\'atica de programas basada en mutaci\'on.
+Como objetivo secundario nos interesa el aporte que puede tener la mutaci\'on de expresiones de navegaci\'on en campos como la reparaci\'on autom\'atica de programas basada en mutaci\'on.
 
 %Objetivos
 
 \section{Estado del Arte}
 \label{sec:intro.estado-del-arte}
-%TODO: Describir brevemente diferentes tipos an\'alisis autom\'aticos que las herramientas y/o metodolog\'ias del estado-del-arte proveen. Mencionar fortalezas y debilidades.
+%Estado del arte en mutacion: selection, coupling, subsumption, high order
+%Estado del arte en reparacion
+
+Testing es una de las t\'ecnicas m\'as utilizadas para evaluar la correctitud de programas. Siendo testing de regresi\'on, la re-ejecuci\'on se tests para evaluar que el comportamiento correcto del programa no fue modificado durante el desarrollo, uno de los usos m\'as comunes. Es en este \'ultimo donde la limitaci\'on en los recursos a utilizar, tiempo por ejemplo, est\'an m\'as acotados, dado que el desarrollador necesita de manera r\'apida y eficiente validar que mantuvo el comportamiento existente. Esto lleva a buscar criterios de evaluaci\'on de test suites que permitan maximizar la eficiencia del mismo con respecto a capacidad de detectar fallas reales, manteniendo acotada la cantidad de tests requeridos.
+
+Mutation testing es uno de los criterios m\'as utilizados. A la vez que al igual que con el test suite, el conjunto de mutantes utilizados debe mantenerse acotado en cantidad, debe ser capaz de evaluar al mismo de tal forma que la calidad asociada al conjunto de tests est\'e correlacionada con la capacidad del mismo en detectar potenciales fallas.
+
+Dentro de las t\'ecnicas utilizadas para mejorar mutation testing se encuentran:
+
+\texttt{Selection}, la selecci\'on de un subconjunto de operadores o mutantes es un \'area de investigaci\'on que intenta encontrar t\'ecnicas que permitan achicar el conjunto de mutantes con los cuales se va a evaluar el conjunto de tests. [AGREGAR]
+
+\texttt{Coupling}, el acoplamiento entre fallas reales y mutantes es una propiedad altamente deseable, sin la misma, mutation testing perder\'ia su utilidad al desaparecer la correlaci\'on entre un mutation score alto y una buena capacidad de parte del test suite para detectar fallas reales. [AGREGAR]
+
+\texttt{Subsumption}, as\'i como la correlaci\'on entre mutantes y fallas reales es una caracter\'istica deseada y buscada, lo mismo pero entre mutantes es una caracter\'istica negativa. Esta correlaci\'on entre mutantes significa que aquellos que lo est\'en, ser\'an redundantes, incrementando el mutation score sin actualmente resultar en un test suite con una mayor capacidad de detectar fallas. [AGREGAR]
+
+\texttt{High Order}, la combinaci\'on de mutaciones, generada al aplicar operadores de mutaci\'on m\'as de una vez al generar un mutante, se denominan mutaciones de alto order mientras que aquellas que la forman, se las llama de primer orden. Si bien en principio esto agregar\'ia una gran cantidad de nuevos mutantes\footnote{Usualmente la cantidad de mutantes al aplicar m\'as de una mutaci\'on por mutante est\'a acotada por M$_0^G$ en donde \texttt{M$_0$} son la cantidad de mutantes de primer orden y \texttt{G} son la cantidad de mutaciones por mutante}, los estudios actuales que se enfocan en esta t\'ecnica concluyen que estos mutantes de alto orden representan fallas artificiales m\'as sutiles y que subsumen a una gran cantidad de mutantes de primer orden.
 
 \section{Contribuciones}
 \label{sec:intro.contribuciones}
