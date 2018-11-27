@@ -19,7 +19,7 @@ Un ejemplo de como los criterios de evaluaci\'on de test suite intentan dar una 
 
 \emph{Mutation testing}, es un criterio que genera copias del programa original en donde cada uno tiene inyectada una falla artificial, \emph{mutante}, en forma de un cambio sint\'actico simple, \emph{mutaci\'on}. Por cada mutante se ejecutan los tests, si al menos uno de estos falla, entonces se marca al mutante como detectado. El valor asociado a este criterio es la relaci\'on entre mutantes detectados y todos los mutantes, \emph{mutation score}. Las fallas artificiales generadas por mutation testing est\'an basadas en distintos operadores de mutaci\'on que definen familias de cambios sint\'acticos similares. Por ejemplo, dada una expresi\'on relacional binaria, cambiar el operador de relaci\'on por cada uno de los existentes en el lenguaje en el cual el programa est\'a desarrollado, es un operador de mutaci\'on. Numerosos estudios han intentado responder si existe una correlaci\'on (acoplamiento) entre la capacidad de un test suite en detectar fallas artificiales utilizadas en mutation testing y la capacidad de hacerlo para fallas reales, entre ellos, \cite{bibliography.mutation.evaluation.coupling.Offutt89, bibliography.mutation.evaluation.coupling.Offutt92, bibliography.mutation.evaluation.HAndrews05, bibliography.mutation.evaluation.valid-substitute}, estos estudios han encontrado que de hecho existe una correlaci\'on, aunque siempre acotado a casos de estudio particulares. A\'un teniendo en cuenta estos resultados, el rendimiento del criterio est\'a directamente relacionado a los operadores de mutaci\'on utilizados y las fallas artificiales que estos generan. Por un lado la cantidad de mutantes impacta en los recursos necesarios para ejecutar el an\'alisis, ya que en el peor caso es necesario ejecutar todos los tests para cada uno de los mutantes. Por el otro lado, existen fallas artificiales que son trivialmente detectables, por ejemplo, modificar el \'indice en el acceso a un arreglo a un valor negativo, y aquellas que son equivalente al programa original. En el primer caso, ejecutar la sentencia va a causar un error, y cualquier test que lo haga va a detectar dicho mutante, este tipo de fallas triviales van a aumentar el mutation score sin realmente significar un aumento en la calidad del test suite. En el segundo caso, no existe ning\'un escenario para el cual el comportamiento del mutante difiera del comportamiento observable del programa original, en este caso el valor del mutation score va a decrementar sin significar un empeoramiento en el test suite. Finalmente as\'i como las fallas artificiales pueden estar acopladas a fallas reales, el mismo fen\'omeno puede ocurrir entre los mutantes, es decir, detectar ciertos mutantes va a implicar que otros sean tambi\'en detectados. Este caso de acoplamiento entre mutantes lleva a un aumento del mutation score que si bien puede estar asociado a fallas artificiales no triviales, son fallas similares que no implican que el test suite sea capaz de detectar mayor variedad de fallas reales.
 
-Existen varios estudios que intentan atacar los problemas mencionados anteriormente, desde aquellos que lo hacen seleccionando un conjunto \emph{suficiente} de operadores de mutaci\'on, entre otros \cite{bibliography.mutation.selection.Offutt96, bibliography.mutation.selection.ASN2008}; buscando m\'etodos de detectar mutantes equivalentes, \cite{biblography.mutation.evaluation.equivalent.Grun+09, biblography.mutation.evaluation.equivalent.Schuler+10, biblography.mutation.evaluation.equivalent.Schuler+13, biblography.mutation.evaluation.equivalent.Just+13}; y utilizando combinaci\'on de mutaciones para generar mutantes sut\'iles bajo el razonamiento de que \'estos deber\'ian representar fallas m\'as dif\'iciles de detectar, \cite{bibliography.mutation.highorder.Jia+08, bibliography.mutation.highorder.Jia+09, bibliography.mutation.highorder.Harman+11}.
+Existen varios estudios que intentan atacar los problemas mencionados anteriormente, desde aquellos que lo hacen seleccionando un conjunto \emph{suficiente} de operadores de mutaci\'on, entre otros \cite{bibliography.mutation.selection.Offutt96, bibliography.mutation.selection.ASN2008}; buscando m\'etodos de detectar mutantes equivalentes, \cite{biblography.mutation.evaluation.equivalent.Grun+09, biblography.mutation.evaluation.equivalent.Schuler+10, biblography.mutation.evaluation.equivalent.Schuler+13, biblography.mutation.evaluation.equivalent.Just+13}; y utilizando combinaci\'on de mutaciones para generar mutantes sut\'iles bajo el razonamiento de que \'estos deber\'ian representar fallas m\'as dif\'iciles de detectar, \cite{bibliography.mutation.highorder.Jia+08, bibliography.mutation.highorder.Jia+09, bibliography.mutation.highorder.Harman+11}. Un resultado de especial inter\'es es el Just et Al. \cite{bibliography.mutation.evaluation.valid-substitute} que una de sus conclusiones es que existen fallas reales que requieren mejorar operadores de mutaci\'on existentes, o desarrollar operadores nuevos.
 
 %Metodológicamente, explicar en qué consiste tener una etapa de captura y especificación de requisitos concreta en el proceso de desarrollo.
 
@@ -48,8 +48,75 @@ Existen varios estudios que intentan atacar los problemas mencionados anteriorme
 \label{sec:intro.objetivos}
 % RE etapa mas informal del proceso de desarrollo
 % incertidumbre, desconocimiento, parcialidad.
-
 %[operacional vs declarativo]
+
+\begin{figure}[t]
+	\begin{lstlisting}[frame=tlrb, mathescape=true]
+	public class Queue {
+	
+	private Node front;
+	private Node last;
+	
+	...
+	public void dequeue() {
+	this.front = this.front.next;
+	}
+	
+	public int size() {
+	// computes number of nodes in the 
+	// underlying list
+	...
+	}
+	...
+	}
+	\end{lstlisting}
+	\caption{Una implementaci\'on de colas basada en referencias.}
+	\label{queue-class}
+\end{figure}
+
+En la actualidad, los lenguajes orientados a objetos, o que contienen caracter\'isticas similares, tienen una presencia mayoritaria en los lenguajes utilizados. Un tipo de expresi\'on com\'unmente encontrado en este tipo de lenguajes, son las expresiones de navegaci\'on. \'Estas se forman al acceder a miembros de instancias de clases mediante un operador de acceso que suele seguir la notaci\'on punto. Incluso con la popularidad de estos lenguajes, ning\'un operador actual, ni siquiera aquellos que pertenecen al grupo de \emph{operadores suficientes}, generan mutaciones para este tipo de expresiones. La necesidad de agregar operadores que generen mutaciones para \'estas, se puede ver con un ejemplo muy simple.
+
+Dada una implementaci\'on muy simple de una cola implementada sobre cadenas simplemente encadenadas, con una referencia al \emph{primer} nodo y otra al \emph{\'ultimo}, y un m\'etodo \emph{desencolar()} implementado de manera incompleta. Cualquier test que haga una llamada a este m\'etodo va a lograr una cobertura estructural (ramas por ejemplo) del 100\%.
+
+Ninguna de las herramientas actuales de mutation testing, por ejemplo, \emph{PITest}, \emph{Major}, y \emph{$\mu$Java}, generan mutaciones para el c\'odigo en \emph{desencolar()} haciendo que sea trivial para cualquiera de estos tests de lograr una cobertura de mutaci\'on. Por lo tanto, tener un \'unico test para este m\'etodo, como el siguiente:
+\begin{center}
+	\begin{lstlisting}[frame=tlrb, mathescape=true]
+	@Test
+	public void dequeueTest() {
+	Queue q = new Queue();
+	q.push(1);
+	int size = q.size();
+	q.dequeue();
+	assertEquals(size - 1, q.size());
+	}
+	\end{lstlisting}
+\end{center}
+va a ser suficiente para lograr una cobertura (ramas) del 100\%, y cubrir de manera trivial todos los objetivos definidos por mutation testing.
+
+En otro tipo de programas, en donde encadenamiento de m\'etodos (\emph{Method Chaining}) es muy utilizado, por ejemplo en el desarrollo de interfaces fluentes (\emph{Fluent Interfaces}). En donde se utiliza la jerarqu\'ia de clases, asociadas a los lenguajes orientados a objetos, para determinar una gram\'atica. Para entre otras cosas, poder definir un lenguaje de dominio espec\'ifico, como por ejemplo:
+\begin{center}
+	\begin{lstlisting}[frame=tlrb, mathescape=true]
+	dbconnector.from("Songs").select().where().attribute("year").ge().value(1980).and().attribute("year").lt().value(1990).ejecute()
+	\end{lstlisting}
+\end{center}
+En donde se muestra el uso de method chaining para escribir una consulta a la tabla "Songs" de la cual se van a seleccionar aquellas en donde el atributo "year" sea mayor o igual a 1980 y menor que 1990.
+
+Un punto importante a notar en el ejemplo anterior es que si bien existen operadores relacionales que pueden modificar un "mayor o igual a" por otro operador, el caso de \texttt{attribute("year").ge().value(1980)}, es sem\'anticamente equivalente a \texttt{attribute("year") >= 1980} pero no puede ser mutado.
+
+Esto nos lleva a nuestros objetivos:
+
+\begin{enumerate}[leftmargin=.75cm,align=left]
+	\item[Determinar las propiedades que un operador deber\'ia satisfacer]
+	Dise\~nar un operador de mutaci\'on no es una tarea trivial, tal como mencionamos anteriormente, mutantes equivalentes al programa original son indeseados; aquellos que son trivialmente detectados tambi\'en; los mutantes generados deben representar, estar acoplados a, fallas reales. Definir estas propiedades es el primer paso para poder dise\~nar un nuevo operador.
+	\item[Definir un operador de mutaci\'on para expresiones de navegaci\'on]
+	Teniendo en cuenta las propiedades definidas anteriormente y la motivaci\'on para disen\~ar nuevo[s] operadores de mutaci\'on para expresiones de navegaci\'on, es necesario dar una definici\'on de su comportamiento.
+	\item[Implementar el o los operadores de mutaci\'on para expresiones de navegaci\'on] 
+	Los operadores existentes actualmente est\'an definidos por reglas de transformaci\'on muy simples, incluso siendo capaz de ser implementados usando expresiones regulares. Modificar una expresi\'on de navegaci\'on requiere informaci\'on de tipos y an\'alisis de alcanzabilidad para determinar las expresiones disponibles al modificar una existente.
+	\item[Evaluaci\'on]
+	Incluso si es cierto que existe una necesidad por la generaci\'on de mutantes para expresiones de navegaci\'on, si el o los operadores que los generan, no cumplen con las propiedades anteriormente descriptas, entonces su utilidad se ve muy reducida. Por eso es necesario evaluar el desempe\~no de \'estos para demostrar su utilidad.
+\end{enumerate}
+
+Como objetivos secundarios nos interesa el aporte que puede tener la mutaci\'on de expresiones de navegaci\'on en campos como la reparaci\'on autom\'atica de programas basada en mutaci\'on.
 
 %Objetivos
 
