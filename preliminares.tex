@@ -1,0 +1,93 @@
+%!TEX root = main.tex
+
+%USEFULL CODE
+%\begin{definition}[Sintaxis de f\'ormulas LP]
+%\label{def:preliminares.lp-sintaxis}
+%Sea $PA$ un conjunto de variables proposicionales; luego: 
+%\begin{itemize}
+%\item Los valores de verdad \True (verdadero) y \False (falso) son f\'ormulas de LP; 
+%\item Toda proposici\'on $p \in PA$ es una f\'ormula de LP; 
+%\item Si $\varphi_1, \varphi_2$ son f\'ormulas de LP, entonces tambi\'en son f\'ormulas de LP: $\neg \varphi_1$ y $\varphi_1 \lor \varphi_2$.
+%\item Podemos definir los operadores derivados $\land$, $\Implies$ y $\Iff$ de la siguiente manera: $\varphi_1 \land \varphi_2 \equiv \neg(\neg \varphi_1 \lor \neg \varphi_2)$, $\varphi_1 \Implies \varphi_2 \equiv \neg \varphi_1 \lor \varphi_2$ y $\varphi_1 \Iff \varphi_2 \equiv (\varphi_1 \Implies \varphi_2) \land (\varphi_2 \Implies \varphi_1)$.
+%\end{itemize}
+%\end{definition}
+
+%\begin{algorithm}[htp]
+%\caption{DPLL}
+%\label{alg:preliminares.DPLL}
+%\begin{algorithmic}[1]
+%\Function{DPLL}{$\varphi$: formula proposicional CNF}
+%\State $\varphi' \gets $ BCP($\varphi$)
+%\If{$\varphi' = \True$}
+%  \State \Return \textit{SAT}
+%\ElsIf{$\varphi' = \False$} 
+%  \State \Return \textit{UNSAT}
+%\Else 
+%	\State $P \gets $ \textit{Choose}(\textbf{vars}($\varphi'$))
+%	\If{DPLL($\varphi'[P \mapsto \True]$) =  \textit{UNSAT}}
+%	\If{DPLL($\varphi'[P \mapsto \False]$) =  \textit{UNSAT}} 
+%		\State \Return \textit{UNSAT}
+%	\EndIf
+%	\EndIf
+%	\State \Return \textit{SAT}
+%\EndIf
+%\EndFunction
+%\end{algorithmic}
+%\end{algorithm}
+
+%\begin{figure}[htp]
+%\begin{minipage}[b]{0.5\linewidth}
+%\tikzstyle{line} = [draw, -latex, line width=0.2ex]
+%\centering
+%\begin{tikzpicture}[node distance = 1.5cm, auto] % ,scale=0.5, every node/.style={scale=0.5}]
+%    % Place nodes
+%\node (s0) {$\Box$};
+%\node (s1) [above of=s0, left of=s0] {$\neg p$};
+%\node (s2) [above of=s0, right of=s0] {$p$};
+%\node at (0,0.8) {$\{p\}$};
+%\node (s3) [above of=s0, left of=s2] {$(p \lor \neg q)$};
+%\node (s4) [above of=s0, right of=s2] {$q$};
+%\node at (1.5, 2.3) {$\{q\}$};
+%\node (s5) [above of=s0, left of=s4] {$(\neg p \lor q)$};
+%\node (s6) [above of=s0, right of=s4] {$p$};
+%\node at (3,3.8) {$\{p\}$};
+%
+%\path [line] (s1) -- (s0);
+%\path [line] (s2) -- (s0);
+%\path [line] (s3) -- (s2);
+%\path [line] (s4) -- (s2);
+%\path [line] (s5) -- (s4);
+%\path [line] (s6) -- (s4);
+%\end{tikzpicture}
+%\caption[Prueba de Insatisfactibilidad $(\Pi, \varphi \cup \psi)$]{$(\Pi, \varphi \cup \psi)$}
+%\label{fig:preliminares.unsat-proof}
+%\end{minipage}
+%\end{figure}
+\chapter[Preliminares]{Preliminares}
+\label{cap:preliminares}
+
+\section{Introducci\'on}
+\label{sec:preliminares.intro}
+
+\input{testing}
+
+%\section{Mutaci\'on}
+%\label{sec:preliminares.mutation}
+%
+%\subsection{Operadores}
+%
+%\subsubsection{Operadores suficientes}
+%
+%\subsection{Propiedades deseadas en mutaci\'on}
+%%EQ, TRIVIAL, COUPPLING -> SUBSUMPTION
+%
+%\subsection{Herramientas de mutaci\'on}
+%
+%\section{Expresiones de navegaci\'on}
+%\label{sec:preliminares.navigationalExpressions}
+%
+%\subsection{Encadenamiento de m\'etodos}
+%\subsubsection{Interfaces fluentes}
+
+\section{Resumen}
+\label{sec:preliminares.resumen}

@@ -1,0 +1,71 @@
+\chapter[Testing]{Testing}
+\label{sec:preliminares.testing}
+
+Garantizar que un programa realice de manera correcta las tareas para las cuales fue desarrollado se encuentra dentro de los problemas m\'as desafiantes y uno de los m\'as importantes temas de investigaci\'on \cite{bibliography.books.GhezziBook,bibliography.books.PressmanBook,bibliography.books.JaloteBook}. Es un tema central en el control de calidad de programas, requiriendo una cantidad significativa de recursos \cite{bibliography.books.JaloteBook} aunque su costo suele estar a la par de sus beneficios. La aparici\'on de fallas puede ocurrir en cualquier etapa del desarrollo del software, sin embargo el costo de reparaci\'on de los mismos aumenta de manera considerable mientras m\'as tarde sean detectados (y corregidos), como ejemplo, detectar un error en la etapa de tests de aceptaci\'on puede costar hasta 100 veces m\'as que hacerlo durante la etapa de requisitos \cite{bibliography.books.JaloteBook}.
+
+Testing, que en esencia consiste en ejecutar un programa bajo un conjunto espec\'ifico de escenarios, contrastando el comportamiento actual con el esperado \cite{bibliography.books.AmmannOffutt}, es el enfoque m\'as com\'unmente usado para garantizar calidad. Dado que ejecutar de manera exhaustiva un programa bajo todos sus posibles escenarios de ejecuci\'on (es decir, considerando todas las entradas, directas e indirectas) es en general inviable, por lo que se debe seleccionar una muestra (un subconjunto de todos los escenarios posibles). Esto hace que testing sea una t\'ecnica necesariamente incompleta, pero al mismo tiempo implica una escalabilidad que otros enfoques de verificaci\'on, especialmente aquellos basados en an\'alisis est\'atico, tienen dificultades de alcanzar.
+
+Los pasos que definen a un test se pueden describir entonces como:
+
+\begin{enumerate}
+	\item Preparaci\'on(\emph{Arrange}), define los datos necesarios para el escenario bajo el cual se va a ejecutar el test. En la l\'inea 1 del c\'odigo en la Figura-\ref{figures.examples.test.manual} se define el escenario sobre el cual se va a evaluar en este caso, una calculadora.
+	
+	\item Ejecuci\'on(\emph{Act}), la ejecuci\'on del programa a evaluar, generalmente incluye adem\'as la obtenci\'on del resultado de dicha ejecuci\'on. En la l\'inea 2 del c\'odigo en la Figura-\ref{figures.examples.test.manual} se ejecuta la calculadora, el m\'etodo \texttt{Calculator\#evaluate(String)} bajo la expresi\'on previamente definida y se obtiene el resultado de esta ejecuci\'on.
+	
+	\item Evaluaci\'on(\emph{Assert}), la verificaci\'on de que el resultado obtenido, ya sea un valor de salida o un estado del programa, se corresponda con el esperado. Esto puede ser una verificaci\'on por igualdad o por propiedades. En la l\'inea 3 del c\'odigo en la Figura-\ref{figures.examples.test.manual} se eval\'ua que la ejecuci\'on del m\'etodo \texttt{Calculator\#evaluate(String)} bajo la expresi\'on previamente definida, sea igual a \texttt{16}.
+\end{enumerate}
+
+\begin{figure}
+	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em]
+ la entrada a evaluar es "(1 + 3)^2"
+ evaluar Calculator#evaluate con la entrada anterior
+ el resultado obtenido deber\'ia ser 16
+	\end{lstlisting}
+	\caption{Ejemplo de un test}
+	\label{figures.examples.test.manual}
+\end{figure}
+
+Claramente como la muestra de entradas, que ser\'a utilizada para testing, es escogida, afecta significativamente la habilidad de esta t\'ecnica en encontrar fallas en el software, lo que lleva a considerar alg\'un criterio (\emph{testing criteria}) para asistir en seleccionar esta muestra, o equivalentemente, \emph{medir} la calidad de la misma. Estos criterios t\'ipicamente se clasifican en \emph{caja blanca}(white box), si tienen en cuenta la estructura del c\'odigo bajo an\'alisis, o \emph{caja negra}(black box), si en cambio se concentran en la especificaci\'on del mismo. Todos estos mecanismos intentan usar una m\'etrica indirecta para b\'asicamente evaluar el potencial de un test suite en detectar fallas. Pero dado que \'estas son desconocidas hasta que son detectadas, no existe una forma directa de evaluar la habilidad de un test suite en detectarlas.
+
+\section{Automatizaci\'on}
+\label{sec:preliminares.testing.automation}
+
+La definici\'on de que es un test, dada anteriormente, no es ejecutable, sin\'o que define una serie de pasos que deber\'ia seguir un individuo para evaluar un programa bajo un escenario particular y analizar si el resultado obtenido corresponde con el esperado. Esto si bien permite evaluar un programa, es evidentemente una metodolog\'ia tediosa y por su naturaleza manual, altamente susceptible a errores humanos, y consume mucho tiempo. Sin embargo es evidente que se trata de un proceso altamente automatizable.
+
+Existen numerosas librer\'ias disponibles para automatizar el proceso de testing, en la Figura-\ref{figures.examples.test.junit} se muestra el ejemplo anterior implementado en \emph{Java} utilizando la librer\'ia \emph{Junit}.
+
+\begin{figure}
+	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em]
+	String expression = "(1 + 3)^2";
+	Integer result = calculator.evaluate(expression);
+	assertEquals(new Integer(16),result);
+	\end{lstlisting}
+	\caption{Ejemplo de un test(JUnit)}
+	\label{figures.examples.test.junit}
+\end{figure}
+
+\subsection{Generaci\'on autom\'atica de escenarios}
+
+La automatizaci\'on de tests, aunque muy \'util, sigue requiriendo que alguien provea los tests con los cuales evaluar un programa particular. La generaci\'on de escenarios de prueba de manera autom\'atica, reducir\'ia, los recursos necesarios para evaluar un programa. Siguiendo el ejemplo anterior, una gram\'atica simple servir\'ia para definir las entradas v\'alidas para luego generar expresiones aleatorias utilizando la misma. Actualmente existen numerosas aplicaciones cuyo objetivo es exclusivamente la generaci\'on autom\'atica de entradas.
+
+Ejemplos de herramientas para generaci\'on autom\'atica de escenarios incluyen: \emph{Korat} \cite{bibliography.inputGeneration.korat.BoyapatiKM02} que permite generar entradas estructuralmente complejas dado un conjunto de cotas para los atributos de la estructura y una especificaci\'on mediante un predicado imperativo que indica las estructuras v\'alidas. [AGREGAR]
+
+\subsection{El problema del or\'aculo}
+
+A\'un teniendo la capacidad de generar escenarios de manera autom\'atica, y dado que la ejecuci\'on del programa a evaluar provista una entrada particular es trivial de automatizar, el valor esperado no es generado por las herramientas de generaci\'on autom\'atica de entradas. Por ejemplo, en el caso del test en la Figura-\ref{figures.examples.test.junit}, el valor esperado \emph{16}, fue propuesto por el desarrollador del test de manera manual. Para poder automatizar completamente la generaci\'on de tests, es entonces necesario resolver el problema de, dado una entrada y un programa a evaluar, generar el valor esperado para poder validar si el programa es correcto (con respecto a esa entrada). Existen distintas soluciones a este problema:
+\begin{enumerate}
+	\item Manualmente, evidentemente la soluci\'on m\'as intuitiva es tener un individuo que lo haga. Esta opci\'on es un proceso muy tedioso y consume mucho tiempo, lo que puede llevar a cometer errores.
+	
+	\item Test diferencial, dado un programa bajo evaluaci\'on \texttt{P} y una entrada \texttt{E} sobre la cual se quiere evaluar el comportamiento de \texttt{P}, se puede generar el or\'aculo \texttt{P$\prime$(E) == P(E)} donde \texttt{P$\prime$} es un programa cuyo comportamento es equivalente al del programa a evaluar, y existe una confianza suficiente en la correctitud del mismo.
+	
+	\item Test de regresi\'on, un caso particular de \emph{test diferencial} es cuando una versi\'on anterior del programa a evaluar es utilizado como alternativa confiable. Esta t\'ecnica es utilizada principalmente para evaluar que el comportamiento previo de un programa no fue modificado involuntariamente al, por ejemplo, agregar nuevas caracter\'isticas.
+	
+	\item Especificaciones ejecutables, es posible dar una especificaci\'on del propiedades que debe cumplir un programa. Por ejemplo, un m\'etodo que ordena listas de enteros siempre debe cumplir que los elementos en el resultado sean los mismos que en la entrada y que est\'en ordenados. Es importante que la especificaci\'on sea ejecutable, este es un requerimiento necesario para poder utilizar a la misma como or\'aculo.
+\end{enumerate}
+
+\subsection{Criterios de cobertura}
+\label{sec:preliminares.testing.covcriteria}
+
+\subsubsection{Criterios de caja blanca}
+
+\subsubsection{Criterios de caja negra}
