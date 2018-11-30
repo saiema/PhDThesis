@@ -1,10 +1,10 @@
 %!TEX root = main.tex
 \chapter*{Resumen}
-Verificar que un programa \emph{Software} realiza correctamente las tareas para las cuales fue desarrollado, forma parte de las tareas de mayor importancia en \emph{Ingenier\'ia de Software} y es de un inter\'es principal como tema de investigaci\'on. La prueba de programas \emph{Testing} es una de las t\'ecnicas m\'as utilizadas para esto. Consiste en ejecutar el programa a evaluar para un escenario particular y comparar el resultado obtenido con el esperado.
+Verificar que un \emph{software} realiza correctamente las tareas para las cuales fue desarrollado, forma parte de las tareas de mayor importancia en \emph{Ingenier\'ia de Software} y es de un inter\'es principal como tema de investigaci\'on. \emph{Testing} es una de las t\'ecnicas m\'as utilizadas para esto. Consiste en ejecutar el programa a evaluar para un escenario particular y comparar el resultado obtenido con el esperado.
 
 %Claramente, un problema que no puede ser completamente resuelto, por dar un ejemplo, analizar la propiedad si un programa termina o no para una determinada entrada es un problema no computable. Dentro de las distintas t\'ecnicas para probar la correctitud de un programa, la prueba de programas \emph{Testing} es una de las m\'as utilizadas. Testing consiste en, dado un escenario, el cual se compone por entradas directas e indirectas del programa a evaluar, ejecutar el programa y comparar el resultado obtenido con el esperado.
 
-Dado que no es posible, en general, evaluar un programa en todos sus posibles escenarios, es necesario elegir un conjunto finito de los mismos. Claramente como \'este es elegido, va a afectar la confianza que genera, cuando los tests pasan, en la correctitud del programa bajo evaluaci\'on. Los criterios de evaluaci\'on permiten medir la calidad de un conjunto de tests \emph{Test Suite} generando objetivos a cubrir y el valor asociado a cada criterio es cuantos de estos objetivos son cubiertos.
+Dado que no es posible, en general, evaluar un programa en todos sus posibles escenarios, es necesario elegir un conjunto finito de los mismos. Claramente como \'este es elegido va a afectar la confianza que genera, cuando los tests pasan, en la correctitud del programa bajo evaluaci\'on. Los criterios de evaluaci\'on permiten medir la calidad de un conjunto de tests (\emph{Test Suite}) generando objetivos a cubrir y evaluando cuantos de estos son satisfechos (cubiertos), la relaci\'on entre objetivos cubiertos y totales, es el valor asociado al criterio.
 
 %Esto lleva a la necesidad de una forma de evaluar la calidad de un conjunto de tests \emph{Test Suite} para poder determinar si es necesario agregar, quitar, o reemplazar tests. Los criterios de evaluaci\'on son la forma de resolver esta necesidad. \'Estos generan objetivos a cubrir y el valor asociado a cada criterio es cuantos de estos objetivos son cubiertos.
 
@@ -16,7 +16,7 @@ Dado que no es posible, en general, evaluar un programa en todos sus posibles es
 
 %Un criterio de cobertura que puede considerarse como de caja blanca es test de mutaci\'on \emph{Mutation Testing}.
 
-\emph{Mutation testing}, es uno de estos, y consiste en inyectar fallas artificiales en el programa bajo evaluaci\'on, generando como objetivos a cubrir a la detecci\'on por parte del test suite de estas fallas. El valor asociado a este criterio, \emph{Mutation Score}, es la relaci\'on de fallas detectadas, es decir aquellos para los cuales al menos un test fall\'o, sobre la cantidad total de fallas generadas.
+\emph{Mutation testing} es uno de estos, y consiste en inyectar fallas artificiales en el programa bajo evaluaci\'on, generando como objetivos a cubrir, la detecci\'on por parte del test suite de estas fallas. El valor asociado a este criterio, \emph{Mutation Score}, es la relaci\'on de fallas detectadas, es decir aquellas para las cuales al menos un test fall\'o, sobre la cantidad total de fallas generadas.
 
 %\emph{Mutation testing}, es uno de estos, y consiste en generar de manera sistem\'atica copias del programa original, cada una con un cambio sint\'actico simple representando una falla artificial, cada copia es llamada mutante y mutaci\'on el cambio asociado, los objetivos a cubrir en este criterio son la detecci\'on de cada mutante por parte de la test suite. El valor asociado a este criterio, \emph{Mutation Score}, es la relaci\'on de mutantes detectados, es decir aquellos para los cuales al menos un test fall\'o, sobre la cantidad total de mutantes generados.
 
@@ -32,7 +32,7 @@ Las fallas artificiales generadas por un operador deben estar limitadas en canti
 
 %Las expresiones de navegaci\'on, com\'unmente encontradas en lenguajes de programaci\'on orientados a objetos, no se encuentran actualmente afectadas por ning\'un operador de mutaci\'on actual. 
 
-En esta tesis presentaremos un nuevo operador de mutaci\'on exclusivo para expresiones de navegaci\'on y el porque de la necesidad de uno. Evaluaremos su desempe\~no con respecto a los criterios de dise\~no para operadores de mutaci\'on presentados anteriormente, su utilizaci\'on en los campos de testing, reparaci\'on autom\'atica de programas y generaci\'on autom\'atica de expresiones.
+En esta tesis presentaremos una familia de operadores de mutaci\'on exclusivos para expresiones de navegaci\'on y el porque de la necesidad de \'estos. Evaluaremos su desempe\~no con respecto a los criterios de dise\~no para operadores de mutaci\'on presentados anteriormente, su utilizaci\'on en los campos de testing, reparaci\'on autom\'atica de programas y generaci\'on autom\'atica de expresiones.
 
 \noindent
 \textbf{Palabras Claves:} Ingenier\'ia de Software, Mutaci\'on, Operadores de Mutaci\'on, Expresiones de navegaci\'on.\\
