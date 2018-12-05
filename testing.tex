@@ -48,7 +48,42 @@ Existen numerosas librer\'ias disponibles para automatizar el proceso de testing
 
 La automatizaci\'on de tests, aunque muy \'util, sigue requiriendo que alguien provea los tests con los cuales evaluar un programa particular. La generaci\'on de escenarios de prueba de manera autom\'atica, reducir\'ia, los recursos necesarios para evaluar un programa. Siguiendo el ejemplo anterior, una gram\'atica simple servir\'ia para definir las entradas v\'alidas para luego generar expresiones aleatorias utilizando la misma. Actualmente existen numerosas aplicaciones cuyo objetivo es exclusivamente la generaci\'on autom\'atica de entradas.
 
-Ejemplos de herramientas para generaci\'on autom\'atica de escenarios incluyen: \emph{Korat} \cite{bibliography.inputGeneration.korat.BoyapatiKM02} que permite generar entradas estructuralmente complejas dado un conjunto de cotas para los atributos de la estructura y una especificaci\'on mediante un predicado imperativo que indica las estructuras v\'alidas. [AGREGAR]
+Algunos de los enfoques utilizados para generaci\'on autom\'atica de entradas incluyen:
+
+Generaci\'on \emph{aleatoria} de entradas, en donde para alg\'un conjunto de valores predefinidos se eligen de manera aleatoria elementos del mismo para usar como entrada. Esta metodolog\'ia es muy sencilla de implementar para valores de tipos no estructurados como por ejemplo, enteros y cadenas de caract\'eres. Para generaci\'on de valores de tipos estructurados, como por ejemplo una lista simplemente encadenada, es necesario combinar la generaci\'on aleatoria para cada componente que conforma el tipo estructurado. Sin embargo, \'estos tipos estructurados tienen invariantes que deben cumplidos para que una instancia (un valor de este tipo) sea considerada v\'alida. En las figuras \ref{figures.examples.testing.random.primitive} y \ref{figures.examples.testing.random.structure} se pueden ver ejemplos de generaci\'on aleatoria para tipos primitivos y estructurados respectivamente. %Un detalle a tener en cuenta en el ejemplo de generaci\'on aleatoria para tipos estructurados, es que la construcci\'on se hace mediante m\'etodos provistos por la misma estructura, en particular, el m\'etodo \lstinline|List#add(int)|. Una alternativa com\'unmente utilizada es generar de menor a mayor complejidad los componentes de las estructuras
+
+\begin{figure}
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+    Set intInputs = new Set();
+    for (int i = 0; i<10; i++) {
+      int rndValue = 10 + random.nextInt(11);
+      intInputs.add(rndValue);
+    }
+	\end{lstlisting}
+	\label{figures.examples.testing.random.primitive}
+	\caption{Ejemplo de generaci\'on aleatoria de 10 valores enteros entre 10 y 20}
+\end{figure}
+
+\begin{figure}
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+    Set structuredInputs = new Set();
+    for (int i = 0; i<10; i++) {
+      int rndSize = random.nextInt(10);
+      List rndList = new List();
+      for (int elemIdx = 0; elemIdx < rndSize; elemIdx++) {
+        int rndValue = random.nextInt(50);
+        rndList.add(rndValue);
+      }
+      structuredInputs.add(rndList);
+    }
+	\end{lstlisting}
+	\label{figures.examples.testing.random.structure}
+	\caption{Ejemplo de generaci\'on aleatoria de 10 listas de enteros con tama\~no entre 0 a 10, y con valores entre 0 a 50}
+\end{figure}
+
+Generaci\'on \emph{exhaustiva} de entradas consiste en utilizar todos los valores disponibles dentro de un espacio acotado. Para valores primitivos esto consistir\'ia en utilizar todos los valores entre un valor m\'inimo y un m\'aximo, evidentemente los tipos para los cuales se puede aplicar esta t\'ecnica, deben ser numerables. Para valores que corresponden a tipos estructurados, la metodolog\'ia es similar a generaci\'on aleatoria. Esta metodolog\'ia parecer\'ia en primera instancia generar una mayor confianza ya que permite eval\'uar un programa bajo todas las posibles entradas dentro de una determinada cota. La cantidad de entradas que se obtienen por generaci\'on exhaustiva llegan muy r\'apido a cantidades intratables, en \cite{bibliography.testing.generation.KoratBoyapatiKM02} que presenta una herramienta de generaci\'on exhaustiva de valores para tipos estructurados, demuestra como la cantidad de valores generados aumenta con respecto a las cotas utilizadas.
+
+%Ejemplos de herramientas para generaci\'on autom\'atica de escenarios incluyen: \emph{Korat} \cite{bibliography.inputGeneration.korat.BoyapatiKM02} que permite generar entradas estructuralmente complejas dado un conjunto de cotas para los atributos de la estructura y una especificaci\'on mediante un predicado imperativo que indica las estructuras v\'alidas. [AGREGAR]
 
 \subsection{El problema del or\'aculo}
 
@@ -65,6 +100,12 @@ A\'un teniendo la capacidad de generar escenarios de manera autom\'atica, y dado
 
 \subsection{Criterios de cobertura}
 \label{sec:preliminares.testing.covcriteria}
+
+Queda en evidencia la necesidad de un criterio para evaluar la calidad de un conjunto de tests. Como condici\'on de terminaci\'on para un proceso (ya sea manual o autom\'atico) de generaci\'on de tests, as\'i como para evaluar el conjunto de tests utilizados para poder medir la relaci\'on entre el hecho de que \'estos pasen y la confianza en que el programa bajo evaluaci\'on sea correcto.
+
+\subsubsection{Modelo RIP}
+
+La detecci\'on de una falla sigue el modelo \emph{\texttt{R}eachability}, el defecto en el c\'odigo debe ser alcanzable por la ejecuci\'on del programa bajo alg\'un escenario particular; \emph{\texttt{I}nfection}, el defecto debe infectar el estado del programa, esto significa que al ejecutar el c\'odigo que contiene el detecto debe ocurrir un cambio en el estado tal que \'este difiere con respecto del estado en el programa sin el defecto o con respecto al estado esperado; \emph{\texttt{P}ropagation}, el cambio del estado debe propagarse hasta alg\'un punto observable para permitir diferenciar una salida incorrecta (error) de la correcta.
 
 \subsubsection{Criterios de caja blanca}
 
