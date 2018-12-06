@@ -1,6 +1,7 @@
 \chapter[Testing]{Testing}
 \label{sec:preliminares.testing}
 
+%MOVER ESTO A INTRODUCCION QUIZAS
 Garantizar que un programa realice de manera correcta las tareas para las cuales fue desarrollado se encuentra dentro de los problemas m\'as desafiantes y uno de los m\'as importantes temas de investigaci\'on \cite{bibliography.books.GhezziBook,bibliography.books.PressmanBook,bibliography.books.JaloteBook}. Es un tema central en el control de calidad de programas, requiriendo una cantidad significativa de recursos \cite{bibliography.books.JaloteBook} aunque su costo suele estar a la par de sus beneficios. La aparici\'on de fallas puede ocurrir en cualquier etapa del desarrollo del software, sin embargo el costo de reparaci\'on de los mismos aumenta de manera considerable mientras m\'as tarde sean detectados (y corregidos), como ejemplo, detectar un error en la etapa de tests de aceptaci\'on puede costar hasta 100 veces m\'as que hacerlo durante la etapa de requisitos \cite{bibliography.books.JaloteBook}.
 
 Testing, que en esencia consiste en ejecutar un programa bajo un conjunto espec\'ifico de escenarios, contrastando el comportamiento actual con el esperado \cite{bibliography.books.AmmannOffutt}, es el enfoque m\'as com\'unmente usado para garantizar calidad. Dado que ejecutar de manera exhaustiva un programa bajo todos sus posibles escenarios de ejecuci\'on (es decir, considerando todas las entradas, directas e indirectas) es en general inviable, por lo que se debe seleccionar una muestra (un subconjunto de todos los escenarios posibles). Esto hace que testing sea una t\'ecnica necesariamente incompleta, pero al mismo tiempo implica una escalabilidad que otros enfoques de verificaci\'on, especialmente aquellos basados en an\'alisis est\'atico, tienen dificultades de alcanzar.
@@ -98,15 +99,33 @@ A\'un teniendo la capacidad de generar escenarios de manera autom\'atica, y dado
 	\item Especificaciones ejecutables, es posible dar una especificaci\'on del propiedades que debe cumplir un programa. Por ejemplo, un m\'etodo que ordena listas de enteros siempre debe cumplir que los elementos en el resultado sean los mismos que en la entrada y que est\'en ordenados. Es importante que la especificaci\'on sea ejecutable, este es un requerimiento necesario para poder utilizar a la misma como or\'aculo.
 \end{enumerate}
 
-\subsection{Criterios de cobertura}
-\label{sec:preliminares.testing.covcriteria}
-
-Queda en evidencia la necesidad de un criterio para evaluar la calidad de un conjunto de tests. Como condici\'on de terminaci\'on para un proceso (ya sea manual o autom\'atico) de generaci\'on de tests, as\'i como para evaluar el conjunto de tests utilizados para poder medir la relaci\'on entre el hecho de que \'estos pasen y la confianza en que el programa bajo evaluaci\'on sea correcto.
-
-\subsubsection{Modelo RIP}
+\subsection{Modelo RIP}
 
 La detecci\'on de una falla sigue el modelo \emph{\texttt{R}eachability}, el defecto en el c\'odigo debe ser alcanzable por la ejecuci\'on del programa bajo alg\'un escenario particular; \emph{\texttt{I}nfection}, el defecto debe infectar el estado del programa, esto significa que al ejecutar el c\'odigo que contiene el detecto debe ocurrir un cambio en el estado tal que \'este difiere con respecto del estado en el programa sin el defecto o con respecto al estado esperado; \emph{\texttt{P}ropagation}, el cambio del estado debe propagarse hasta alg\'un punto observable para permitir diferenciar una salida incorrecta (error) de la correcta.
 
-\subsubsection{Criterios de caja blanca}
+\begin{figure}
+	\begin{lstlisting}[frame=single,numbers=left, mathescape=true,framexleftmargin=1.5em]
+    public int max(int a, int b) {
+      int result = a;
+      if (a > b) {
+        result = a;
+      } else if (b < a) {
+        result = b;
+      }
+      return result;
+    }
+	\end{lstlisting}
+	\label{figures.examples.testing.rip}
+	\caption{Una implementaci\'on incorrecta de un m'etodo \emph{max}}
+\end{figure}
 
-\subsubsection{Criterios de caja negra}
+En la Figura-\ref{figures.examples.testing.rip} se puede ver una implementaci\'on de un programa que calcula el m\'aximo entre dos n\'umeros. El defecto se encuentra en la segunda condici\'on \texttt{b < a}, cualquier entrada en donde no se cumpla que \texttt{a > b} va alcanzar la sentencia con el defecto; la infecci\'on se da cuando una entrada que cumpla con \texttt{b > a} no cambie el valor de \texttt{result} para contener el valor de \texttt{b}; la propagaci\'on se da por que el valor incorrecto en \texttt{result} se retorna en la \'ultima sentencia del programa. Incluso al tener un escenario que cumpla con el modelo \emph{RIP} para un defecto, \'este no va a ser detectado si no se cuenta con un or\'aculo apropiado, en este caso, validar que por ejemplo para los valores \emph{5} y \emph{3} el resultado esperado es \emph{5}.
+
+\subsection{Criterios de cobertura}
+\label{sec:preliminares.testing.covcriteria}
+
+%Queda en evidencia la necesidad de un criterio para evaluar la calidad de un conjunto de tests. Como condici\'on de terminaci\'on para un proceso (ya sea manual o autom\'atico) de generaci\'on de tests, as\'i como para evaluar el conjunto de tests utilizados para poder medir la relaci\'on entre el hecho de que \'estos pasen y la confianza en que el programa bajo evaluaci\'on sea correcto.
+
+Los criterios de cobertura generan metas para el test suite bajo evaluaci\'on y eval\'uan cuantas de \'estas son satisfechas por el mismo. Dado que un criterio de evaluaci\'on para un test suite no puede directamente analizar la capacidad del mismo en detectar fallas (salvo para aquellas conocidas), el disen\~o de \'estos se basan en encontrar relaciones entre criterios que pueden ser evaluados y el potencial de detectar fallas. El modelo \emph{RIP} representa una base de partida para el disen\~o de criterios.
+
+Como criterios de cobertura, aquellos denominados de \emph{caja blanca}, se basan en la estructura del programa para generar metas a cubrir. Por ejemplo, cobertura de sentencias genera como metas, la ejecuci\'on de las sentencias del programa, \'este criterio se enfoca principalmente en \emph{alcanzabilidad}. Los criterios de \emph{caja negra} se enfocan la especificaci\'on del programa para generar metas, por ejemplo, el criterio de \emph{partici\'on de clases de equivalencia} se enfoca en dividir las entradas en conjuntos para los cuales el comportamiento del programa deber\'ia ser el mismo, en el caso de \emph{max} uno de \'estos contendr\'ia todas las entradas tal que el primer valor es mayor al segundo.
