@@ -2,9 +2,18 @@
 \chapter[PRVO]{PRVO una familia de operadores para expresiones de navegaci\'on}
 \label{sec:prvo}
 
-Para definir nuestra familia de operadores, primero necesitamos definir que consideramos como una \emph{expresi\'on encadenada}. Una expresi\'on encadenada involucra un \emph{operador de navegaci\'on}. En Lenguajes orientados a objetos, el operador de navefaci\'on puede tomar distintas formas sint\'acticas, con la notaci\'on punto siendo la encontrada com\'unmente. Su prop\'osito es acceder a miembros de una instancia de clase. Por simplicidad nos referiremos a una expresi\'on encadenada a una que cuenta con cero o m\'as de estos operadores. El tama\~no de una expresi\'on encadenada est\'a dada por el n\'umero de operadores de navegaci\'on involucrados. Una \emph{expresi\'on de navegaci\'on} es una expresi\'on encadenada de tama\~no 1 o m\'as. 
+\section{Expresiones de navegaci\'on}
+\label{sec:prvo.navigationalExpressions}
 
-Una definici\'on directa de \emph{prvo} puede darse de la siguiente manera:
+Para definir nuestra familia de operadores, primero necesitamos definir que consideramos como una \emph{expresi\'on encadenada}. Una expresi\'on encadenada involucra un \emph{operador de navegaci\'on}. En Lenguajes orientados a objetos, el operador de navefaci\'on puede tomar distintas formas sint\'acticas, con la notaci\'on punto siendo la encontrada com\'unmente. Su prop\'osito es acceder a miembros de una instancia de clase. Por simplicidad nos referiremos a una expresi\'on encadenada a una que cuenta con cero o m\'as de estos operadores. El tama\~no de una expresi\'on encadenada est\'a dada por el n\'umero de operadores de navegaci\'on involucrados. Una \emph{expresi\'on de navegaci\'on} es una expresi\'on encadenada de tama\~no 1 o m\'as.
+
+En una expresi\'on encadenada, el tipo de la misma est\'a dado por la \'ultima expresi\'on en la cadena. Por ejemplo \lstinline|a.b.c| es una expresi\'on encadenada de tama\~no tres cuyo tipo est\'a dado por el de \emph{c}. Una expresi\'on de navegaci\'on bien tipada se puede definir de dos formas. Por pertenencia, para toda cadena \texttt{a.b}, \texttt{b} es un miembro de la clase de \texttt{a}. Si cada tipo representa un conjunto y los miembros de una clase representan relaciones entre instancias de un tipo en instancias de otro (no necesariamente distintos), entonces es posible generar un grafo con las las posibles expresiones encadenadas v\'alidas.
+[AGREGAR IMAGENES/GRAFICOS]
+
+\section{PRVO}
+%DEFINIR OPERADORES DE PRVO COMO CONFIGURACIONES PARECE INTERESANTE
+
+Todas las mutaciones que van a ser generadas est\'an centradas en expresiones encadenadas, que como definimos anteriormente, son aquellas expresiones que involucran cero o m\'as operadores de navegaci\'on, el punto en el caso de \emph{Java}. Esto significa que mutar una variable por otra es una posible mutaci\'on. En \emph{$\mu$Java}, un operador as\'i ya existe, llamado \emph{PRV} \cite{bibliography.mutation.operators.MaKO02}. En \emph{$\mu$Java++} este operador est\'a incluido en nuestra familia de operadores. Teniendo en cuenta que \'este operador ya es capaz de generar una cantidad significativa de mutaciones y pretendemos agregar mutaciones a mayor cantidad de expresiones, lleva a la necesidad de definir una familia de operadores. De todas formas, es posible dar definici\'on general de \emph{prvo} de la siguiente manera:
 \begin{quote}
 	Dada una expresi\'on encadenada $e$, \emph{prvo} va a generar mutaciones al reemplazar sub-expresiones en $e$, respectando el tipo de la expresi\'on, y manteniendo, incrementando, o decrementando su tama\~no.
 \end{quote}
@@ -33,6 +42,102 @@ La Figura-\ref{figures.definitions.prvo.simple_def} define a la familia de opera
 	\label{figures.definitions.prvo.simple_def}
 \end{figure}
 
-Teniendo en cuenta los criterios para el disen\~no de operadores de mutaci\'on, discutidos en [REFERENCIA], en particular con respecto al n\'umero de mutaciones que un operador produce, es necesario proveer algunas cotas razonables para la aplicaci\'on de \emph{prvo}. El n\'umero de mutantes generados por \emph{prvo} puede ser limitado al limitar tres caracter\'isticas: las expresiones \emph{objetivo} (donde se va a aplicar \emph{prvo}); el \emph{tama\~no de las expresiones}, por cuanto se permite cambiar, incrementar o reducir, el tama\~no de las expresiones resultantes (las mutaciones); y los \emph{reemplazos}, es decir, las expresiones que se van a usar para el intercalado/substituci\'on en \emph{prvo}. En cuanto a los objetivos, \emph{prvo} solo va a ser aplicado a expresiones de navegaci\'on, es decir, expresiones que involucran al menos una navegaci\'on. Respecto al tama\~no, vamos a limitar \emph{prvo} a producir expresiones del \emph{mismo} tama\~no que la expresi\'on original (el n\'umero de navegaciones se mantiene). En cuanto a los reemplazos, solo vamos a reemplazar expresiones con otras de exactamente el mismo tipo (al contrario de considerar definiciones menos estrictas, que permitir\'ian utilizar tipos compatibles m\'as generales), que pertenezcan a la misma clase en donde se encuentra la expresi\'on original, o en clases directamente alcanzables desde esta clase.
+La definci\'on general de \emph{prvo} es muy similar a la de un generador de sentencias que pertenecen a una gram\'atica. Donde los t\'ipos definen a la misma. Si hubiera un programa definido mediante expresiones encadenadas y tipos, en donde encontrar\'iamos expresiones como \lstinline|if(a.gt().b).then(result.assign(a)).else(result.assign(b)).return(result)|, \emph{prvo} podr\'ia generar cualquier programa correcto desde un punto de vista de tipos. Principalmente por que las expresiones que puede utilizar no est\'an restringidas en absoluto. Esta caracter\'istica hace que \emph{prvo} sea completamente inservible para mutation testing. Lo que obliga a establecer restricciones, esto sin embargo, es una caracter\'istica positiva de \emph{prvo}, ya que cualquier operador en la familia de operadores \emph{prvo}, es en realidad una configuraci\'on particular de la misma. Lo que nos permite definir operadores a medida y aumentar la eficiencia de los mismos para cada caso.
 
-Claramente, estas limitaciones pueden ser pensadas como par\'ametros de \emph{prvo}, que en algunas situaciones pueden ser alteradas, permitiendo por un conjunto m\'as rico de expresiones a considerar en los reemplazos, permitiendo la generaci\'on de expresiones de navegaci\'on m\'as cortas/largas, etc. En nuestros caso, esta selecci\'on est\'a basada en experimentaci\'on, teniendo en cuenta los criterios para el disen\~o de operadores de mutaci\'on, mencionados anteriormente.
+Para mostrar esto pasemos a un ejemplo simple. Teniendo en cuenta los criterios para el disen\~no de operadores de mutaci\'on, discutidos en [REFERENCIA], en particular con respecto al n\'umero de mutaciones que un operador produce, es necesario proveer algunas cotas razonables para la aplicaci\'on de \emph{prvo}. El n\'umero de mutantes generados por \emph{prvo} puede ser limitado al limitar tres caracter\'isticas: las expresiones \emph{objetivo} (donde se va a aplicar \emph{prvo}); el \emph{tama\~no de las expresiones}, por cuanto se permite cambiar, incrementar o reducir, el tama\~no de las expresiones resultantes (las mutaciones); y los \emph{reemplazos}, es decir, las expresiones que se van a usar para el intercalado/substituci\'on en \emph{prvo}. En cuanto a los objetivos, \emph{prvo} solo va a ser aplicado a expresiones de navegaci\'on, es decir, expresiones que involucran al menos una navegaci\'on. Respecto al tama\~no, vamos a limitar \emph{prvo} a producir expresiones del \emph{mismo} tama\~no que la expresi\'on original (el n\'umero de navegaciones se mantiene). En cuanto a los reemplazos, solo vamos a reemplazar expresiones con otras de exactamente el mismo tipo (al contrario de considerar definiciones menos estrictas, que permitir\'ian utilizar tipos compatibles m\'as generales), que pertenezcan a la misma clase en donde se encuentra la expresi\'on original, o en clases directamente alcanzables desde esta clase.
+
+Hemos definido un operador de \emph{prvo} como una serie de restricciones a la definici\'on abstracta/general. Esto nos permite centrarnos en cierto tipo de fallas particulares sin perder la habilidad de eventualmente generar otra configuraci\'on que se centra en otras.
+
+\section{Fallas asociadas a PRVO}
+
+En \cite{bibliography.mutation.evaluation.valid-substitute} se concluyen que cierto tipo de fallas reales requieren mejorar o definir operadores de mutaci\'on. Mientras que se definen cierto tipo de fallas reales como imposibles de acoplar a mutantes. En cuanto a las fallas que nos interesan, es necesario especificarlas bien y analizar como deber\'iamos, de ser posible, configurar un "operador" en \emph{prvo}.
+
+\subsection{Fallas que requieren mejorar operadores existentes}
+
+\subsubsection{Eliminaci\'on de sentencias}
+
+Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un ciclo infinito con una sentencia de retorno bajo cierta condici\'on [FIGURA]; una sentencia \emph{switch} en donde para alg\'un caso no se escribi\'o una sentencia de retorno o frenado (\emph{break}); nicializaciones faltantes, entre otros casos, son todos ejemplos de fallas reales que requieren un operador que elimine sentencias para poder generar el mismo tipo de falla.
+
+En principio, ya existen operadores que realizan este tipo de mutaciones. No solo eso, sino que adem\'as no parece ser un tipo de fallas asociada mutaciones de expresiones encadenadas.
+
+Sin embargo, \emph{Fluent interfaces}, un disen\~o muy usado en conjunto con \emph{patr\'on Builder}, permite escribir algoritmos sem\'anticamente equivalentes a un programa imperativo, ciclos y sentencias condicionales inclu\'idas. Un c\'odigo como \lstinline|list.foreach().filter(c1).if(c2).then(p1).else(p2)| no es extra\~no en programaci\'on orientada a objetos, en la Figura-\ref{figures.examples.fluent.example1.imperative} se muestra la implementaci\'on m\'as com\'un de esta expresi\'on en lenguaje imperativo.
+
+\begin{figure}
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+  List<Elem> list = ...;
+  for (Elem e : list) {
+    if (c1(e)) {
+      if (c2(e)) {
+        p1(e);
+      } else {
+        p2(e);
+      }
+    }
+  }
+	\end{lstlisting}
+	\label{figures.examples.fluent.example1.imperative}
+	\caption{Versi\'on en lenguaje imperativo del recorrido de una lista filtrando y ejecutando condicionalmente un procedimiento.}
+\end{figure}
+
+Esto muestra que por un lado es interesante poder mutar expresiones de navegaci\'on de este tipo. Adem\'as, uno de los principales problemas con operadores que eliminan o insertan sentencias, es que suelen generar numerosos mutantes triviales que son detectados por no compilar o por que se elimin\'o directamente una gran parte de c\'odigo por una sentencia de control faltante. En \emph{interfaces fluentes}, el uso de jerarqu\'ia de tipos para garantizar la correctitud de una expresi\'on garantiza que nunca va a ser posible eliminar una sentencia cuando \'esta es necesaria.
+
+\subsubsection{Intercambio de argumentos}
+
+Este tipo de fallas involucra utilizar argumentos con tipos correctos, pero en el orden incorrecto en la llamada a un m\'etodo. En la Figura-\ref{figures.examples.argumentSwap.example1} se ve un m\'etodo que toma como entrada dos listas y agrega la primera al final de la segunda. Los nombres de los argumentos son quiz\'as amb\'ig\"{u}os, y ser\'ia incluso esperable que sin una documentaci\'on apropiada, haya programadores que asuman que se hace un \emph{append} de \texttt{thiz} \emph{en} \texttt{that}, aunque otros podr\'ian entender de que el \emph{append} se hace con el orden de los argumentos resultando en \texttt{that} \emph{en} \texttt{thiz}. 
+
+\begin{figure}
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+	public void append(List<E> thiz, List<E> that) {
+		...
+		for (E e : thiz) {
+			that.append(e);
+		}
+	}
+	\end{lstlisting}
+	\label{figures.examples.argumentSwap.example1}
+	\caption{M\'etodo que agrega una lista al final de otra.}
+\end{figure}
+
+Este tipo de fallas es equivalente a aplicar dos mutaciones de cambio de referencias, \lstinline|append(thiz,that) -> append(that,that) -> append(that,thiz)|. Un tipo de mutaci\'on de expresiones de cadena de tama\~no 1, salvo que requiere dos cambios en una misma mutaci\'on. Este tipo de mutaciones no puede definirse como una serie de restricciones a la definici\'on de \emph{prvo} ya que incluye definiciones extra para incluir m\'ultiples cambios. Sin embargo vale la pena notar que con dos mutaciones de \emph{prvo} podr\'ia lograrse.
+
+\subsubsection{Llamada a un m\'etodo similar de la misma librer\'ia}
+
+Existen ejemplos de m\'etodos que si bien distintos, tienen una sem\'antica relacionada, \texttt{indexOf} y \texttt{lastIndexOf} son dos m\'etodos de la clase \emph{java.lang.String} que permiten obtener el primer \'indice de ocurrencia de una subcadena, o el \'ultimo respectivamente. Un operador que modifique una llamada a un m\'etodo por todas las posibles, generar\'ia una cantidad demasiado grande de mutantes para ser \'util. Sin embargo cometer una equivocaci\'on al usar un m\'etodo por otro con una sem\'antica similar, es com\'un. Este es un caso de un tipo de fallas que se pueden generar utilizando restricciones sobre \emph{prvo}.
+
+\subsection{Fallas que requieren nuevos operadores}
+
+\subsubsection{Omitir la llamada a un m\'etodo}
+
+Retomemos el ejemplo de \emph{interfaces fluentes}, \lstinline|list.foreach().filter(c1).if(c2).then(p1).else(p2)|. Si en este c\'odigo nos olvid\'aramos de llamar \texttt{filter(c1)}, la expresi\'on seguir\'ia siendo correcta solamente que aplicar\'iamos el tratamiento condicional a todos los elementos de la lista en lugar de solo a aquellos que filtrar\'ia \texttt{c1}. Un ejemplo m\'as sencillo, una aplicaci\'on que toma un valor dado por el usuario y realiza una consulta en una base de datos. Es un caso t\'ipico de uso de datos no confiables, lo normal es limpiar o validar los datos ingresados antes de hacer la consulta. Una posible implementaci\'on ser\'ia:
+\begin{lstlisting}
+  ...
+  String userQuery = getFromUser();
+  List<Result> results = database.execute(cleanQuery(query));
+  ...
+\end{lstlisting}
+Un error cl\'asico ser\'ia que el desarrollador olvide de usar \texttt{cleanQuery(query)} y directamente use \texttt{query}. Ambos casos responden a configuraciones particulares de \emph{prvo}. El primer caso, restringir las expresiones objetivo a llamadas a m\'etodos involucradas en una expresi\'on de navegaci\'on. El segundo caso responde a restringir las expresiones objetivo a llamadas a m\'etodos en casos donde \'esta ocurra en una condici\'on, argumento u asignaci\'on, siempre que el tipo de retorno del m\'etodo sea igual o compatible con el del argumento usado en la llamada. Para los ejemplos anterior se obtendr\'ian los mutantes \lstinline|list.foreach().if(c2).then(p1).else(p2)| y:
+\begin{lstlisting}
+...
+String userQuery = getFromUser();
+List<Result> results = database.execute(query);
+...
+\end{lstlisting}
+
+\subsubsection{Acceso directo a un campo}
+
+Un caso particular del tipo de fallas por omisi\'on de una llamada a un m\'etodo, es el acceso a campos de clase de manera directa en lugar de mediante el m\'etodo \emph{getter} asociado. Si bien usualmente para cualquier atributo \emph{x} de una clase al cual se desea dar acceso se genera un m\'etodo \emph{getX()} del mismo tipo y conteniendo solo una sentencia de retorno \emph{return x}. Existen casos donde el m\'etodo \emph{getter} realiza mas tareas que solo retornar. Un ejemplo [AGREGAR]
+
+\subsubsection{Conversi\'on de tipos}
+
+Muchas veces existen conversiones no visibles de tipos num\'ericos. Una divisi\'on \texttt{2/3} no da lo mismo que \texttt{2/3.0} aunque es dif\'icil darse cuenta durante el desarrollo de un programa. Estas situaciones involucran en general \emph{casteos} expl\'icitos de tipos, \texttt{2/(float)3}, o uso de valores que especif\'ican claramente el tipo particular, \texttt{3.0}. Fallas de este tipo no est\'an representadas por operadores actuales, ya que en muchos casos el error, finalmente se produce por el acarreo de numerosas p\'erdidas de precisi\'on. Aunque no relacionado con expresiones de navegaci\'on, este tipo de fallas artificiales se puede definir en base a restricciones sobre \emph{prvo}, dada una expresi\'on num\'erica, las posibles mutaciones son nuevas expresiones con el mismo valor pero distinto tipo.
+
+\subsection{Fallas no asociadas a mutantes}
+
+Las fallas en esta categor\'ia, son aquellas que no pueden ser acopladas a operadores de mutaci\'on. Las razones que evitan esto se pueden dividir en casos donde no es posible definir un operador dado que ser\'ia necesario dar una definici\'on por cada falla particular que se quiere representar. Y aquellos casos donde si bien es posible dar una definici\'on general, como \emph{reemplazar una llamada a un m\'etodo por todas las posibles} lleva a una cantidad intratable de mutantes. Incluso cuando estas fallas se definen como incapaces de ser acopladas a operadores de mutaci\'on, es decir, no se puede definir un operador que las represente de manera eficiente. Creemos que es posible mediante \emph{prvo} poder representar algunos subconjuntos de las mismas.
+
+\subsubsection{Modificaci\'on o simplificaci\'on del algoritmo}
+
+Las fallas en este conjunto son aquellas que se dan por un algoritmo incorrecto en lugar de un algoritmo defectuoso. Mutation testing parte de asumir que el programador es competente y escribe programas cercanos a la soluci\'on correcta, si esto no se cumple, y el programa difiere significativamente tal que se dificulta entrar una versi\'on "cercana" y correcta del programa, mutation testing se vuelve inaplicable. Esto no significa que no es posible construir una falla que represente estos casos, pero no es posible hacerlo de manera general, lo que imposibilita dise\~nar un operador que represente este conjunto de fallas. Pero si nos quedamos con el subconjunto de algoritmos implementados mediante \emph{interfaces fluentes}, ahora llevamos el problema a realizar cambios en una expresi\'on de navegaci\'on, y esto es precisamente lo que hace \emph{prvo}. Como mencionamos, cualquier operador en la familia de \emph{prvo} es una configuraci\'on (que define restricciones) sobre un generador de cadenas para una gram\'atica (basada en tipos). Un programa definido con \emph{interfaces fluentes} es solo una cadena de una gram\'atica que \emph{prvo} puede modificar completamente dentro de las restricciones impuestas. En estos casos, modificar un algoritmo es totalmente posible, aunque es necesario controlar las restricciones impuestas para no caer en una explosi\'on de mutantes a analizar.
+
+\subsubsection{Eliminaci\'on de c\'odigo}
+
