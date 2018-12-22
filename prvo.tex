@@ -50,7 +50,7 @@ Hemos definido un operador de \emph{prvo} como una serie de restricciones a la d
 
 \section{Fallas asociadas a PRVO}
 
-En \cite{bibliography.mutation.evaluation.valid-substitute} se concluyen que cierto tipo de fallas reales requieren mejorar o definir operadores de mutaci\'on. Mientras que se definen cierto tipo de fallas reales como imposibles de acoplar a mutantes. En cuanto a las fallas que nos interesan, es necesario especificarlas bien y analizar como deber\'iamos, de ser posible, configurar un "operador" en \emph{prvo}.
+En \cite{bibliography.mutation.evaluation.valid-substitute} se concluyen que cierto tipo de fallas reales requieren mejorar o definir operadores de mutaci\'on para representarlas. Mientras que cierto tipo de fallas reales se consideran como imposibles de acoplar a mutantes. En esta tesis estamos interesados en aquellas fallas que pueden ser acopladas a \emph{prvo}, aun cuando algunas de estas solo puedan ser parcialmente acopladas, en referencia a que solo un subconjunto de las mismas pueden representarse mediante \emph{prvo}. En cuanto a las fallas que nos interesan, es necesario especificarlas bien y analizar como deber\'iamos configurar un ``operador'' en \emph{prvo}, la palabra \emph{operador} no se puede asociar directamente con un conjunto de funciones como ocurre en la pr\'actica, sin\'o que se refiere a una configuraci\'on particular de estas funciones. %LA ULTIMA PARTE YA FUE MENCIONADA
 
 \subsection{Fallas que requieren mejorar operadores existentes}
 
@@ -125,7 +125,7 @@ List<Result> results = database.execute(query);
 
 \subsubsection{Acceso directo a un campo}
 
-Un caso particular del tipo de fallas por omisi\'on de una llamada a un m\'etodo, es el acceso a campos de clase de manera directa en lugar de mediante el m\'etodo \emph{getter} asociado. Si bien usualmente para cualquier atributo \emph{x} de una clase al cual se desea dar acceso se genera un m\'etodo \emph{getX()} del mismo tipo y conteniendo solo una sentencia de retorno \emph{return x}. Existen casos donde el m\'etodo \emph{getter} realiza mas tareas que solo retornar. Un ejemplo [AGREGAR]
+Un caso particular del tipo de fallas por omisi\'on de una llamada a un m\'etodo, es el acceso a campos de clase de manera directa en lugar de mediante el m\'etodo \emph{getter} asociado. Si bien usualmente para cualquier atributo \emph{x} de una clase al cual se desea dar acceso se genera un m\'etodo \emph{getX()} del mismo tipo y conteniendo solo una sentencia de retorno \emph{return x}. Existen casos donde el m\'etodo \emph{getter} realiza mas tareas que solo retornar. Un ejemplo muy simple es un m\'etodo que retorna una colleci\'on cuando el campo asociado es a\'un nulo, el m\'etodo se asegurar\'ia de retornan una lista vac\'ia en este caso.
 
 \subsubsection{Conversi\'on de tipos}
 
@@ -139,5 +139,21 @@ Las fallas en esta categor\'ia, son aquellas que no pueden ser acopladas a opera
 
 Las fallas en este conjunto son aquellas que se dan por un algoritmo incorrecto en lugar de un algoritmo defectuoso. Mutation testing parte de asumir que el programador es competente y escribe programas cercanos a la soluci\'on correcta, si esto no se cumple, y el programa difiere significativamente tal que se dificulta entrar una versi\'on "cercana" y correcta del programa, mutation testing se vuelve inaplicable. Esto no significa que no es posible construir una falla que represente estos casos, pero no es posible hacerlo de manera general, lo que imposibilita dise\~nar un operador que represente este conjunto de fallas. Pero si nos quedamos con el subconjunto de algoritmos implementados mediante \emph{interfaces fluentes}, ahora llevamos el problema a realizar cambios en una expresi\'on de navegaci\'on, y esto es precisamente lo que hace \emph{prvo}. Como mencionamos, cualquier operador en la familia de \emph{prvo} es una configuraci\'on (que define restricciones) sobre un generador de cadenas para una gram\'atica (basada en tipos). Un programa definido con \emph{interfaces fluentes} es solo una cadena de una gram\'atica que \emph{prvo} puede modificar completamente dentro de las restricciones impuestas. En estos casos, modificar un algoritmo es totalmente posible, aunque es necesario controlar las restricciones impuestas para no caer en una explosi\'on de mutantes a analizar.
 
-\subsubsection{Eliminaci\'on de c\'odigo}
+\subsubsection{C\'odigo no requerido} %REVISAR TITULO
+
+Existen fallas causadas por c\'odigo que no deber\'ia estar, es decir, cuando la reparaci\'on asociada es eliminar c\'odigo, ya sea una l\'inea o varias (no necesariamente secuenciales). Por ejemplo:
+\begin{lstlisting}
+	...
+	if (c) breakProgram();
+	...
+\end{lstlisting}
+En donde la reparaci\'on no es una condici\'on mal escrita sino directamente la eliminaci\'on de ciertas l\'ineas de c\'odigo. Si se quisiera representar este tipo de fallas ser\'ia necesario generar c\'odigo e insertarlo, la complejidad de generar c\'odigo v\'alido y la cantidad que se puede generar, sumado a la cantidad de lugares en donde se puede insertar, hacen que este tipo de fallas no puedan ser representadas mediante mutaci\'on.
+
+\subsubsection{Llamada a m\'etodos similares}
+
+Si bien el tipo de fallas en donde se utiliza un m\'etodo similar de una librer\'ia fue mencionado como acoplable a mutantes. Eliminar la restricci\'on de que los m\'etodos pertenezcan a la misma librer\'ia causa que el espacio posible de mutantes se convierta en completamente inmanejable. Lo \'unico que vale la pena destacar de este tipo de fallas en relaci\'on a \emph{prvo}, es que la capacidad de configurar a nuestra familia de operadores para cada caso particular, hace que sea posible considerar un conjunto acotado de m\'etodos que no necesariamente pertenezcan a la misma librer\'ia.
+
+\subsubsection{Violaci\'on de especificaciones}
+
+En mutaci\'on, el conocimiento que se tiene del c\'odigo a mutar es, a lo sumo, contexto: que elementos son alcanzables en un determinado punto del c\'odigo; tipos: cual es el tipo de una variable, el retorno de un m\'etodo, los par\'ametros del mismo, etc. Pero no existe un conocimiento de que hace un determinado c\'odigo, que precondiciones requiere y que postcondiciones asegura. Representar fallas causadas por el mal uso con respecto a invariantes, precondiciones y postcondiciones, es entonces imposible de conseguir. Sin embargo, un caso particular que creemos que \emph{prvo} puede ser de gran utilidad, es en dise\~nos basados en encadenar m\'etodos (interfaces fluentes, builder pattern, entre otros). En estas situaciones el programador debe utilizar jerarqu\'ia de clases para definir una gram\'atica, donde todo m\'etodo involucrado tiene una precondici\'on y postcondici\'on basada en tipos. Con \emph{prvo} es posible generar mutantes que permitan analizar si \'estas son incumplidas.
 

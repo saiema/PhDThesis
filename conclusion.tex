@@ -1,0 +1,45 @@
+%!TEX root = rdegiovanni-phd-tesis.tex
+\chapter{Conclusiones y Trabajos Futuros}
+\label{cap:conclusion}
+En las \'ultimas d\'ecadas los m\'etodos formales han ganado una influencia notable dentro de la Ingenier\'ia de Requisitos. Tal es el caso de las metodolog\'ias orientadas a objetivos y las notaciones tabulares, que han logrado gran aceptaci\'on y se han aplicado sobre numerosos casos pr\'acticos.
+El uso de lenguajes formales permite, entre otras cosas, eliminar todo tipo de ambig\"uedades sobre las especificaciones de requisitos, y las hace adecuadas para el an\'alisis autom\'atico, por ejemplo, para el chequeo de consistencia y completitud de los requisitos. Sin embargo, otras \'areas de la Ingenier\'ia de Software, como la verificaci\'on autom\'atica de programas, han sabido explotar en mayor medida el poder de los mecanismos de an\'alisis asociados a los m\'etodos formales, como SAT Solving e interpolaci\'on. 
+
+En esta tesis, mostramos que es posible aprovechar este poder de an\'alisis que proveen los m\'etodos formales a lo largo de todo el proceso de ingenier\'ia de requisitos, contribuyendo a la elaboraci\'on y construcci\'on de requisitos de software (etapa temprana del proceso de requisitos), y a la validaci\'on y verificaci\'on de las especificaciones de requisitos construidas (etapa tard\'ia del proceso de requisitos). 
+Mostramos adem\'as, que nuestras t\'ecnicas no s\'olo logran mejores niveles de escalabilidad que las t\'ecnicas relacionadas en el estado del arte del \'area, sino que adem\'as pueden aplicarse a casos m\'as generales (como es el caso de nuestra t\'ecnica de operacionalizaci\'on de objetivos, que puede lidiar con un amplio conjunto de propiedades de liveness).
+%Sin embargo, los m\'etodos formales tienen poderosos mecanismos de an\'alisis asociados, como SAT Solving e interpolaci\'on, que han sabido ser explotados en gran medida en otras areas de la Ingenier\'ia de Software, como la verificaci\'on autom\'atica de programas. 
+%A nuestro criterio, \'este poder de an\'alisis que proveen los m\'etodos formales puede ser aprovechado para asistir al ingeniero en tareas relacionadas a la elaboraci\'on y construcci\'on de requisitos de software, y no s\'olo la autom\'atizaci\'on de ciertos an\'alisis.
+%En esta tesis, hemos mostrado que \'este poder de an\'alisis que proveen los m\'etodos formales, puede ser aprovechado para asistir al ingeniero en tareas relacionadas a la elaboraci\'on y construcci\'on de requisitos de software, y no s\'olo la autom\'atizaci\'on de ciertos an\'alisis.
+
+
+\section{Conclusiones}
+La principal contribuci\'on de esta tesis es el desarrollo de dos novedosas t\'ecnicas \emph{autom\'aticas} que, mediante la manipulaci\'on l\'ogica de f\'ormulas, asisten al ingeniero en tareas espec\'ificas llevadas a cabo a lo largo del proceso de ingenier\'ia de requisitos. 
+Nuestra primera t\'ecnica ayuda al ingeniero a resolver la incompletitud de los requisitos operacionales, garantizando que la especificaci\'on obtenida satisface un conjunto de propiedades deseables. 
+Por otro lado, la segunda t\'ecnica nos permite analizar si el comportamiento descripto por nuestras especificaciones de requisitos cumplen con las expectativas del cliente (validaci\'on) y se corresponde con la implementaci\'on del sistema (verificaci\'on).
+Puede notarse que, en general, nuestra primera t\'ecnica es m\'as aplicable durante la etapa temprana del proceso de ingenier\'ia de requisitos, donde el ingeniero debe lidiar y resolver la parcialidad de los requisitos; mientras que la segunta t\'ecnica, requiere una descripci\'on m\'as precisa y acabada de los requisitos, por lo que es aplicable en la etapa tard\'ia de la ingenier\'ia de requisitos.
+
+
+En el \cref{cap:KAOS-analisis} presentamos una t\'ecnica para la \emph{operacionalizaci\'on autom\'atica de objetivos}. B\'asicamente, nuestra t\'ecnica utiliza model checking para detectar la incompletitud de un Modelo Operacional respecto a un conjunto de objetivos, y de manera autom\'atica, combinando interpolaci\'on y SAT solving, refina las condiciones requeridas necesarias para garantizar la satisfacci\'on de los objetivos. Esta t\'ecnica propone dos contribuciones destacadas.
+Primero, nuestro enfoque es completamente autom\'atico, a diferencia de los existentes que son manuales \cite{LetierVanLamsweerde2002} o a lo sumo semi-autom\'aticos \cite{Alrajeh+2009}, requiriendo la asistencia del usuario en el proceso de refinamiento. Segundo, nuestra t\'ecnica es capaz de lidiar con un amplio rango de propiedades de \emph{liveness}, mientras que los enfoque previos para la operacionalizaci\'on de objetivos \cite{LetierVanLamsweerde2002,Alrajeh+2009} s\'olo aplican a objetivos de safety y a un tipo muy particular de propiedades de progreso, que es el progreso del tiempo (\textit{Time Progress}).
+Adem\'as demostramos que nuestra t\'ecnica es correcta y garantiza terminaci\'on cuando tratamos con objetivos de safety. M\'as a\'un, brindamos una metodolog\'ia que el ingeniero de requisitos puede seguir, para acercarse lo m\'as posible a la soluci\'on \'optima, en la \cref{sec:KAOS.metodologia}.
+
+En el \cref{cap:SCR-analisis} presentamos una t\'ecnica autom\'atica para el an\'alisis de especificaciones de requisitos, aplicada a tareas ligadas a la \emph{validaci\'on} y \emph{verificaci\'on} de requisitos.
+En particular, mostramos que nuestra t\'ecnica puede ser utilizada para generar casos de tests y verificar propiedades sobre las especificaciones de requisitos. 
+B\'asicamente, la t\'ecnica aplica un proceso de \emph{abstracci\'on autom\'atico}, demostrado ser correcto, logrando notables mejoras en la eficiencia y escalabilidad respecto a las t\'ecnicas existentes. La principal contribuci\'on de esta t\'ecnica es que puede lidiar con el nivel de detalle original de las especificaciones, sin someterlas a reducciones manuales o fallar en el proceso de an\'alisis cuando otras t\'ecnicas lo hacen. Esto permite, entre otras cosas, que los casos de tests generados (o las violaciones detectadas) puedan ser directamente contrastados con las expectativas del usuario (validaci\'on) y con el comportamiento real del sistema implementado (verificaci\'on). 
+
+%Todos los casos de estudio presentados en esta tesis, pueden descargarse desde {\small\url{http://dc.exa.unrc.edu.ar/staff/rdegiovanni/es/casos-de-estudio.html}} y reproducirse siguiendo las instrucciones que all\'i se pueden encontrar.
+
+%Es importante mencionar, que las t\'ecnicas presentadas en esta tesis est\'an basadas y extienden art\'iculos que hemos publicado recientemente \cite{Degiovanni+2011,Degiovanni+2014}. 
+%Adem\'as, en colaboraci\'on con otros investigadores, y gracias a lo aprendido en este trabajo, hemos publicado \cite{Scilingo+2013,Scilingo+2014,Regis+2015}.
+
+
+\section{Trabajos Futuros}
+
+Tenemos varias l\'ineas de trabajos futuros. 
+Por un lado, planeamos aplicar nuestra t\'ecnica de operacionalizaci\'on de objetivos sobre casos de estudio m\'as grandes, que nos permitan evaluar si existen problemas de escalabilidad, para as\'i realizar las mejoras necesarias. Adem\'as, planeamos investigar cu\'al es la relaci\'on precisa entre las operacionalizaciones obtenidas por interpolaci\'on con aquellas obtenidas con programaci\'on l\'ogica inductiva (ILP). En particular, estamos interesados en analizar una posible noci\'on de operacionalizaci\'on ``m\'as general'', y evaluar si el refinamiento basado en interpolaci\'on nos permite alcanzar dicha operacionalizaci\'on.  Adem\'as, planeamos investigar una potencial complementaci\'on entre interpolaci\'on e ILP, para la operacionalizaci\'on de objetivos. 
+
+Por otro lado, estamos estudiando la posibilidad de utilizar interpolaci\'on para la detecci\'on y resoluci\'on de conflictos a nivel de objetivos. Intuitivamente, podemos pensar a un interpolante sobre dos objetivos inconsistentes, como un obst\'aculo, es decir, una condici\'on cuya validez garantiza que no podr\'an ser satisfechos ambos objetivos a la vez.
+
+Finalmente, debido a que nuestras t\'ecnicas recaen fuertemente en el c\'omputo de interpolantes, planeamos evaluar mecanismos alternativos que computan interpolantes, para analizar si alg\'un algoritmo particular de interpolaci\'on es m\'as adecuado para nuestros prop\'ositos.
+
+
+
