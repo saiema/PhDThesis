@@ -1,3 +1,48 @@
 %!TEX root = main.tex
 \chapter[Implementaci\'on]{PRVO y $\mu$Java++}
 \label{sec:implementation}
+
+\section{$\mu$Java++}
+
+La herramienta \emph{$\mu$Java} \cite{bibliography.mutation.tools.muJavaMaOK05} funciona traduciendo c\'odigo fuente \emph{Java} a un \emph{AST}, una estructura de \'arbol que representa el c\'odigo original como nodos, y recorriendo el mismo mediante un patr\'on \emph{visitor}. Cada operador sobreescribe m\'etodos particulares de visita para los nodos objetivo, el operador \emph{ROR} solo tiene por objetivo a expresiones binarias (en cuanto al tipo de nodos) y particularmente a aquellas que utilicen un operador relacional. La versi\'on que fue desarrollada para poder implementar nuestra familia de operadores \emph{prvo}, contiene, a grandes rasgos, las siguientes caracter\'isticas que valen la pena mencionar:
+
+\begin{enumerate}
+	\item[Representaci\'on], las mutaciones generadas se representan mediante ternas \texttt{(original, mutante, operador)} en donde los dos primeros elementos representan nodos del \emph{AST} y el tercero denota el operador utilizado. \'Estas se almacenan durante la generaci\'on de mutaciones hasta que se decida generar los mutantes, esto permite analizar y evitar mutaciones repetidas.
+	\item[Anotaciones], es posible utilizar comentarios \lstinline|//mutGenLimit K| luego de una sentencia para permitir que solo aquellas que tengan estas anotaciones y el \emph{K} sea mayor a 0, sean mutadas.
+	\item[Control de generaciones], las anotaciones utilizadas son escritas en el mutante con el \emph{K} asociado disminu\'ido en 1. Esto permite, en casos como reparaci\'on o generaci\'on de mutantes compuestos (aquellos con m\'as de una mutaci\'on aplicada), controlar las generaciones m\'aximas por sentencia.
+	\item[Estandarizaci\'on de componentes], la versi\'on original de la herramienta ten\'ia implementaci\'ones muy diferentes por operador, algunos escrib\'ian directamente cada mutantes (sin tener una representaci\'on para las mutaciones aplicadas), esto hac\'ia que desarrollar nuevos operadores fuera una tarea compleja, nuestra versi\'on permite desarrollar nuevos operadores con relativa facilidad.
+	\item[Evaluaci\'on 2.0], mutation testing consiste en generar mutantes y evaluar cuantos son detectados por el conjunto de tests en evaluaci\'on. En la secci\'on \ref{sec:preliminares.mutation.opevaluation} se mencionan varias caracter\'isticas que afectan a este criterio, en particular dificultad de detecci\'on y redundancia de mutantes. Nuestra versi\'on de \emph{$\mu$Java} provee ciertas mejoras en el an\'alisis como ofrecer dos valores de \emph{mutation score}, uno en donde se consideran los mutantes que no compilaron y otro donde no se los considera; ofrecer un an\'alisis de ``dureza'' de los mutantes, al analizar cuantos tests fueron capaces de sobrevivir, no ser detectados por \'estos, antes de ser detectados; \emph{dynamic mutant subsumption}, en donde se genera un grafo de subsuma de mutantes para el test suite particular, permitiendo evaluar que mutantes fueron redundantes y cuales son indispensables; finalmente, para lidiar con la explosi\'on de mutantes que se puede dar y c\'omo el rendimiento es afectado, se implementaron la capacidad de frenar la ejecuci\'on de los tests para un mutante cuando \'este es detectado (perdiendo ciertos an\'alisis que requieren datos completos de la ejecuci\'on de los tests), y se introdujo el an\'alisis en paralelo de mutantes para acelerar el proceso.
+\end{enumerate}
+
+\section{PRVO}
+
+La definici\'on general de \emph{prvo}, dada en \ref{sec:prvo.prvo}, no es efectiva en la pr\'actica, desde ya por que permite entre otras cosas, infinitas mutaciones. Si bien se menciona que operadores de esta familia se definen mediante configuraciones particulares, en forma de restricciones, sobre la definici\'on general, la evoluci\'on de \emph{prvo} llev\'o a ciertas restricciones iniciales.
+
+Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atica de programas mediante mutaci\'on y \emph{SAT solving}. Utilizando la herramienta \emph{Stryker}, \emph{prvo} provee el potencial de reparar ciertos defectos no reparables anteriormente mediante mutantes. Como un problema que se menciona en \ref{sec:preliminares.repair}, la explosi\'on de candidatos en el espacio de b\'usqueda es uno de los principales obst\'aculos en reparaci\'on autom\'atica basada en mutaci\'on. Por esto, \emph{prvo} comienza con una serie de restricciones sobre el tama\~no de las expresiones mutadas, la diferencia entre el tama\~no original y final de una expresi\'on no puede superar a \texttt{1}. Estas restricciones llevan a una gram\'atica ligeramente distinta a la original.
+
+\begin{figure}
+	\begin{displaymath}
+	\begin{array}{lll}
+	PRVO(x)		& :=	& expression^{|1|} \\
+	& := & x.expression^{|1-2|} \\
+	& := & expression^{|1-2|}.x \\
+	& := & null \\
+	
+	\\
+	PRVO(x.y)	& :=	& x \\
+	& :=	& 	y \\
+	& :=	& expression^{|1-2|}.y \\
+	& :=	& y.expression^{|1-2|} \\
+	& :=	& expression^{|1-2|} \\
+	& :=	& x.y.expression^{|1|} \\
+	& :=	& x.expression^{|1|}.y \\
+	& :=	& expression^{|1|}.x.y \\
+	\\
+	
+	\end{array}
+	\end{displaymath}
+	\caption{Definici\'on base de la implementaci\'on de \emph{prvo}}
+	\label{figures.definitions.prvo.impl_def}
+\end{figure}
+
+En la Figura-\ref{figures.definitions.prvo.impl_def} se restringe la definici\'on abstracta de \emph{prvo} [\ref{figures.definitions.prvo.simple_def}] en base a cuanto se puede cambiar la longitud de la expresi\'on original. La notaci\'on \emph{expression$^{|R|}$} denota una expresi\'on encadenada de un tama\~no particular o un rango de tama\~nos, por ejemplo, de 1 a 2.
