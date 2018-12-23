@@ -46,3 +46,25 @@ Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atic
 \end{figure}
 
 En la Figura-\ref{figures.definitions.prvo.impl_def} se restringe la definici\'on abstracta de \emph{prvo} [\ref{figures.definitions.prvo.simple_def}] en base a cuanto se puede cambiar la longitud de la expresi\'on original. La notaci\'on \emph{expression$^{|R|}$} denota una expresi\'on encadenada de un tama\~no particular o un rango de tama\~nos, por ejemplo, de 1 a 2.
+
+\subsection{Configuraci\'on de PRVO}
+
+Con el tiempo la cantidad de comportamientos o restricciones configurables en \emph{prvo} fue aumentando. En esta secci\'on solo mencionaremos un conjunto de \'estas, ya que varias fueron implementadas para casos muy particulares.
+
+\subsubsection{Restricciones de tama\~no}
+
+A partir de la definici\'on en la Figura-\ref{figures.definitions.prvo.impl_def}, las restricciones sobre cuanto puede decrementar o incrementar una expresi\'on encadenada se limitan a:
+
+\begin{enumerate}
+	\item[Reemplazar un elemento] Ciertas mutaciones de \emph{prvo} solo modifican elementos unitarios (expresiones de tama\~no 1) en una expresi\'on encadenada, reemplaz\'andolos por otros de tama\~no 1.
+	\item[A\~nadir un elemento] Una expresi\'on encadenada puede incrementarse por 1 su tama\~no, al insertar un elemento tanto al principio, al final, o intercalarlo en su interior.
+	\item[Eliminar un elemento] En una expresi\'on encadenada se puede eliminar un elemento, teniendo en cuenta que si la misma estaba solamente constitu\'ida por un elemento, entonces solo es posible decrementar la expresi\'on original reemplaz\'andola por \emph{null}.
+	\item[Intercambiar dos elementos por uno] Dada una expresi\'on de navegaci\'on, dos elementos contiguos, es decir, una subexpresi\'on de navegaci\'on de tama\~no 1, puede ser reemplazada por un \'unico elemento.
+	\item[Intercambiar un elemento por dos] En una expresi\'on encadenada, un elemento de la misma puede ser reemplazado por dos elementos contiguos, es decir, una expresi\'on de navegaci\'on de tama\~no 1.
+\end{enumerate}
+
+En el ejemplo siguiente pueden verse las distintas mutaciones que corresponden a las restricciones anteriores:
+\begin{lstlisting}
+  current = current.next;
+  previous = current;
+\end{lstlisting}
