@@ -65,17 +65,17 @@ A partir de la definici\'on en la Figura-\ref{figures.definitions.prvo.impl_def}
 \end{enumerate}
 
 En el ejemplo siguiente pueden verse algunas de las distintas mutaciones que corresponden a las restricciones anteriores:
-\begin{lstlisting}
+\begin{lstlisting}[mathescape=true]
   current = current.next;
-  $\delta$ current = header;
-  $\delta$ current = current;
-  $\delta$ current = current.next.next;
-  $\delta$ current = header.previous.next;
+  $\delta$current = header;
+  $\delta$current = current;
+  $\delta$current = current.next.next;
+  $\delta$current = header.previous.next;
   previous = current;
-  $\delta$ previous = header;
-  $\delta$ previous = null;
-  $\delta$ previous = current.next;
-  $\delta$ previous = header.next;
+  $\delta$previous = header;
+  $\delta$previous = null;
+  $\delta$previous = current.next;
+  $\delta$previous = header.next;
 \end{lstlisting}
 
 \subsubsection{Restricciones de puntos de mutaci\'on}
