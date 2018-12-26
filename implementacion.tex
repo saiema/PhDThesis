@@ -15,6 +15,7 @@ La herramienta \emph{$\mu$Java} \cite{bibliography.mutation.tools.muJavaMaOK05} 
 \end{enumerate}
 
 \section{PRVO}
+\label{sec:implementation.prvo}
 
 La definici\'on general de \emph{prvo}, dada en \ref{sec:prvo.prvo}, no es efectiva en la pr\'actica, desde ya por que permite entre otras cosas, infinitas mutaciones. Si bien se menciona que operadores de esta familia se definen mediante configuraciones particulares, en forma de restricciones, sobre la definici\'on general, la evoluci\'on de \emph{prvo} llev\'o a ciertas restricciones iniciales.
 
@@ -63,8 +64,54 @@ A partir de la definici\'on en la Figura-\ref{figures.definitions.prvo.impl_def}
 	\item[Intercambiar un elemento por dos] En una expresi\'on encadenada, un elemento de la misma puede ser reemplazado por dos elementos contiguos, es decir, una expresi\'on de navegaci\'on de tama\~no 1.
 \end{enumerate}
 
-En el ejemplo siguiente pueden verse las distintas mutaciones que corresponden a las restricciones anteriores:
+En el ejemplo siguiente pueden verse algunas de las distintas mutaciones que corresponden a las restricciones anteriores:
 \begin{lstlisting}
   current = current.next;
+  $\delta$ current = header;
+  $\delta$ current = current;
+  $\delta$ current = current.next.next;
+  $\delta$ current = header.previous.next;
   previous = current;
+  $\delta$ previous = header;
+  $\delta$ previous = null;
+  $\delta$ previous = current.next;
+  $\delta$ previous = header.next;
 \end{lstlisting}
+
+\subsubsection{Restricciones de puntos de mutaci\'on}
+
+Una expresi\'on encadenada como las que muta \emph{prvo} puede encontrarse en una gran cantidad de lugares distintas en el c\'odigo fuente. Si bien en el ejemplo anterior las expresiones mutadas fueron siempre sobre asignaciones y solo se aplicaban mutaciones a la parte derecha de la misma, \emph{prvo} cuenta actualmente con las siguientes restricciones configurables:
+
+\begin{enumerate}
+	\item[Parte izquierda de asignaciones], en una asignaci\'on \texttt{a = b}, \emph{prvo} puede o no generar mutaciones para \texttt{a}. Es necesario destacar que estas mutaciones no se aplican en declaraciones de variables, es decir, expresiones \texttt{T a = b} dado que modificar \texttt{a} en este caso genera en muchos casos mutantes que no compilan. Si bien es cierto que existen fallas en donde un desarrollador puede olvidar declarar una variable local y de esta forma hacer menci\'on a un atributo/campo de clase, este tipo de fallas no corresponde con las que se desea representar mediante \emph{prvo}.
+	\item[Parte derecha de asignaciones], en una asignaci\'on \texttt{a = b}, \emph{prvo} puede o no generar mutaciones para \texttt{b}.
+	\item[Sentencias de retorno y expresiones internas], \emph{prvo} es capaz de mutar expresiones encadenadas asociadas a sentencias de retorno (\texttt{return e}), al mismo tiempo que expresiones unarias y binarias encontradas en asignaciones \texttt{(a = e \&\& f)}, en sentencias condicionales \texttt{(while(c) ...)}, argumentos de m\'etodos \texttt{foo(x)}, e incluso en las distintas partes de sentencias \texttt{for} como la inicializaci\'on, condici\'on e incremento.
+\end{enumerate}
+
+\subsubsection{Restricciones de expresiones a utilizar}
+
+Incluso luego de configurar restricciones sobre cuanto disminuir o incrementar la expresi\'on encadenada original, y en que partes del c\'odigo aplicar \emph{prvo}. La cantidad de expresiones v\'alidas disponibles para mutar una expresi\'on encadenada, sigue siendo demasiado grande. Esto trae aparejado problemas de eficiencia (la cantidad de mutantes afecta los recursos necesarios para mutation testing), generaci\'on de mutantes triviales o con poca dificultad para ser detectados, y mutantes redundantes.
+
+La expresi\'on \lstinline|Object obj = current.next;|, puede dar lugar a una enorme cantidad de mutaciones v\'alidas, dado que no solo cualquier tipo no primitivo hereda de \texttt{Object}, sino que adem\'as, \emph{Java} permite ``autoboxing'' de tipos primitivos. Esta t\'ecnica permite que expresiones como \lstinline|Integer i = 1;| sean v\'alidas e internamente se traducen a \lstinline|Integer i = new Integer(1);|. Volviendo al ejemplo anterior podemos ver que es posible generar una gran cantidad de mutaciones completamente v\'alidas desde un punto de vista de tipos, pero completamente independientes de los tipos que pueden ser de inter\'es o que est\'an involucrados en la expresi\'on original. Ejemplos de \'estas son:
+\begin{lstlisting}
+  Object obj = current.toString();
+  Object obj = current.getClass();
+  Object obj = current.hashCode();
+  Object obj = current.toString().length;
+  Object obj = current.next.toString();
+  ...
+\end{lstlisting}
+
+Por esto, \emph{prvo} cuenta con las siguientes restricciones configurables:
+
+\begin{enumerate}
+	\item[M\'etodos y campos restringidos], es posible definir expresiones regulares para restringir el uso de ciertos m\'etodos y campos, por ejemplo \lstinline|java\\.lang\\.String\\#.*| restringe cualquier m\'etodo y campo de \emph{java.lang.String}. Durante la generaci\'on de mutaciones, \emph{prvo} verifica que cualquier m\'etodo o campo que vaya a utilizar para mutar una expresi\'on encadenada, no est\'e restringida.
+	\item[M\'etodos y campos permitidos], en muchos casos, la cantidad de m\'etodos y campos a restringir es muy grande y solo se quieren permitir aquellos que pertenezcan a ciertas clases, por ejemplo, en el caso de una lista puede solo desearse utilizar aquellos que pertenezcan a la clase \emph{Lista} y \emph{Nodo}. Es posible definir, de la misma forma que en el caso anterior, que m\'etodos y campos son permitidos para que \emph{prvo} los utilice durante la generaci\'on de mutaciones. Cabe destacar que estas opciones son exclusivas, no es posible utilizar ambas al mismo tiempo.
+	\item[Control de tipos], en lenguajes orientados a objetos como \emph{Java}, la herencia de clases permite que dos tipos sean compatibles a\'un cuando no son iguales. Dados dos tipos, \texttt{A} y \texttt{B}, tal que el segundo hereda del primero. La asignaci\'on \lstinline|A a = new B();| es v\'alida mientras que la inversa no lo es. Una expresi\'on encadenada mutada por \emph{prvo} tiene que ser correcta con respecto a tipos, pero con esto podemos cambiar expresiones como \lstinline|list.node.value| a \lstinline|list.toString().getClass()| si \texttt{value} era de tipo \texttt{Object}. Por esto, \emph{prvo} puede ser restringirse a utilizar un control estricto de tipos, en donde \'estos solo se consideran compatibles sin son exactamente iguales.
+	\item[Uso de literales], en ciertos casos el uso de literales conforman expresiones v\'alidas para mutar una expresi\'on encadenada, \lstinline|var.toString().length| puede cambiarse a \lstinline|"".length|. Cualquier operador que utilice valores literales, va a requerir un conjunto finito de los mismos. En el caso de \emph{prvo}, utiliza un conjunto de literales base, \emph{1,0,True,False,"",null} en donde cada uno puede habilitarse o no; a su vez permite la b\'usqueda de literales alcanzables desde el punto en donde se est\'a mutando; tambi\'en es posible habilitar/deshabilitar la generaci\'on de variaciones en literales num\'ericos, es decir que para cada literal que pertenezca a un tipo primitivo num\'erico, se van a crear copias del mismo para los otros tipos. Por ejemplo, para \texttt{2}, un literal de tipo \texttt{int} se van a crear las variantes \texttt{2.0d}, \texttt{2.0f}, y \texttt{2l}.
+	\item[Uso de campos est\'aticos], el modificador \emph{static} en \emph{Java} define a un miembro que es compartido por todas las instancias de la clase que lo define. Estos miembros est\'aticos no deber\'ian accederse mediante instancias de una clase, aunque hacerlo es posible y no representa c\'odigo inv\'alido. Sin embargo si \'esto se permite, se pueden obtener muchas mutaciones asociadas al uso de constantes est\'aticas que no fueron restringidas mediante otra configuraci\'on. Por eso, \emph{prvo} permite la restricci\'on del uso de miembros est\'aticos en un contexto no est\'atico.
+\end{enumerate}
+
+\section{Dynamic mutant subsumption}
+\label{sec:implementation.dynamicSubsumption}
+
