@@ -126,5 +126,14 @@ La intuici\'on es que si un mutante es detectado por una gran cantidad de tests 
 \end{quote}
 Esta definici\'on da a lugar a \emph{Dynamic Mutant Subsumption}, y es la que se implement\'o en \emph{$\mu$Java++} y que va a ser utilizada como evaluaci\'on adicional, en este caso para el conjunto de mutantes generados en cada experimento.
 
-\subsection{Mutantes dominadores}
+\subsection{Dynamic Mutant Subsumption Graph}
 \label{sec:implementation.dynamicSubsumption.dominators}
+
+A partir del an\'alisis anterior, es posible construir un grafo en el cual un nodo contiene todos los mutantes equivalentes respecto a subsuma, es decir, para cada par de nodos \emph{m$_1$} y \emph{m$_2$} en el nodo, \emph{m$_1$} subsume a \emph{m$_2$} y viceversa. Una arista direccional conectando el nodo \emph{n$_1$} con el nodo \emph{n$_2$} representa la relaci\'on de subsuma:
+\begin{quote}
+	Para cada mutante \emph{m$_i$} en el nodo \emph{n$_1$}, y para cada mutante \emph{m$_j$} en el nodo \emph{n$_2$}, se cumple que \emph{m$_i$} subsume a \emph{m$_j$}.
+\end{quote}
+A partir de este grafo se observan nodos que son subsumidos pero no subsumen a nadie, a los mutantes en estos nodos se los considera los m\'as redundantes de todos. Nodos que subsumen a otros y son a su vez subsumidos, \'estos siguen siendo redundantes pero en un grado menor a los anteriores. Finalmente los nodos que subsumen a otros pero no son a su vez subsumido, son denominados ``dominadores''. Dado que en esta tesis presentamos una familia particular de operadores, y que son el objetivos de nuestra evaluaciones, lograr que los mutantes generados por \emph{prvo} ocupen una mayor\'ia de los nodos dominadores, no alcanza, \'esto es causa de que cualquier mutante generado por otro operador e inclu\'ido en el nodo, es equivalente a los de \emph{prvo}. Este problema se extiende a la evaluaci\'on de cualquier operador utilizando grafos de dynamic mutant subsumtion. Por esto, este an\'alisis incluye la propiedad de pureza en los nodos.
+\begin{quote}
+	Un nodo en un grafo de dynamic mutant subsumption es considerado puro, si para cada mutante contenido en el mismo, \'este fue generado por el mismo operador.
+\end{quote}
