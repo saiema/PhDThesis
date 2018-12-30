@@ -1,0 +1,1 @@
+Definir propiedes que afectan a los operadores de mutacion y las metodologias para evaluarlas
