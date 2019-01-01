@@ -4,36 +4,36 @@
 %MOVER ESTO A INTRODUCCION QUIZAS
 Garantizar que un programa realice de manera correcta las tareas para las cuales fue desarrollado se encuentra dentro de los problemas m\'as desafiantes y uno de los m\'as importantes temas de investigaci\'on \cite{bibliography.books.GhezziBook,bibliography.books.PressmanBook,bibliography.books.JaloteBook}. Es un tema central en el control de calidad de programas, requiriendo una cantidad significativa de recursos \cite{bibliography.books.JaloteBook} aunque su costo suele estar a la par de sus beneficios. La aparici\'on de fallas puede ocurrir en cualquier etapa del desarrollo del software, sin embargo el costo de reparaci\'on de los mismos aumenta de manera considerable mientras m\'as tarde sean detectados (y corregidos), como ejemplo, detectar un error en la etapa de tests de aceptaci\'on puede costar hasta 100 veces m\'as que hacerlo durante la etapa de requisitos \cite{bibliography.books.JaloteBook}.
 
-Testing, que en esencia consiste en ejecutar un programa bajo un conjunto espec\'ifico de escenarios, contrastando el comportamiento actual con el esperado \cite{bibliography.books.AmmannOffutt}, es el enfoque m\'as com\'unmente usado para garantizar calidad. Dado que ejecutar de manera exhaustiva un programa bajo todos sus posibles escenarios de ejecuci\'on (es decir, considerando todas las entradas, directas e indirectas) es en general inviable, por lo que se debe seleccionar una muestra (un subconjunto de todos los escenarios posibles). Esto hace que testing sea una t\'ecnica necesariamente incompleta, pero al mismo tiempo implica una escalabilidad que otros enfoques de verificaci\'on, especialmente aquellos basados en an\'alisis est\'atico, tienen dificultades de alcanzar.
+Testing, que en esencia consiste en ejecutar un programa bajo un conjunto espec\'ifico de escenarios, contrastando el comportamiento actual con el esperado \cite{bibliography.books.AmmannOffutt}, es el enfoque m\'as com\'unmente usado para garantizar calidad. Ejecutar de manera exhaustiva un programa bajo todos sus posibles escenarios de ejecuci\'on (es decir, considerando todas las entradas, directas e indirectas) es en general inviable. Por \'esto, es necesario seleccionar una muestra (un subconjunto de todos los escenarios posibles). Esto hace que testing sea una t\'ecnica necesariamente incompleta, pero al mismo tiempo implica una escalabilidad que otros enfoques de verificaci\'on, especialmente aquellos basados en an\'alisis est\'atico, tienen dificultades de alcanzar.
 
 Los pasos que definen a un test se pueden describir entonces como:
 
 \begin{enumerate}
-	\item Preparaci\'on(\emph{Arrange}), define los datos necesarios para el escenario bajo el cual se va a ejecutar el test. En la l\'inea 1 del c\'odigo en la Figura-\ref{figures.examples.test.manual} se define el escenario sobre el cual se va a evaluar en este caso, una calculadora.
+	\item Preparaci\'on(\emph{Arrange}), define los datos necesarios para el escenario bajo el cual se va a ejecutar el test. En la primer l\'inea de la Figura-\ref{figures.examples.test.manual} se define el escenario sobre el cual se va a evaluar en este caso, una calculadora.
 	
-	\item Ejecuci\'on(\emph{Act}), la ejecuci\'on del programa a evaluar, generalmente incluye adem\'as la obtenci\'on del resultado de dicha ejecuci\'on. En la l\'inea 2 del c\'odigo en la Figura-\ref{figures.examples.test.manual} se ejecuta la calculadora, el m\'etodo \texttt{Calculator\#evaluate(String)} bajo la expresi\'on previamente definida y se obtiene el resultado de esta ejecuci\'on.
+	\item Ejecuci\'on(\emph{Act}), la ejecuci\'on del programa a evaluar, generalmente incluye adem\'as la obtenci\'on del resultado de dicha ejecuci\'on. En la l\'inea 2 de la Figura-\ref{figures.examples.test.manual} se ejecuta la calculadora, el m\'etodo \texttt{Calculator\#evaluate(String)} bajo la expresi\'on previamente definida y se obtiene el resultado de esta ejecuci\'on.
 	
-	\item Evaluaci\'on(\emph{Assert}), la verificaci\'on de que el resultado obtenido, ya sea un valor de salida o un estado del programa, se corresponda con el esperado. Esto puede ser una verificaci\'on por igualdad o por propiedades. En la l\'inea 3 del c\'odigo en la Figura-\ref{figures.examples.test.manual} se eval\'ua que la ejecuci\'on del m\'etodo \texttt{Calculator\#evaluate(String)} bajo la expresi\'on previamente definida, sea igual a \texttt{16}.
+	\item Evaluaci\'on(\emph{Assert}), la verificaci\'on de que el resultado obtenido, ya sea un valor de salida o un estado del programa, se corresponda con el esperado. Esto puede ser una verificaci\'on por igualdad o por propiedades. En la \'ultima l\'inea de la Figura-\ref{figures.examples.test.manual}, se eval\'ua que la ejecuci\'on del m\'etodo \texttt{Calculator\#evaluate(String)} bajo la expresi\'on previamente definida, sea igual a \texttt{16}.
 \end{enumerate}
 
 \begin{figure}
 	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em]
  la entrada a evaluar es "(1 + 3)^2"
  evaluar Calculator#evaluate con la entrada anterior
- el resultado obtenido deber\'ia ser 16
+ el resultado obtenido debe ser 16
 	\end{lstlisting}
 	\caption{Ejemplo de un test}
 	\label{figures.examples.test.manual}
 \end{figure}
 
-Claramente como la muestra de entradas, que ser\'a utilizada para testing, es escogida, afecta significativamente la habilidad de esta t\'ecnica en encontrar fallas en el software, lo que lleva a considerar alg\'un criterio (\emph{testing criteria}) para asistir en seleccionar esta muestra, o equivalentemente, \emph{medir} la calidad de la misma. Estos criterios t\'ipicamente se clasifican en \emph{caja blanca}(white box), si tienen en cuenta la estructura del c\'odigo bajo an\'alisis, o \emph{caja negra}(black box), si en cambio se concentran en la especificaci\'on del mismo. Todos estos mecanismos intentan usar una m\'etrica indirecta para b\'asicamente evaluar el potencial de un test suite en detectar fallas. Pero dado que \'estas son desconocidas hasta que son detectadas, no existe una forma directa de evaluar la habilidad de un test suite en detectarlas.
+Claramente como la muestra de entradas, que ser\'a utilizada para testing, es escogida, afecta significativamente la habilidad de esta t\'ecnica en encontrar fallas en el software. Recordemos que el programa se va a evaluar sobre un conjunto de entradas, con la intenci\'on de que el comportamiento sobre el mismo, sea generalizable para todas las posibles entradas. Lo que nos lleva a considerar alg\'un criterio (\emph{testing criteria}) para asistir en seleccionar esta muestra, o equivalentemente, \emph{medir} la calidad de la misma. Estos criterios t\'ipicamente se clasifican en \emph{caja blanca} (white box), si tienen en cuenta la estructura del c\'odigo bajo an\'alisis, o \emph{caja negra} (black box), si en cambio se concentran en la especificaci\'on del programa bajo prueba. Todos estos mecanismos intentan usar una m\'etrica indirecta, para b\'asicamente, evaluar el potencial de un test suite en detectar fallas, dado que \'estas son desconocidas hasta que son detectadas, y m\'etricas indirectas, representan la \'unica forma de evaluar la habilidad de un test suite en detectar potenciales fallas.
 
 \section{Automatizaci\'on}
 \label{sec:preliminares.testing.automation}
 
-La definici\'on de que es un test, dada anteriormente, no es ejecutable, sin\'o que define una serie de pasos que deber\'ia seguir un individuo para evaluar un programa bajo un escenario particular y analizar si el resultado obtenido corresponde con el esperado. Esto si bien permite evaluar un programa, es evidentemente una metodolog\'ia tediosa y por su naturaleza manual, altamente susceptible a errores humanos, y consume mucho tiempo. Sin embargo es evidente que se trata de un proceso altamente automatizable.
+La definici\'on de que es un test, dada anteriormente, no es ejecutable, sin\'o que define una serie de pasos que deber\'ia seguir un individuo para evaluar un programa bajo un escenario particular y analizar si el resultado obtenido corresponde con el esperado. \'Esto, si bien permite evaluar un programa, es evidentemente una metodolog\'ia tediosa y por su naturaleza manual, altamente susceptible a errores humanos, adem\'as de consumir mucho tiempo. Sin embargo es evidente que se trata de un proceso altamente automatizable.
 
-Existen numerosas librer\'ias disponibles para automatizar el proceso de testing, en la Figura-\ref{figures.examples.test.junit} se muestra el ejemplo anterior implementado en \emph{Java} utilizando la librer\'ia \emph{Junit}.
+Existen numerosas librer\'ias disponibles para automatizar el proceso de testing, en la Figura-\ref{figures.examples.test.junit} se muestra el ejemplo anterior implementado en \emph{Java} utilizando la librer\'ia \emph{JUnit}.
 
 \begin{figure}
 	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em]
@@ -47,7 +47,7 @@ Existen numerosas librer\'ias disponibles para automatizar el proceso de testing
 
 \subsection{Generaci\'on autom\'atica de escenarios}
 
-La automatizaci\'on de tests, aunque muy \'util, sigue requiriendo que alguien provea los tests con los cuales evaluar un programa particular. La generaci\'on de escenarios de prueba de manera autom\'atica, reducir\'ia, los recursos necesarios para evaluar un programa. Siguiendo el ejemplo anterior, una gram\'atica simple servir\'ia para definir las entradas v\'alidas para luego generar expresiones aleatorias utilizando la misma. Actualmente existen numerosas aplicaciones cuyo objetivo es exclusivamente la generaci\'on autom\'atica de entradas.
+La automatizaci\'on de tests, aunque muy \'util, sigue requiriendo que alguien provea los tests con los cuales evaluar un programa particular. La generaci\'on de escenarios de prueba de manera autom\'atica, reducir\'ia los recursos necesarios para evaluar un programa. Siguiendo el ejemplo anterior, una gram\'atica simple servir\'ia para definir las entradas v\'alidas para luego generar expresiones aleatorias utilizando la misma. Actualmente existen numerosas aplicaciones cuyo objetivo es exclusivamente la generaci\'on autom\'atica de entradas.
 
 Algunos de los enfoques utilizados para generaci\'on autom\'atica de entradas incluyen:
 
@@ -61,8 +61,8 @@ Generaci\'on \emph{aleatoria} de entradas, en donde para alg\'un conjunto de val
       intInputs.add(rndValue);
     }
 	\end{lstlisting}
-	\label{figures.examples.testing.random.primitive}
 	\caption{Ejemplo de generaci\'on aleatoria de 10 valores enteros entre 10 y 20}
+	\label{figures.examples.testing.random.primitive}
 \end{figure}
 
 \begin{figure}
@@ -78,8 +78,8 @@ Generaci\'on \emph{aleatoria} de entradas, en donde para alg\'un conjunto de val
       structuredInputs.add(rndList);
     }
 	\end{lstlisting}
-	\label{figures.examples.testing.random.structure}
 	\caption{Ejemplo de generaci\'on aleatoria de 10 listas de enteros con tama\~no entre 0 a 10, y con valores entre 0 a 50}
+	\label{figures.examples.testing.random.structure}
 \end{figure}
 
 Generaci\'on \emph{exhaustiva} de entradas consiste en utilizar todos los valores disponibles dentro de un espacio acotado. Para valores primitivos esto consistir\'ia en utilizar todos los valores entre un valor m\'inimo y un m\'aximo, evidentemente los tipos para los cuales se puede aplicar esta t\'ecnica, deben ser numerables. Para valores que corresponden a tipos estructurados, la metodolog\'ia es similar a generaci\'on aleatoria. Esta metodolog\'ia parecer\'ia en primera instancia generar una mayor confianza ya que permite eval\'uar un programa bajo todas las posibles entradas dentro de una determinada cota. La cantidad de entradas que se obtienen por generaci\'on exhaustiva llegan muy r\'apido a cantidades intratables, en \cite{bibliography.testing.generation.KoratBoyapatiKM02} que presenta una herramienta de generaci\'on exhaustiva de valores para tipos estructurados, demuestra como la cantidad de valores generados aumenta con respecto a las cotas utilizadas.
@@ -88,7 +88,7 @@ Generaci\'on \emph{exhaustiva} de entradas consiste en utilizar todos los valore
 
 \subsection{El problema del or\'aculo}
 
-A\'un teniendo la capacidad de generar escenarios de manera autom\'atica, y dado que la ejecuci\'on del programa a evaluar provista una entrada particular es trivial de automatizar, el valor esperado no es generado por las herramientas de generaci\'on autom\'atica de entradas. Por ejemplo, en el caso del test en la Figura-\ref{figures.examples.test.junit}, el valor esperado \emph{16}, fue propuesto por el desarrollador del test de manera manual. Para poder automatizar completamente la generaci\'on de tests, es entonces necesario resolver el problema de, dado una entrada y un programa a evaluar, generar el valor esperado para poder validar si el programa es correcto (con respecto a esa entrada). Existen distintas soluciones a este problema:
+A\'un teniendo la capacidad de generar escenarios de manera autom\'atica, y dado que la ejecuci\'on del programa a evaluar, bajo una entrada particular, es trivial de automatizar, el valor esperado no es generado por las herramientas de generaci\'on autom\'atica de entradas. Por ejemplo, en el caso del test en la Figura-\ref{figures.examples.test.junit}, el valor esperado \emph{16}, fue propuesto por el desarrollador del test, de manera manual. Para poder automatizar completamente la generaci\'on de tests, es entonces necesario resolver el problema de, dado una entrada y un programa a evaluar, generar el comportamiento esperado para poder validar si el programa es correcto (con respecto a esa entrada). Existen distintas soluciones a este problema:
 \begin{enumerate}
 	\item Manualmente, evidentemente la soluci\'on m\'as intuitiva es tener un individuo que lo haga. Esta opci\'on es un proceso muy tedioso y consume mucho tiempo, lo que puede llevar a cometer errores.
 	
@@ -96,12 +96,12 @@ A\'un teniendo la capacidad de generar escenarios de manera autom\'atica, y dado
 	
 	\item Test de regresi\'on, un caso particular de \emph{test diferencial} es cuando una versi\'on anterior del programa a evaluar es utilizado como alternativa confiable. Esta t\'ecnica es utilizada principalmente para evaluar que el comportamiento previo de un programa no fue modificado involuntariamente al, por ejemplo, agregar nuevas caracter\'isticas.
 	
-	\item Especificaciones ejecutables, es posible dar una especificaci\'on del propiedades que debe cumplir un programa. Por ejemplo, un m\'etodo que ordena listas de enteros siempre debe cumplir que los elementos en el resultado sean los mismos que en la entrada y que est\'en ordenados. Es importante que la especificaci\'on sea ejecutable, este es un requerimiento necesario para poder utilizar a la misma como or\'aculo.
+	\item Especificaciones ejecutables, es posible dar una especificaci\'on de las propiedades que debe cumplir un programa. Por ejemplo, un m\'etodo que ordena listas de enteros siempre debe cumplir que los elementos en el resultado sean los mismos que en la entrada, y que est\'en ordenados. Es importante que la especificaci\'on sea ejecutable, este es un requerimiento necesario para poder utilizar a la misma como or\'aculo.
 \end{enumerate}
 
 \subsection{Modelo RIP}
 
-La detecci\'on de una falla sigue el modelo \emph{\texttt{R}eachability}, el defecto en el c\'odigo debe ser alcanzable por la ejecuci\'on del programa bajo alg\'un escenario particular; \emph{\texttt{I}nfection}, el defecto debe infectar el estado del programa, esto significa que al ejecutar el c\'odigo que contiene el detecto debe ocurrir un cambio en el estado tal que \'este difiere con respecto del estado en el programa sin el defecto o con respecto al estado esperado; \emph{\texttt{P}ropagation}, el cambio del estado debe propagarse hasta alg\'un punto observable para permitir diferenciar una salida incorrecta (error) de la correcta.
+La detecci\'on de una falla sigue el siguiente modelo: \emph{\texttt{R}eachability}, el defecto en el c\'odigo debe ser alcanzable por la ejecuci\'on del programa bajo alg\'un escenario particular; \emph{\texttt{I}nfection}, el defecto debe infectar el estado del programa, esto significa que al ejecutar el c\'odigo que contiene el detecto debe ocurrir un cambio en el estado tal que \'este, difiere con respecto del estado en el programa sin el defecto, o con respecto al estado esperado; \emph{\texttt{P}ropagation}, el cambio del estado debe propagarse hasta alg\'un punto observable, para permitir diferenciar una salida incorrecta (error) de la correcta.
 
 \begin{figure}
 	\begin{lstlisting}[frame=single,numbers=left, mathescape=true,framexleftmargin=1.5em]
@@ -115,17 +115,17 @@ La detecci\'on de una falla sigue el modelo \emph{\texttt{R}eachability}, el def
       return result;
     }
 	\end{lstlisting}
+	\caption{Una implementaci\'on incorrecta de un m\'etodo \emph{max}}
 	\label{figures.examples.testing.rip}
-	\caption{Una implementaci\'on incorrecta de un m'etodo \emph{max}}
 \end{figure}
 
-En la Figura-\ref{figures.examples.testing.rip} se puede ver una implementaci\'on de un programa que calcula el m\'aximo entre dos n\'umeros. El defecto se encuentra en la segunda condici\'on \texttt{b < a}, cualquier entrada en donde no se cumpla que \texttt{a > b} va alcanzar la sentencia con el defecto; la infecci\'on se da cuando una entrada que cumpla con \texttt{b > a} no cambie el valor de \texttt{result} para contener el valor de \texttt{b}; la propagaci\'on se da por que el valor incorrecto en \texttt{result} se retorna en la \'ultima sentencia del programa. Incluso al tener un escenario que cumpla con el modelo \emph{RIP} para un defecto, \'este no va a ser detectado si no se cuenta con un or\'aculo apropiado, en este caso, validar que por ejemplo para los valores \emph{5} y \emph{3} el resultado esperado es \emph{5}.
+En la Figura-\ref{figures.examples.testing.rip} se puede ver una implementaci\'on de un programa que calcula el m\'aximo entre dos n\'umeros. El defecto se encuentra en la segunda condici\'on, \texttt{b < a}, cualquier entrada en donde no se cumpla que \texttt{a > b}, va alcanzar la sentencia con el defecto; la infecci\'on se da cuando una entrada que cumpla con, \texttt{b > a}, no cambie el valor de \texttt{result} para contener el valor de \texttt{b}; la propagaci\'on se da por que el valor incorrecto en \texttt{result}, se retorna en la \'ultima sentencia del programa. Incluso al tener un escenario que cumpla con el modelo \emph{RIP} para un defecto, \'este no va a ser detectado si no se cuenta con un or\'aculo apropiado, en este caso, validar que por ejemplo para los valores \emph{5} y \emph{3}, el resultado esperado es \emph{5}.
 
 \subsection{Criterios de cobertura}
 \label{sec:preliminares.testing.covcriteria}
 
 %Queda en evidencia la necesidad de un criterio para evaluar la calidad de un conjunto de tests. Como condici\'on de terminaci\'on para un proceso (ya sea manual o autom\'atico) de generaci\'on de tests, as\'i como para evaluar el conjunto de tests utilizados para poder medir la relaci\'on entre el hecho de que \'estos pasen y la confianza en que el programa bajo evaluaci\'on sea correcto.
 
-Los criterios de cobertura generan metas para el test suite bajo evaluaci\'on y eval\'uan cuantas de \'estas son satisfechas por el mismo. Dado que un criterio de evaluaci\'on para un test suite no puede directamente analizar la capacidad del mismo en detectar fallas (salvo para aquellas conocidas), el disen\~o de \'estos se basan en encontrar relaciones entre criterios que pueden ser evaluados y el potencial de detectar fallas. El modelo \emph{RIP} representa una base de partida para el disen\~o de criterios.
+Los criterios de cobertura generan metas, o requisitos, para el test suite bajo evaluaci\'on, y eval\'uan cuantas de \'estas son satisfechas por el mismo. Dado que un criterio de evaluaci\'on para un test suite no puede, directamente analizar la capacidad del mismo en detectar fallas (salvo para aquellas conocidas), el dise\~no de \'estos se basa en encontrar relaciones entre criterios que pueden ser evaluados, y el potencial de detectar fallas. El modelo \emph{RIP} representa una base de partida para el disen\~o de criterios.
 
-Como criterios de cobertura, aquellos denominados de \emph{caja blanca}, se basan en la estructura del programa para generar metas a cubrir. Por ejemplo, cobertura de sentencias genera como metas, la ejecuci\'on de las sentencias del programa, \'este criterio se enfoca principalmente en \emph{alcanzabilidad}. Los criterios de \emph{caja negra} se enfocan la especificaci\'on del programa para generar metas, por ejemplo, el criterio de \emph{partici\'on de clases de equivalencia} se enfoca en dividir las entradas en conjuntos para los cuales el comportamiento del programa deber\'ia ser el mismo, en el caso de \emph{max} uno de \'estos contendr\'ia todas las entradas tal que el primer valor es mayor al segundo.
+Como criterios de cobertura, aquellos denominados de \emph{caja blanca}, se basan en la estructura del programa para generar metas a cubrir. Por ejemplo, cobertura de sentencias genera como metas, la ejecuci\'on de las sentencias del programa, \'este criterio se enfoca principalmente en \emph{alcanzabilidad}. Los criterios de \emph{caja negra} se enfocan en la especificaci\'on del programa para generar metas, por ejemplo, el criterio de \emph{partici\'on de clases de equivalencia}, se enfoca en dividir las entradas en conjuntos para los cuales el comportamiento del programa deber\'ia ser el mismo, en el caso de \emph{max} uno de \'estos contendr\'ia todas las entradas tal que el primer valor es mayor al segundo.
