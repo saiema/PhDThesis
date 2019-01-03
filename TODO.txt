@@ -1,1 +1,2 @@
-Definir propiedes que afectan a los operadores de mutacion y las metodologias para evaluarlas
+Definir propiedades que afectan a los operadores de mutacion y las metodologias para evaluarlas (hecho la primera parte)
+Mostrar una comparación de como distintas configuraciones de PRVO alteran la cantidad de mutantes generados
