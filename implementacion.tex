@@ -4,20 +4,61 @@
 
 \section{$\mu$Java++}
 
-La herramienta \emph{$\mu$Java} \cite{bibliography.mutation.tools.muJavaMaOK05} funciona traduciendo c\'odigo fuente \emph{Java} a un \emph{AST}, una estructura de \'arbol que representa el c\'odigo original como nodos, y recorriendo el mismo mediante un patr\'on \emph{visitor}. Cada operador sobreescribe m\'etodos particulares de visita para los nodos objetivo, el operador \emph{ROR} solo tiene por objetivo a expresiones binarias (en cuanto al tipo de nodos) y particularmente a aquellas que utilicen un operador relacional. La versi\'on que fue desarrollada para poder implementar nuestra familia de operadores \emph{prvo}, contiene, a grandes rasgos, las siguientes caracter\'isticas que valen la pena mencionar:
+La herramienta \emph{$\mu$Java} \cite{bibliography.mutation.tools.muJavaMaOK05} funciona traduciendo c\'odigo fuente \emph{Java} a un \emph{AST}, una estructura de \'arbol que representa el c\'odigo original como nodos, y recorriendo el mismo mediante un patr\'on \emph{visitor}. Cada operador sobreescribe m\'etodos particulares de visita para los nodos objetivo, el operador \emph{ROR}, por ejemplo, solo tiene por objetivo a expresiones binarias (en cuanto al tipo de nodos) y particularmente a aquellas que utilicen un operador relacional. En la Figura-\ref{figures.examples.rorMutation} se ve una parte de un \emph{AST} correspondiente a la sentencia \lstinline|x = y < 0|, \emph{ROR} al visitar el nodo \emph{BinExpr} con el operador \emph{<}, va a generar varias a generar, entre otros, el nodo mutado \emph{BinExpr[>]} que corresponde al cambio de el operador \emph{<} por \emph{>}, mientras mantiene los subnodos de \emph{BinExpr} sin modificaciones.
 
-\begin{enumerate}
-	\item[Representaci\'on], las mutaciones generadas se representan mediante ternas \texttt{(original, mutante, operador)} en donde los dos primeros elementos representan nodos del \emph{AST} y el tercero denota el operador utilizado. \'Estas se almacenan durante la generaci\'on de mutaciones hasta que se decida generar los mutantes, esto permite analizar y evitar mutaciones repetidas.
-	\item[Anotaciones], es posible utilizar comentarios \lstinline|//mutGenLimit K| luego de una sentencia para permitir que solo aquellas que tengan estas anotaciones y el \emph{K} sea mayor a 0, sean mutadas.
-	\item[Control de generaciones], las anotaciones utilizadas son escritas en el mutante con el \emph{K} asociado disminu\'ido en 1. Esto permite, en casos como reparaci\'on o generaci\'on de mutantes compuestos (aquellos con m\'as de una mutaci\'on aplicada), controlar las generaciones m\'aximas por sentencia.
-	\item[Estandarizaci\'on de componentes], la versi\'on original de la herramienta ten\'ia implementaci\'ones muy diferentes por operador, algunos escrib\'ian directamente cada mutantes (sin tener una representaci\'on para las mutaciones aplicadas), esto hac\'ia que desarrollar nuevos operadores fuera una tarea compleja, nuestra versi\'on permite desarrollar nuevos operadores con relativa facilidad.
-	\item[Evaluaci\'on 2.0], mutation testing consiste en generar mutantes y evaluar cuantos son detectados por el conjunto de tests en evaluaci\'on. En la secci\'on \ref{sec:preliminares.mutation.opevaluation} se mencionan varias caracter\'isticas que afectan a este criterio, en particular dificultad de detecci\'on y redundancia de mutantes. Nuestra versi\'on de \emph{$\mu$Java} provee ciertas mejoras en el an\'alisis como ofrecer dos valores de \emph{mutation score}, uno en donde se consideran los mutantes que no compilaron y otro donde no se los considera; ofrecer un an\'alisis de ``dureza'' de los mutantes, al analizar cuantos tests fueron capaces de sobrevivir, no ser detectados por \'estos, antes de ser detectados; \emph{dynamic mutant subsumption}, en donde se genera un grafo de subsuma de mutantes para el test suite particular, permitiendo evaluar que mutantes fueron redundantes y cuales son indispensables; finalmente, para lidiar con la explosi\'on de mutantes que se puede dar y c\'omo el rendimiento es afectado, se implementaron la capacidad de frenar la ejecuci\'on de los tests para un mutante cuando \'este es detectado (perdiendo ciertos an\'alisis que requieren datos completos de la ejecuci\'on de los tests), y se introdujo el an\'alisis en paralelo de mutantes para acelerar el proceso.
-\end{enumerate}
+\begin{figure}
+	\begin{tikzpicture}%
+	[state/.style ={ellipse, draw, minimum width = 0.7 cm},
+	point/.style = {circle, draw, inner sep=0.04cm,fill,node contents={}},
+	el/.style = {inner sep=2pt, align=left, sloped}]
+	\node[state,rectangle] (asg) {$Assignment$};
+	\node[state,rectangle] (varx) [below=of asg] {$Var[x]$};
+	\node[state,rectangle] (bexpr) [right=of varx] {$BinExpr[<]$};
+	\node[state,rectangle] (vary) [below=of bexpr] {$Var[y]$};
+	\node[state,rectangle] (lit) [right=of vary] {$Lit[0]$};
+	
+	\path (asg) edge (varx);
+	\path (asg) edge (bexpr);
+	\path (bexpr) edge (vary);
+	\path (bexpr) edge (lit);
+	
+	\node[draw=blue,dotted,fit=(bexpr) (vary) (lit), inner sep=0.2cm] (binaryO) {};
+	
+	\node[state, rectangle] (bexprM) [right=of binaryO] {$BinExpr[>]$};
+	
+	\path[->] (binaryO) edge[bend left=20] node[above] {ROR} (bexprM);
+	\path (bexprM) edge[bend right=20] (vary);
+	\path (bexprM) edge[bend right=20] (lit);
+	
+	\end{tikzpicture}
+	\caption{Ejemplo del operador \emph{ROR} en funcionamiento}
+	\label{figures.examples.rorMutation}
+\end{figure}
+
+Una de las primeras tareas para poder desarrollar \emph{prvo}, fue la reimplementaci\'on de esta herramienta. Hay dos herramientas involucradas, una es \emph{OJ}, anteriormente conocida como \emph{OpenJava}, permite la transformaci\'on de c\'odigo fuente \emph{Java} en un \emph{AST}, as\'i como ofrecer clases para el recorrido y modificaci\'on de el mismo. \'Esta es la base que utiliza \emph{$\mu$Java}, y actualmente \emph{$\mu$Java++}. Ambas herramientas fueron altamente modificadas, con \emph{$\mu$Java} siendo pr\'acticamente reescrita por completo. Las razones para realizar dicha tarea tiene que ver con una serie de requerimientos que definimos a continuaci\'on:
+
+\subsection{Representaci\'on}
+
+Originalmente, las mutaciones no estaban representadas en \emph{$mu$Java}, los mutantes se generaban directamente, muchas veces como una responsabilidad del operador. Al dise\~nar \emph{prvo}, observamos que era muy f\'acil generar mutaciones repetidas, tomemos por ejemplo la expresi\'on \lstinline|a.b.c|, es posible generar \lstinline|a.c| eliminando la subexpresi\'on del medio, pero tambi\'en es posible al reemplazar las dos primeras por \lstinline|a|. Al mismo tiempo, la variable especial \lstinline|this|, permite que para todo campo de una clase, haya dos formas de referirse al mismo, una mediante el uso de \lstinline|this|, y otra obviando el mismo. Por otro lado, \emph{prvo} estaba siendo muy utilizado en el desarrollo de \emph{Stryker}, herramienta de reparaci\'on autom\'atica mediante mutaci\'on y \emph{SAT solving}, vista en la secci\'on \ref{sec:preliminares.repair.striker}. La necesidad de contar con cierta informaci\'on sobre las mutaciones para permitir ordenar e incluso ignorar algunas durante la b\'usqueda de un potencial arreglo, nos llev\'o a definir una representaci\'on para las mutaciones generadas mediante ternas \texttt{(original, mutante, operador)} en donde los dos primeros elementos representan nodos del \emph{AST} y el tercero denota el operador utilizado. \'Estas se almacenan durante la generaci\'on de mutaciones hasta que se decida generar los mutantes, esto permite, entre otras cosas, analizar y evitar mutaciones repetidas.
+
+\subsection{Anotaciones y control de generaciones}
+
+Las herramientas de mutaci\'on, suele o bien no contar con un control sobre que partes de c\'odigo se van a mutar, o \'este es muy grueso, por ejemplo al permitir definir clases y m\'etodos a mutar. Debido nuevamente a los comienzos orientados a reparaci\'on de \emph{prvo}, necesit\'abamos un control m\'as fino sobre donde se aplicar\'ian las mutaciones. Lo que nos llev\'o, adem\'as de permitir definir que m\'etodos se permiten mutar, a utilizar comentarios \lstinline|//mutGenLimit K| luego de una sentencia para permitir que solo aquellas que tengan estas anotaciones y el \emph{K} sea mayor a 0, sean mutadas.
+
+A su vez, las anotaciones utilizadas son escritas en el mutante con el \emph{K} asociado disminu\'ido en 1. Esto permite, en casos como reparaci\'on o generaci\'on de mutantes compuestos (aquellos con m\'as de una mutaci\'on aplicada), controlar las generaciones m\'aximas por sentencia.
+
+\subsection{Estandarizaci\'on de componentes}
+
+La versi\'on original de la herramienta ten\'ia implementaci\'ones muy diferentes por operador, algunos escrib\'ian directamente cada mutante (sin tener una representaci\'on para las mutaciones aplicadas), esto hac\'ia que desarrollar nuevos operadores fuera una tarea compleja, nuestra versi\'on permite desarrollar nuevos operadores con relativa facilidad. Durante el desarrollo de \emph{prvo}, tuvimos en cuenta que en el futuro podr\'iamos querer implementar nuevos operadores, y funcionalidades, lo que nos llev\'o a re-dise\~nar grandes partes de la herramienta. Gracias a esto, pudimos utilizar a \emph{$mu$Java++} para desarrollar otro operador de mutaci\'on, \emph{BEE}, centrado en generar mutaciones para fortalecer y debilitar expresiones condicionales de una manera m\'as fina que operadores existentes, a su vez, pudimos implementar funcionalidades de an\'alisis descriptas a continuaci\'on.
+
+\subsection{Evaluaci\'on}
+
+Mutation testing consiste en generar mutantes y evaluar cuantos son detectados por el conjunto de tests en evaluaci\'on. En la secci\'on \ref{sec:preliminares.mutation.opevaluation} se mencionan varias caracter\'isticas que afectan a este criterio, en particular dificultad de detecci\'on y redundancia de mutantes. Nuestra versi\'on de \emph{$\mu$Java} provee ciertas mejoras en el an\'alisis con respecto a estas propiedades, como ofrecer dos valores de \emph{mutation score}, uno en donde se consideran los mutantes que no compilaron y otro donde no se los considera. Si bien, una evaluaci\'on inicial y muy b\'asica de dificultad de detecci\'on, \emph{$mu$Java++} ofrece un an\'alisis de ``dureza'' de los mutantes, al analizar, cuantos tests fue capaz de sobrevivir cada mutante. Con respecto a redundancia, un an\'alisis m\'as complejo que ofrece nuestra herramienta, es \emph{dynamic mutant subsumption}, en donde se genera un grafo de subsuma de mutantes para el test suite particular, permitiendo evaluar que mutantes fueron redundantes y cuales son indispensables. Finalmente, para lidiar con la explosi\'on de mutantes que se puede dar, y c\'omo el rendimiento es afectado por eso, se implementaron la capacidad de frenar la ejecuci\'on de los tests para un mutante cuando \'este es detectado (perdiendo ciertos an\'alisis que requieren datos completos de la ejecuci\'on de los tests), y el an\'alisis en paralelo de mutantes para acelerar el proceso.
 
 \section{PRVO}
 \label{sec:implementation.prvo}
 
-La definici\'on general de \emph{prvo}, dada en \ref{sec:prvo.prvo}, no es efectiva en la pr\'actica, desde ya por que permite entre otras cosas, infinitas mutaciones. Si bien se menciona que operadores de esta familia se definen mediante configuraciones particulares, en forma de restricciones, sobre la definici\'on general, la evoluci\'on de \emph{prvo} llev\'o a ciertas restricciones iniciales.
+La definici\'on general de \emph{prvo}, dada en \ref{sec:prvo.prvo}, no es efectiva en la pr\'actica, desde ya por que permite entre otras cosas, infinitas mutaciones. Si bien mencionamos, e incluso presentamos a \emph{prvo} como un meta-operador altamente configurable, es necesario establecer algunas restricciones b\'asicas, ya que mientras m\'as flexible es un operador, m\'as compleja es su implementaci\'on. Por esta raz\'on, es que decimos fijar ciertas restricciones iniciales, basadas en la evoluci\'on de \emph{prvo} durante su desarrollo, tanto el su uso en reparaci\'on, como en mutation testing.
 
 Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atica de programas mediante mutaci\'on y \emph{SAT solving}. Utilizando la herramienta \emph{Stryker}, \emph{prvo} provee el potencial de reparar ciertos defectos no reparables anteriormente mediante mutantes. Como un problema que se menciona en \ref{sec:preliminares.repair}, la explosi\'on de candidatos en el espacio de b\'usqueda es uno de los principales obst\'aculos en reparaci\'on autom\'atica basada en mutaci\'on. Por esto, \emph{prvo} comienza con una serie de restricciones sobre el tama\~no de las expresiones mutadas, la diferencia entre el tama\~no original y final de una expresi\'on no puede superar a \texttt{1}. Estas restricciones llevan a una gram\'atica ligeramente distinta a la original.
 
@@ -56,36 +97,42 @@ Con el tiempo la cantidad de comportamientos o restricciones configurables en \e
 
 A partir de la definici\'on en la Figura-\ref{figures.definitions.prvo.impl_def}, las restricciones sobre cuanto puede decrementar o incrementar una expresi\'on encadenada se limitan a:
 
-\begin{enumerate}
-	\item[Reemplazar un elemento] Ciertas mutaciones de \emph{prvo} solo modifican elementos unitarios (expresiones de tama\~no 1) en una expresi\'on encadenada, reemplaz\'andolos por otros de tama\~no 1.
-	\item[A\~nadir un elemento] Una expresi\'on encadenada puede incrementarse por 1 su tama\~no, al insertar un elemento tanto al principio, al final, o intercalarlo en su interior.
-	\item[Eliminar un elemento] En una expresi\'on encadenada se puede eliminar un elemento, teniendo en cuenta que si la misma estaba solamente constitu\'ida por un elemento, entonces solo es posible decrementar la expresi\'on original reemplaz\'andola por \emph{null}.
-	\item[Intercambiar dos elementos por uno] Dada una expresi\'on de navegaci\'on, dos elementos contiguos, es decir, una subexpresi\'on de navegaci\'on de tama\~no 1, puede ser reemplazada por un \'unico elemento.
-	\item[Intercambiar un elemento por dos] En una expresi\'on encadenada, un elemento de la misma puede ser reemplazado por dos elementos contiguos, es decir, una expresi\'on de navegaci\'on de tama\~no 1.
+\begin{enumerate}[leftmargin=.75cm,align=left]
+	\item[\textbf{Reemplazar un elemento(R)}] Ciertas mutaciones de \emph{prvo} solo modifican elementos unitarios (expresiones de tama\~no 0) en una expresi\'on encadenada, reemplaz\'andolos por otros de tama\~no 0.
+	
+	\item[\textbf{A\~nadir un elemento(A)}] Una expresi\'on encadenada puede incrementarse por 1 su tama\~no, al insertar un elemento tanto al principio, al final, o intercalarlo en su interior.
+	
+	\item[\textbf{Eliminar un elemento(D)}] En una expresi\'on de navegaci\'on, se puede eliminar un elemento, ya sea al principio, final, o en el resto de la expresi\'on. No es posible eliminar un elemento en una expresi\'on encadenada de tama\~no 0, ya que no est\'a definida una expresi\'on de menor tama\~no.
+	
+	\item[\textbf{Intercambiar dos elementos por uno(2x1)}] Dada una expresi\'on de navegaci\'on, dos elementos contiguos, es decir, una subexpresi\'on de navegaci\'on de tama\~no 1, puede ser reemplazada por un \'unico elemento, es decir, una expresi\'on encadenada de tama\~no 0.
+	
+	\item[\textbf{Intercambiar un elemento por dos(1x2)}] En una expresi\'on encadenada, un elemento de la misma puede ser reemplazado por dos elementos contiguos, es decir, una expresi\'on de navegaci\'on de tama\~no 1.
 \end{enumerate}
 
-En el ejemplo siguiente pueden verse algunas de las distintas mutaciones que corresponden a las restricciones anteriores:
+En el ejemplo siguiente pueden verse algunas de las distintas mutaciones que corresponden a las restricciones anteriores, en algunos casos el mismo mutante puede ser logrado por distintas mutaciones:
 \begin{lstlisting}[mathescape=true]
-  current = current.next;
-  $\delta$current = header;
-  $\delta$current = current;
-  $\delta$current = current.next.next;
-  $\delta$current = header.previous.next;
-  previous = current;
-  $\delta$previous = header;
-  $\delta$previous = null;
-  $\delta$previous = current.next;
-  $\delta$previous = header.next;
+  current = current.next; //original
+  $\delta$current = header; //2x1
+  $\delta$current = current; //2x1 o D 
+  $\delta$current = current.next.next; //1x2 o A
+  $\delta$current = header.previous.next; //1x2 o A
+  previous = current; //original
+  $\delta$previous = header; //R
+  $\delta$previous = null; //R
+  $\delta$previous = current.next; //1x2 o A
+  $\delta$previous = header.next; //1x2
 \end{lstlisting}
 
 \subsubsection{Restricciones de puntos de mutaci\'on}
 
-Una expresi\'on encadenada como las que muta \emph{prvo} puede encontrarse en una gran cantidad de lugares distintas en el c\'odigo fuente. Si bien en el ejemplo anterior las expresiones mutadas fueron siempre sobre asignaciones y solo se aplicaban mutaciones a la parte derecha de la misma, \emph{prvo} cuenta actualmente con las siguientes restricciones configurables:
+Una expresi\'on encadenada como las que muta \emph{prvo} puede encontrarse en una gran cantidad de lugares distintos en el c\'odigo fuente. Si bien en el ejemplo anterior las expresiones mutadas fueron siempre sobre asignaciones y solo se aplicaban mutaciones a la parte derecha de la misma, \emph{prvo} cuenta actualmente con las siguientes restricciones configurables:
 
-\begin{enumerate}
-	\item[Parte izquierda de asignaciones], en una asignaci\'on \texttt{a = b}, \emph{prvo} puede o no generar mutaciones para \texttt{a}. Es necesario destacar que estas mutaciones no se aplican en declaraciones de variables, es decir, expresiones \texttt{T a = b} dado que modificar \texttt{a} en este caso genera en muchos casos mutantes que no compilan. Si bien es cierto que existen fallas en donde un desarrollador puede olvidar declarar una variable local y de esta forma hacer menci\'on a un atributo/campo de clase, este tipo de fallas no corresponde con las que se desea representar mediante \emph{prvo}.
-	\item[Parte derecha de asignaciones], en una asignaci\'on \texttt{a = b}, \emph{prvo} puede o no generar mutaciones para \texttt{b}.
-	\item[Sentencias de retorno y expresiones internas], \emph{prvo} es capaz de mutar expresiones encadenadas asociadas a sentencias de retorno (\texttt{return e}), al mismo tiempo que expresiones unarias y binarias encontradas en asignaciones \texttt{(a = e \&\& f)}, en sentencias condicionales \texttt{(while(c) ...)}, argumentos de m\'etodos \texttt{foo(x)}, e incluso en las distintas partes de sentencias \texttt{for} como la inicializaci\'on, condici\'on e incremento.
+\begin{enumerate}[leftmargin=.75cm,align=left]
+	\item[\textbf{Parte izquierda de asignaciones}] En una asignaci\'on \texttt{a = b}, \emph{prvo} puede o no generar mutaciones para \texttt{a}. Es necesario destacar que estas mutaciones no se aplican en declaraciones de variables, es decir, expresiones \texttt{T a = b}, dado que modificar \texttt{a} en este caso tender\'ia a generar mutantes que no compilan. Si bien es cierto que existen fallas en donde un desarrollador puede olvidar declarar una variable local, y de esta forma hacer menci\'on a un atributo/campo de clase, este tipo de fallas no corresponde con las que se desea representar mediante \emph{prvo}.
+	
+	\item[\textbf{Parte derecha de asignaciones}] En una asignaci\'on \texttt{a = b}, \emph{prvo} puede o no generar mutaciones para \texttt{b}.
+	
+	\item[\textbf{Sentencias de retorno y expresiones internas}] El operador \emph{prvo} es capaz de mutar expresiones encadenadas asociadas a sentencias de retorno (\texttt{return e}), al mismo tiempo que expresiones unarias y binarias encontradas en asignaciones \texttt{(a = e \&\& f)}, en sentencias condicionales \texttt{(while(c) ...)}, argumentos de m\'etodos \texttt{foo(x)}, e incluso en las distintas partes de sentencias \texttt{for} como la inicializaci\'on, condici\'on e incremento.
 \end{enumerate}
 
 \subsubsection{Restricciones de expresiones a utilizar}
