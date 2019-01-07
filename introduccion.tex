@@ -22,34 +22,9 @@ Un ejemplo de como los criterios de evaluaci\'on de test suite intentan dar una 
 
 Existen varios estudios que intentan atacar los problemas mencionados anteriormente, desde aquellos que lo hacen seleccionando un conjunto \emph{suficiente} de operadores de mutaci\'on \cite{bibliography.mutation.selection.Offutt96, bibliography.mutation.selection.ASN2008}; buscando m\'etodos para detectar mutantes equivalentes, \cite{biblography.mutation.evaluation.equivalent.Grun+09, biblography.mutation.evaluation.equivalent.Schuler+10, biblography.mutation.evaluation.equivalent.Just+13}; y utilizando una combinaci\'on de mutaciones, para generar mutantes sut\'iles bajo el razonamiento de que \'estos deber\'ian representar fallas m\'as dif\'iciles de detectar, \cite{bibliography.mutation.highorder.Jia+08, bibliography.mutation.highorder.Jia+09, bibliography.mutation.highorder.Harman+11}. Un resultado de especial inter\'es es el de Just et Al. \cite{bibliography.mutation.evaluation.valid-substitute}, que una de sus conclusiones es que existen fallas reales que requieren mejorar operadores de mutaci\'on existentes, o desarrollar operadores nuevos.
 
-%Metodológicamente, explicar en qué consiste tener una etapa de captura y especificación de requisitos concreta en el proceso de desarrollo.
-
-%Etapa de análisis = captura y especificación de requisitos. Con qué contamos para hacerlo.Y captura? Varias herramientas vinculadas al “proceso”. Ej.: checklists, listas de preguntas frecuentes sobre el software a construir, etc. 
-
-%Con qué contamos para hacerlo. Lenguaje natural, lenguajes de propósito específico (todo esto es especificación).
-%Algunas herramientas metodológicas: Diagramas de estímulo/respuesta, DFDs y descomposición de funcionalidades, 4-variable model, KAOS. 
-
-%natural 
-
-%informales 
-
-%Lenguaje natural vs. lenguajes formales para la especificación de requisitos. Sintaxis formal vs sintaxis+semántica. Posibilidades de análisis “objetivo” de specs, libre de interpretaciones subjetivas de las specs por parte de los ingenieros . Algunos antecedentes (mencionados superficialmente).
-
-%Sintaxis + semántica formales facilitan análisis (semi-)automático vinculado a specs de requisitos. Qué se puede sistematizar? (algunos ejemplos de tareas).  Automático vs. asistido. Ejemplos de alto nivel, y mencionando sólo referencias, no trabajos concretos.
-%Algunos ejemplos de trabajos explotando estas observaciones: referencias, descripciones superficiales.
-
-%semi-automaticas 
-
-%automaticas
-
-% % % %
-
-
 \section{Motivaci\'on y Objetivos}
 \label{sec:intro.objetivos}
-% RE etapa mas informal del proceso de desarrollo
-% incertidumbre, desconocimiento, parcialidad.
-%[operacional vs declarativo]
+
 
 \begin{figure}[t]
 	\begin{lstlisting}[frame=tlrb, mathescape=true]
@@ -128,15 +103,16 @@ Un punto importante a notar en el ejemplo anterior, es que si bien existen opera
 Esto nos lleva a nuestros objetivos:
 
 \begin{enumerate}[leftmargin=.75cm,align=left]
-	\item[Determinar las propiedades que un operador deber\'ia satisfacer], dise\~nar un operador de mutaci\'on no es una tarea trivial, tal como mencionamos anteriormente, mutantes equivalentes al programa original son indeseados, as\'i como aquellos que son trivialmente detectados; los mutantes generados deben representar, estar acoplados a, fallas reales. De esta menara, nuestro primer objetivo es, definir estas propiedades, de manera precisa y definiendo metodolog\'ias para evaluar a las mismas.
-	\item[Definir un operador de mutaci\'on para expresiones de navegaci\'on]
+	\item[\textbf{Determinar las propiedades que un operador deber\'ia satisfacer}] Dise\~nar un operador de mutaci\'on no es una tarea trivial, tal como mencionamos anteriormente, mutantes equivalentes al programa original son indeseados, as\'i como aquellos que son trivialmente detectados; los mutantes generados deben representar, estar acoplados a, fallas reales. De esta menara, nuestro primer objetivo es, definir estas propiedades, de manera precisa y definiendo metodolog\'ias para evaluar a las mismas.
+	
+	\item[\textbf{Definir un operador de mutaci\'on para expresiones de navegaci\'on}]
 	Teniendo en cuenta las propiedades definidas anteriormente, y la motivaci\'on para dise\~nar nuevo[s] operadores de mutaci\'on para expresiones de navegaci\'on, nuestro segundo objetivo, es dar una definici\'on de un nuevo operador que satisfaga estas necesidades. Esta definici\'on debe ser agn\'ostica al lenguaje de programaci\'on utilizado para implementarlo.
-	\item[Implementar el operador de mutaci\'on para expresiones de navegaci\'on] Los operadores existentes actualmente est\'an definidos por reglas de transformaci\'on muy simples, incluso siendo capaz de ser implementados usando expresiones regulares. Modificar una expresi\'on de navegaci\'on requiere informaci\'on de tipos y an\'alisis de alcanzabilidad para determinar las expresiones disponibles al modificar una existente. Nuestro tercer objetivo entonces, es encontrar una herramienta de mutaci\'on que permita realizar el an\'alis necesario para generar estas mutaciones; elegir un lenguaje sobre el cual y para el cual implementar este operador; e implementar tanto el operador como herramientas u extensiones que permitan realizar los an\'alis apropiados para las evaluaciones necesarias a nuestro operador.
-	\item[Evaluaci\'on]
+	
+	\item[\textbf{Implementar el operador de mutaci\'on para expresiones de navegaci\'on}] Los operadores existentes actualmente est\'an definidos por reglas de transformaci\'on muy simples, incluso siendo capaz de ser implementados usando expresiones regulares. Modificar una expresi\'on de navegaci\'on requiere informaci\'on de tipos y an\'alisis de alcanzabilidad para determinar las expresiones disponibles al modificar una existente. Nuestro tercer objetivo entonces, es encontrar una herramienta de mutaci\'on que permita realizar el an\'alis necesario para generar estas mutaciones; elegir un lenguaje sobre el cual y para el cual implementar este operador; e implementar tanto el operador como herramientas u extensiones que permitan realizar los an\'alis apropiados para las evaluaciones necesarias a nuestro operador.
+	
+	\item[\textbf{Evaluaci\'on}]
 	Incluso si es cierto que existe una necesidad por la generaci\'on de mutantes para expresiones de navegaci\'on, si el o los operadores que los generan, no cumplen con las propiedades anteriormente descriptas, entonces su utilidad se ve muy reducida. Por eso, nuestro objetivo final, es evaluar el desempe\~no de nuestro operador para demostrar su utilidad, con respecto a las propiedades definidas por el primer objetivo.
 \end{enumerate}
-
-%Como objetivo secundario nos interesa el aporte que puede tener la mutaci\'on de expresiones de navegaci\'on en campos como la reparaci\'on autom\'atica de programas basada en mutaci\'on.
 
 %Objetivos
 
@@ -145,17 +121,17 @@ Esto nos lleva a nuestros objetivos:
 
 %Se pueden mencionar papers publicados
 
-La definici\'on e implementaci\'on de una familia de operadores de mutaci\'on para expresiones de navegaci\'on, dentro del contexto de mutation testing, es la principal contribuci\'on de este trabajo. Dado que la mutaci\'on de expresiones de navegaci\'on generar\'ia en principio una cantidad inmanejable de mutantes, es necesario encontrar y definir el tipo de fallas que se desean generar. Incluso si la generaci\'on de mutantes para expresiones de navegaci\'on representa un conjunto de fallas no representadas actualmente, no alcanza con generar a las mismas, sino tambi\'en es necesario evaluar que el rendimiento de mutation testing no se vea significativamente afectado de forma negativa al agregar estos operadores. Espef\'iciamente en esta tesis presentaremos las siguientes contribuciones principales:
+La definici\'on e implementaci\'on de un operador de mutaci\'on, altamente configurable, para expresiones de navegaci\'on, dentro del contexto de mutation testing, es la principal contribuci\'on de este trabajo. Dado que la mutaci\'on de expresiones de navegaci\'on generar\'ia en principio una cantidad inmanejable de mutantes, es necesario encontrar y definir el tipo de fallas que se desean generar. Incluso si la generaci\'on de mutantes para expresiones de navegaci\'on representa un conjunto de fallas no representadas actualmente, no alcanza con generar a las mismas, sino tambi\'en es necesario evaluar que el rendimiento de mutation testing no se vea significativamente afectado de forma negativa al agregar estas mutaciones. Espef\'iciamente en esta tesis presentaremos las siguientes contribuciones principales:
 
 \begin{enumerate}
-	\item Mostrar la necesidad de generar mutantes para expresiones de navegaci\'on. El conjunto de \emph{operadores suficientes} de mutaci\'on, ha permanecido pr\'acticamente inalterado desde hace a\~nos, si bien el primer trabajo que ofrece un conjunto de operadores formalmente definidos lo hace para el lenguaje FORTRAN \cite{bibliography.mutation.definitions.fortranOffut87, bibliography.mutation.definitions.fortranKing91}, mutation testing fue siendo aplicado y evaluado en varios lenguajes, incluyendo aquellos considerados orientados a objetos (ADA, JAVA, entre otros). Sin embargo los operadores de mutaci\'on espec\'ificos para lenguajes orientados a objetos solo afectan, en general, jerarqu\'ia de clases, visibilidad, y sobre-escritura. En el trabajo de \cite{bibliography.mutation.evaluation.valid-substitute} se expone la necesidad de mejorar operadores de mutaci\'on o desarrollar nuevos operadores, para poder representar cierto tipos de fallas reales no representadas actualmente. Nuestra primer contribuci\'on es evidenciar la necesidad de representar fallas relacionadas a expresiones de navegaci\'on com\'unmente encontradas en lenguajes orientados a objetos.
+	\item Mostrar la necesidad de generar mutantes para expresiones de navegaci\'on. El conjunto de \emph{operadores suficientes} de mutaci\'on, ha permanecido pr\'acticamente inalterado desde hace a\~nos, si bien el primer trabajo que ofrece un conjunto de operadores formalmente definidos lo hace para el lenguaje FORTRAN \cite{bibliography.mutation.definitions.fortranOffut87, bibliography.mutation.definitions.fortranKing91}, mutation testing fue siendo aplicado y evaluado en varios lenguajes, incluyendo aquellos considerados orientados a objetos (ADA, JAVA, entre otros). Sin embargo los operadores de mutaci\'on espec\'ificos para lenguajes orientados a objetos solo afectan, en general, jerarqu\'ia de clases, visibilidad, y sobre-escritura. En el trabajo de \cite{bibliography.mutation.evaluation.valid-substitute} se expone la necesidad de mejorar operadores de mutaci\'on o desarrollar nuevos operadores, para poder representar cierto tipos de fallas reales no representadas actualmente. Nuestra primer contribuci\'on es evidenciar la necesidad de representar fallas relacionadas a expresiones de navegaci\'on com\'unmente encontradas en lenguajes orientados a objetos. [ESTA NO ME PARECE QUE SEA UNA CONTRIBUCION]
 	
-	\item Dar una definici\'on formal de operador para expresiones de navegaci\'on. Si bien la implementaci\'on que se ofrece en esta tesis es implementada en una herramienta espec\'ifica, y para un lenguaje particular, la definici\'on de los operadores deber\'ia permitir su implementaci\'on en cualquier herramienta y lenguaje. Una de las razones para esto incluye su utilizaci\'on para lenguajes de modelado, como Alloy \cite{bibliography.books.SoftwareAbstractions-alloy}, basados en trabajos como \cite{bibliography.repair.mutation.AlloyWang18}, que propone una herramienta de reparaci\'on de modelos escritos en este lenguaje, y \cite{bibliography.algebraicExpressions.RexGenWang18}, que expone la necesidad de la generaci\'on autom\'atica de expresiones en \'algebra relacional para distintos campos, entre ellos, reparaci\'on autom\'atica y ayudas al desarrollador (tooltips autom\'aticos).
+	\item Dar una definici\'on formal de un operador para expresiones de navegaci\'on. Si bien la implementaci\'on que se ofrece en esta tesis es implementada en una herramienta espec\'ifica, y para un lenguaje particular, la definici\'on de los operadores deber\'ia permitir su implementaci\'on en cualquier herramienta y lenguaje. Una de las razones para esto incluye su utilizaci\'on para lenguajes de modelado, como Alloy \cite{bibliography.books.SoftwareAbstractions-alloy}, basados en trabajos como \cite{bibliography.repair.mutation.AlloyWang18}, que propone una herramienta de reparaci\'on de modelos escritos en este lenguaje, y \cite{bibliography.algebraicExpressions.RexGenWang18}, que expone la necesidad de la generaci\'on autom\'atica de expresiones en \'algebra relacional para distintos campos, entre ellos, reparaci\'on autom\'atica y ayudas al desarrollador (tooltips autom\'aticos).
 	
 	\item Implementar un operador para expresiones de navegaci\'on. Nuestra implementaci\'on est\'a enfocada al lenguaje \emph{Java}, dado que es un buen representante de lenguajes orientados a objetos. Nuestra implementaci\'on est\'a realizada en una versi\'on modificada de \emph{$\mu$Java} \cite{bibliography.mutation.tools.muJavaMaOK05}, llamada \emph{$\mu$Java++}, que nos permite realizar an\'alisis de tipos y alcanzabilidad que otras herramientas no permiten. Aprovecharemos para implementar distintos an\'alisis que usaremos durante la evaluaci\'on, como \emph{dureza}(toughness), que mide cuantos tests fue capaz de sobrevivir un mutante antes de ser detectado, este valor puede ser tomado como un indicador de cuan dif\'icil es detectar un mutante, y permitir\'ia sacar conclusiones sobre la dificultad de los mutantes generados por un operador; \emph{subsumci\'on}(subsumption) de mutantes, es un an\'alis que permite poner en evidencia para un programa particular, con un conjunto de tests particular, mutantes redundantes. Como veremos m\'as adelante, generar mutaciones para expresiones de navegaci\'on, requiere una gran cantidad de ``fine tuning'', para maximizar las fallas reales representadas, minimizando caracter\'isticas no deseadas, entre ellas, una gran cantidad de mutantes. Por esto, nuestro operador termina siendo definido como un ``meta-operador'' el cual, mediante una amplia gama de configuraciones, puede verse como una familia de operadores, donde cada operador es una configuraci\'on particular.
 \end{enumerate}
 
-Evaluaremos nuestra familia de operadores para expresiones de navegaci\'on bajo, mayormente, estructuras de datos [BENCHMARK]. Contrastaremos el efecto de agregar estos operadores al conjunto suficiente de operadores definidos en la literatura y que se encuentran implementados en \emph{$mu$Java++}. Es necesario considerar que nuestra versi\'on de esta herramienta contiene numerosas mejoras a los operadores ya existentes en la versi\'on original, \emph{$\mu$Java}, principalmente validaciones faltantes para evitar la generaci\'on de mutantes que no compilan (un subconjunto de los mutantes triviales), como por ejemplo no agregar el operador \texttt{++} a una expresi\'on constante.
+Evaluaremos nuestro operador bajo colecciones implementadas y utilizando caracter\'isticas de programaci\'on orientada a objetos [BENCHMARK]. Contrastaremos el efecto de agregar este operador al conjunto suficiente de operadores definidos en la literatura y que se encuentran implementados en \emph{$mu$Java++}. Es necesario considerar que nuestra versi\'on de esta herramienta contiene numerosas mejoras a los operadores ya existentes en la versi\'on original, \emph{$\mu$Java}, principalmente validaciones faltantes para evitar la generaci\'on de mutantes que no compilan (un subconjunto de los mutantes triviales), como por ejemplo no agregar el operador \texttt{++} a una expresi\'on constante.
 [AGREGAR]
 
 
