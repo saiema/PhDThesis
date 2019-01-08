@@ -1,6 +1,6 @@
 %!TEX root = main.tex
 \chapter[Implementaci\'on]{PRVO y $\mu$Java++}
-\label{sec:implementation}
+\label{cap:implementation}
 
 \section{$\mu$Java++}
 
@@ -60,7 +60,7 @@ Mutation testing consiste en generar mutantes y evaluar cuantos son detectados p
 
 La definici\'on general de \emph{prvo}, dada en \ref{sec:prvo.prvo}, no es efectiva en la pr\'actica, desde ya por que permite entre otras cosas, infinitas mutaciones. Si bien mencionamos, e incluso presentamos a \emph{prvo} como un meta-operador altamente configurable, es necesario establecer algunas restricciones b\'asicas, ya que mientras m\'as flexible es un operador, m\'as compleja es su implementaci\'on. Por esta raz\'on, es que decimos fijar ciertas restricciones iniciales, basadas en la evoluci\'on de \emph{prvo} durante su desarrollo, tanto el su uso en reparaci\'on, como en mutation testing.
 
-Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atica de programas mediante mutaci\'on y \emph{SAT solving}. Utilizando la herramienta \emph{Stryker}, \emph{prvo} provee el potencial de reparar ciertos defectos no reparables anteriormente mediante mutantes. Como un problema que se menciona en \ref{sec:preliminares.repair}, la explosi\'on de candidatos en el espacio de b\'usqueda es uno de los principales obst\'aculos en reparaci\'on autom\'atica basada en mutaci\'on. Por esto, \emph{prvo} comienza con una serie de restricciones sobre el tama\~no de las expresiones mutadas, la diferencia entre el tama\~no original y final de una expresi\'on no puede superar a \texttt{1}. Estas restricciones llevan a una gram\'atica ligeramente distinta a la original.
+Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atica de programas mediante mutaci\'on y \emph{SAT solving}. Utilizando la herramienta \emph{Stryker}, \emph{prvo} provee el potencial de reparar ciertos defectos no reparables anteriormente mediante mutantes. Como un problema que se menciona en \ref{cap:preliminares.repair}, la explosi\'on de candidatos en el espacio de b\'usqueda es uno de los principales obst\'aculos en reparaci\'on autom\'atica basada en mutaci\'on. Por esto, \emph{prvo} comienza con una serie de restricciones sobre el tama\~no de las expresiones mutadas, la diferencia entre el tama\~no original y final de una expresi\'on no puede superar a \texttt{1}. Estas restricciones llevan a una gram\'atica ligeramente distinta a la original.
 
 \begin{figure}
 	\begin{displaymath}
