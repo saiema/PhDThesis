@@ -135,7 +135,15 @@ Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un cic
 
 En principio, ya existen operadores que realizan este tipo de mutaciones. No solo eso, sino que adem\'as no parece ser un tipo de fallas asociada mutaciones de expresiones encadenadas.
 
-Sin embargo, \emph{Fluent interfaces}, un dise\~no muy usado en conjunto con el \emph{patr\'on Builder}, permite escribir algoritmos sem\'anticamente equivalentes a un programa imperativo, ciclos y sentencias condicionales inclu\'idas. Un c\'odigo como \lstinline|list.foreach().filter(c1).if(c2).then(p1).else(p2)| no es extra\~no en programaci\'on orientada a objetos, en la Figura-\ref{figures.examples.fluent.example1.imperative} se muestra la implementaci\'on m\'as com\'un de esta expresi\'on en lenguaje imperativo.
+\begin{figure}
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+  list.foreach().filter(c1).if(c2).then(p1).else(p2)
+	\end{lstlisting}
+	\caption{Versi\'on utilizando \emph{interfaces fluentes} del recorrido de una lista filtrando y ejecutando condicionalmente un procedimiento.}
+	\label{figures.examples.fluent.example1.fluent}
+\end{figure}
+
+Sin embargo, \emph{Fluent interfaces}, un dise\~no muy usado en conjunto con el \emph{patr\'on Builder}, permite escribir algoritmos sem\'anticamente equivalentes a un programa imperativo, ciclos y sentencias condicionales inclu\'idas. Un c\'odigo como el mostrado en la Figura-\ref{figures.examples.fluent.example1.fluent} no es extra\~no en programaci\'on orientada a objetos, en la Figura-\ref{figures.examples.fluent.example1.imperative} se muestra la implementaci\'on m\'as com\'un de esta expresi\'on en lenguaje imperativo.
 
 \begin{figure}
 	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
@@ -183,7 +191,7 @@ Existen ejemplos de m\'etodos que si bien distintos, tienen una sem\'antica rela
 
 \subsubsection{Omitir la llamada a un m\'etodo}
 
-Retomemos el ejemplo de \emph{interfaces fluentes}, \lstinline|list.foreach().filter(c1).if(c2).then(p1).else(p2)|. Si en este c\'odigo nos olvid\'aramos de llamar \texttt{filter(c1)}, la expresi\'on seguir\'ia siendo correcta, solamente que aplicar\'iamos el tratamiento condicional a todos los elementos de la lista en lugar de solo a aquellos que filtrar\'ia \texttt{c1}. Un ejemplo m\'as sencillo, una aplicaci\'on que toma un valor dado por el usuario y realiza una consulta en una base de datos. Es un caso t\'ipico de uso de datos no confiables, lo normal es limpiar o validar los datos ingresados antes de hacer la consulta. Una posible implementaci\'on ser\'ia:
+Retomemos el ejemplo de \emph{interfaces fluentes} de la Figura-\ref{figures.examples.fluent.example1.fluent}. Si en este c\'odigo nos olvid\'aramos de llamar \texttt{filter(c1)}, la expresi\'on seguir\'ia siendo correcta, solamente que aplicar\'iamos el tratamiento condicional a todos los elementos de la lista en lugar de solo a aquellos que filtrar\'ia \texttt{c1}. Un ejemplo m\'as sencillo, una aplicaci\'on que toma un valor dado por el usuario y realiza una consulta en una base de datos. Es un caso t\'ipico de uso de datos no confiables, lo normal es limpiar o validar los datos ingresados antes de hacer la consulta. Una posible implementaci\'on ser\'ia:
 \begin{lstlisting}
   ...
   String userQuery = getFromUser();

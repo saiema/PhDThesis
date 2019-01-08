@@ -28,6 +28,29 @@ Con respecto a las expresiones que se van a utilizar al mutar una expresi\'on, s
 
 El control de tipos va a ser estricto, lo que significa que una subexpresi\'on solo puede intercambiarse por otra con \textbf{exactamente} el mismo tipo. Al tener como objetivo a expresiones de navegaci\'on, el uso de literales no tiene mucho sentido, \'esto no significa no utilizar constantes como por ejemplo definir el puntero al comienzo de la lista con \emph{final}, o definir un nodo ficticio de nuevo con el mismo modificador. El uso de campos est\'aticos solo se va a permitir dentro de un contexto est\'atico, por ejemplo, en el m\'etodo \lstinline|public static int foo()|, se van a permitir miembros est\'aticos, pero en el m\'etodo \lstinline|public int bar()|, no.
 
+\section{Operadores a utilizar}
+\label{sec:evaluation.operators}
+
+Para nuestros experimentos vamos a seleccionar todos los operadores b\'asicos, que aplican a nivel de m\'etodo, implementados en \emph{$\mu$Java++}. \'Estos son un conjunto que incluye al conjunto de operadores suficientes definidos en \ref{sec:preliminares.mutation.sufficient}, excepto por \emph{ABS} (el cual cambia expresiones aritm\'eticas a 0, un valor positivo, y un valor negativo) por no estar implementado en \emph{$\mu$Java} y por lo tanto no lo est\'a en \emph{$\mu$Java++}.
+
+\begin{description}[leftmargin=8em,style=nextline]
+	\item[AODS] Elimina los operadores aritm\'eticos de incremento y decremento (pre-decremento: \emph{--exp}; pre-incremento: \emph{++exp}; pos-decremento: \emph{exp--}; y pos-incremento: \emph{exp++}).
+	\item[AODU] Elimina los operadores aritm\'eticos unarios (\emph{+exp} y \emph{-exp}).
+	\item[AOIS] Inserta los operadores aritm\'eticos de incremento y decremento en variables y campos de clases.
+	\item[AOIU] Inserta los operadores aritm\'eticos unarios en expresiones artim\'eticas.
+	\item[AORB] Reemplaza operadores aritm\'eticos binarios por otros, en una expresi\'on binaria.
+	\item[AORS] Reemplaza operadores aritm\'eticos de incremento y decremento.
+	\item[AORU] Reemplaza operadores aritm\'eticos unarios en expresiones.
+	\item[ASRS] Reemplaza los operadores de asignaci\'on compuestos por otros del mismo tipo, \'estos operadores de asignaci\'on, permiten reemplazar expresiones del tipo \textbf{x = x op y} por \textbf{x op= y}, por ejemplo \textbf{x += y}.
+	\item[COD] Elimina el operador unario de negaci\'on condicional.
+	\item[COI] Inserta el operador unario de negaci\'on condicional a expresiones de tipo booleano.
+	\item[COR] Reemplaza operadores condicionales binarios por otros (\emph{\&\&}, \emph{||}). Si bien no considerados condicionales, los operadores l\'ogicos pueden ser utilizados tambi\'en por este operador, incluyendo el ``y'' (\emph{\&}), ``o'' (\emph{|}), y ``xor'' (\emph{\^}) bit a bit.
+	\item[LOD] Elimina el operador l\'ogico de negaci\'on binaria (\emph{~}).
+	\item[LOI] Inserta el operador l\'ogico de negaci\'on binaria.
+	\item[LOR] Reemplaza operadores l\'ogicos binarios por otros (\emph{\&}, \emph{|}, \emph{\^}).
+	\item[ROR] Reemplaza operadores relacionales con otros (\emph{<}, \emph{<=}, \emph{>}, y \emph{>=}), y reemplaza todo un predicado por \emph{verdadero} y \emph{falso}.
+\end{description}
+
 \section{Evaluaci\'on}
 \label{sec:evaluation.evaluation}
 

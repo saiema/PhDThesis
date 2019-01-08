@@ -3,9 +3,47 @@
 
 \emph{Mutation testing} es un criterio de cobertura que puede ser considerado de \emph{caja blanca}, en donde las metas a cubrir por el test suite, est\'an representadas por fallas artificiales, que deben ser detectadas por el test suite bajo evaluaci\'on. Las fallas artificiales se representan por variantes del programa original, en donde cada una tiene un cambio sint\'actico simple, representando un defecto. Cada variante se denomina \emph{mutante}, mientras que la falla artificial asociada, se llama \emph{mutaci\'on}. Cuantos, de los mutantes generados, son detectados por el test suite, es el valor asociado a este criterio, y se denomina \emph{mutation score}.
 
-Las fallas artificiales utilizadas por este criterio, se agrupan en operadores de mutaci\'on, por ejemplo, el operador de \emph{reemplazo de operadores relacionales} (\emph{ROR}) agrupa las fallas artificiales que cambian un operador relacional en una expresi\'on binaria, por todos los otros disponibles en el lenguaje con el que est\'a escrito el programa.
+Las fallas artificiales involucradas en mutation testing son producidas basadas en \emph{operadores de mutaci\'on}. Un operador de mutaci\'on define los cambios sint\'acticos que se van a producir a partir de un programa, t\'ipicamente eligiendo tipos particulares de expresiones en el mismo, y llevando a familias de mutantes. Dos ejemplos tradicionales de operadores de mutaci\'on son \emph{reemplazo de operadores relacionales}, el cual reemplaza un operador relacional por todos los otros soportados por el lenguaje de programaci\'on utilizado, y \emph{reemplazo de operadores aritm\'eticos}, que realiza cambios similares pero sobre operadores aritm\'eticos. Las mutaciones $1\Delta$, $2\Delta$ and $3\Delta$ en la Figura-\ref{figures.examples.mutations} corresponden a reemplazo de operadores relacionales, mientras que $4\Delta$ corresponde a reemplazo de operadores aritm\'eticos.
+
+\begin{figure}[t]
+	\begin{lstlisting}[frame=tlrb, mathescape=true]
+  int countEven( int[] input ) {
+    int count = 0;
+    for (int i = 0; i < input.length; i++) {
+    $1\Delta$for (int i = 0; i <= input.length; i++) {
+    $2\Delta$for (int i = 0; i != input.length; i++) {
+      int value = input[i];
+      if (value % 2 == 0) {
+      $3\Delta$ if (value % 2 != 0) {
+        count = count + 1;
+        $4\Delta$ count = count / 1;
+      }
+    }
+    return count;
+  }
+	\end{lstlisting}
+	\caption{Ejemplos de un programa y posibles mutaciones}
+	\label{figures.examples.mutations}
+\end{figure}
 
 Como con cualquier criterio, mientras mas cercano al 100\% sea valor asociado, m\'as confianza se puede tener en la calidad del test suite evaluado. En el caso de mutation testing, este valor sube mientras m\'as mutantes sean detectados y baja en caso contrario, sin embargo existen situaciones que afectan de manera negativa a este valor. Ciertas fallas son triviales de detectar, ya sea por que causan que la compilaci\'on o la ejecuci\'on (bajo cualquier entrada) falle, o solo requieren alcanzabilidad para hacerlo, por ejemplo \lstinline|if (c) x = array[-1];|, solo requiere una entrada que satisfaga \emph{c} para detectar la falla, ni siquiera es necesario un or\'aculo para evaluar el resultado. Las fallas triviales aumentan el mutation score sin implicar una mejora en la calidad del test suite. En el espectro opuesto, pueden haber fallas artificiales que tengan el mismo comportamiento sem\'antico, por ejemplo \lstinline|for (int i = 0; i < 10; i++)| es equivalente a \lstinline|for (int i = 0; i < 10; ++i)|. Estos mutantes son llamados equivalentes y por lo tanto indistinguibles del programa original, lo que genera metas que no pueden ser cubiertas, que a su vez disminuye el valor de mutation score, pero el test suite no tiene una peor calidad por no ser capaz de detectar estos mutantes. Finalmente un valor alto de mutation score no significa nada si no existe una relaci\'on entre detectar fallas artificiales y reales.
+
+\section{Operadores de mutaci\'on suficientes}
+\label{sec:preliminares.mutation.sufficient}
+
+El estudio llevado a cabo en \cite{bibliography.mutation.selection.Offutt96}, evalu\'o el conjunto de operadores de mutaci\'on utilizados por \emph{Mothra}, una herramienta de mutation testing para el lenguaje Fortran-77. Llegando al siguiente conjunto de operadores considerados como suficientes:
+
+\begin{description}[leftmargin=8em,style=nextline]
+	\item[ABS] Modifica cada expresi\'on aritm\'etica por 0, un valor positivo, y un valor negativo.
+	\item[AOR] Reemplaza cada operador aritm\'etico con todos los operadores legales.
+	\item[LCR] Reemplaza operadores l\'ogicos o condicionales por otros v\'alidos.
+	\item[ROR] Reemplaza operadores relacionales.
+	\item[UOI] Inserta operadores unarios en expresiones compatibles.
+\end{description}
+
+Si bien otros estudios sobre conjunto suficiente de operadores, entre ellos \cite{bibliography.mutation.selection.ASN2008}, se han realizado. Particularmente \'este concluye en un conjunto muy similar al anterior, con la diferencia que la herramienta de mutaci\'on ofrece una mayor cantidad de operadores de mutaci\'on, que en muchos casos est\'an inclu\'idos en los anteriores.
+
+Cabe destacar que \'estos estudios siempre cuentan con la misma amenaza de validez, el hecho de realizar el estudio bajo un conjunto de programas determinados con un conjunto de tests particulares. Sin embargo, todos llegan al mismo conjunto de cambios, ya sean realizados por los mismos operadores o por operadores similares.
 
 \section{Propiedades de operadores de mutaci\'on}
 \label{sec:preliminares.mutation.opevaluation}
