@@ -37,9 +37,9 @@ Existen numerosas librer\'ias disponibles para automatizar el proceso de testing
 
 \begin{figure}
 	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em]
-	String expression = "(1 + 3)^2";
-	Integer result = calculator.evaluate(expression);
-	assertEquals(new Integer(16),result);
+  String expression = "(1 + 3)^2";
+  Integer result = calculator.evaluate(expression);
+  assertEquals(new Integer(16),result);
 	\end{lstlisting}
 	\caption{Ejemplo de un test(JUnit)}
 	\label{figures.examples.test.junit}
@@ -67,16 +67,16 @@ Generaci\'on \emph{aleatoria} de entradas, en donde para alg\'un conjunto de val
 
 \begin{figure}
 	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
-    Set structuredInputs = new Set();
-    for (int i = 0; i<10; i++) {
-      int rndSize = random.nextInt(10);
-      List rndList = new List();
-      for (int elemIdx = 0; elemIdx < rndSize; elemIdx++) {
-        int rndValue = random.nextInt(50);
-        rndList.add(rndValue);
-      }
-      structuredInputs.add(rndList);
+  Set structuredInputs = new Set();
+  for (int i = 0; i<10; i++) {
+    int rndSize = random.nextInt(10);
+    List rndList = new List();
+    for (int elemIdx = 0; elemIdx < rndSize; elemIdx++) {
+      int rndValue = random.nextInt(50);
+      rndList.add(rndValue);
     }
+    structuredInputs.add(rndList);
+  }
 	\end{lstlisting}
 	\caption{Ejemplo de generaci\'on aleatoria de 10 listas de enteros con tama\~no entre 0 a 10, y con valores entre 0 a 50}
 	\label{figures.examples.testing.random.structure}

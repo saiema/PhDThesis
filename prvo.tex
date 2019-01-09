@@ -9,10 +9,10 @@ Para definir a nuestro operador, primero necesitamos definir que consideramos co
 
 \begin{figure}
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
-  current //expresi$\'o$n encadenada de tama$\~n$o 0
-  null 	//un caso especial de expresi$\'o$n encadenada de tama$\~n$o 0
-  current.next //expresi$\'o$n de navegaci$\'o$n de tama$\~n$o 1
-  current.next.value //expresi$\'o$n de navegaci$\'o$n de tama$\~n$o 2
+current //expresi$\'o$n encadenada de tama$\~n$o 0
+null 	//expresi$\'o$n encadenada de tama$\~n$o 0
+current.next //expresi$\'o$n de navegaci$\'o$n de tama$\~n$o 1
+current.next.value //expresi$\'o$n de navegaci$\'o$n de tama$\~n$o 2
 	\end{lstlisting}
 	\caption{Ejemplos de cadenas encadenadas}
 	\label{figures.examples.chainedExpr}
@@ -170,12 +170,12 @@ Este tipo de fallas involucra utilizar argumentos con tipos correctos, pero en e
 
 \begin{figure}
 	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
-	public void append(List<E> thiz, List<E> that) {
-		...
-		for (E e : thiz) {
-			that.append(e);
-		}
-	}
+  public void append(List<E> thiz, List<E> that) {
+    ...
+    for (E e : thiz) {
+      that.append(e);
+    }
+  }
 	\end{lstlisting}
 	\caption{M\'etodo que agrega una lista al final de otra.}
 	\label{figures.examples.argumentSwap.example1}
@@ -193,16 +193,16 @@ Existen ejemplos de m\'etodos que si bien distintos, tienen una sem\'antica rela
 
 Retomemos el ejemplo de \emph{interfaces fluentes} de la Figura-\ref{figures.examples.fluent.example1.fluent}. Si en este c\'odigo nos olvid\'aramos de llamar \texttt{filter(c1)}, la expresi\'on seguir\'ia siendo correcta, solamente que aplicar\'iamos el tratamiento condicional a todos los elementos de la lista en lugar de solo a aquellos que filtrar\'ia \texttt{c1}. Un ejemplo m\'as sencillo, una aplicaci\'on que toma un valor dado por el usuario y realiza una consulta en una base de datos. Es un caso t\'ipico de uso de datos no confiables, lo normal es limpiar o validar los datos ingresados antes de hacer la consulta. Una posible implementaci\'on ser\'ia:
 \begin{lstlisting}
-  ...
-  String userQuery = getFromUser();
-  List<Result> results = database.execute(cleanQuery(query));
-  ...
+...
+userQuery = getFromUser();
+results = database.execute(cleanQuery(query));
+...
 \end{lstlisting}
 Un error cl\'asico ser\'ia que el desarrollador olvide de usar \texttt{cleanQuery(query)} y directamente use \texttt{query}. Ambos casos responden a configuraciones particulares de \emph{prvo}. El primer caso, restringir las expresiones objetivo a llamadas a m\'etodos, involucradas en una expresi\'on de navegaci\'on. El segundo caso responde a restringir las expresiones objetivo a llamadas a m\'etodos en casos donde \'esta ocurra en una condici\'on, argumento u asignaci\'on, siempre que el tipo de retorno del m\'etodo sea igual o compatible con el del argumento usado en la llamada. Para los ejemplos anterior se obtendr\'ian los mutantes \lstinline|list.foreach().if(c2).then(p1).else(p2)| y:
 \begin{lstlisting}
 ...
-String userQuery = getFromUser();
-List<Result> results = database.execute(query);
+userQuery = getFromUser();
+results = database.execute(query);
 ...
 \end{lstlisting}
 

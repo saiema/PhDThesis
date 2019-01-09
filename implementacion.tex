@@ -65,21 +65,21 @@ Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atic
 \begin{figure}
 	\begin{displaymath}
 	\begin{array}{lll}
-	PRVO(x)		& :=	& expression^{|1|} \\
-	& := & x.expression^{|1-2|} \\
-	& := & expression^{|1-2|}.x \\
-	& := & null \\
+  PRVO(x)		& :=	& expression^{|1|} \\
+  & := & x.expression^{|1-2|} \\
+  & := & expression^{|1-2|}.x \\
+  & := & null \\
 	
-	\\
-	PRVO(x.y)	& :=	& x \\
-	& :=	& 	y \\
-	& :=	& expression^{|1-2|}.y \\
-	& :=	& y.expression^{|1-2|} \\
-	& :=	& expression^{|1-2|} \\
-	& :=	& x.y.expression^{|1|} \\
-	& :=	& x.expression^{|1|}.y \\
-	& :=	& expression^{|1|}.x.y \\
-	\\
+  \\
+  PRVO(x.y)	& :=	& x \\
+  & :=	& 	y \\
+  & :=	& expression^{|1-2|}.y \\
+  & :=	& y.expression^{|1-2|} \\
+  & :=	& expression^{|1-2|} \\
+  & :=	& x.y.expression^{|1|} \\
+  & :=	& x.expression^{|1|}.y \\
+  & :=	& expression^{|1|}.x.y \\
+  \\
 	
 	\end{array}
 	\end{displaymath}
@@ -152,7 +152,11 @@ La expresi\'on \lstinline|Object obj = current.next;|, puede dar lugar a una eno
 Por esto, \emph{prvo} cuenta con las siguientes restricciones configurables:
 
 \begin{enumerate}[leftmargin=.75cm,align=left]
-	\item[\textbf{M\'etodos y campos restringidos}] Es posible definir expresiones regulares para restringir el uso de ciertos m\'etodos y campos, por ejemplo \lstinline|java\\.lang\\.String\\#.*| restringe cualquier m\'etodo y campo de \emph{java.lang.String}. Durante la generaci\'on de mutaciones, \emph{prvo} verifica que cualquier m\'etodo o campo que vaya a utilizar para mutar una expresi\'on encadenada, no est\'e restringida, la verificaci\'on se hace sobre el nombre completo de un miembro de clase, el cual se define con \emph{<nombre completo de la clase>\#<nombre del miembro>[(<tipos de los argumentos separados por coma>)]}.
+	\item[\textbf{M\'etodos y campos restringidos}] Es posible definir expresiones regulares para restringir el uso de ciertos m\'etodos y campos, por ejemplo:
+	\begin{lstlisting}[mathescape=true]
+	java\\.lang\\.String\\$\#$.*
+	\end{lstlisting}
+	restringe cualquier m\'etodo y campo de \emph{java.lang.String}. Durante la generaci\'on de mutaciones, \emph{prvo} verifica que cualquier m\'etodo o campo que vaya a utilizar para mutar una expresi\'on encadenada, no est\'e restringida, la verificaci\'on se hace sobre el nombre completo de un miembro de clase, el cual se define con \emph{<nombre completo de la clase>\#<nombre del miembro>[(<tipos de los argumentos separados por coma>)]}.
 	
 	\item[\textbf{M\'etodos y campos permitidos}] En muchos casos, la cantidad de m\'etodos y campos a restringir es muy grande y solo se quieren permitir aquellos que pertenezcan a ciertas clases, por ejemplo, en el caso de una lista puede solo desearse utilizar aquellos que pertenezcan a la clase \emph{Lista} y \emph{Nodo}. Es posible definir, de la misma forma que en el caso anterior, que m\'etodos y campos son permitidos para que \emph{prvo} los utilice durante la generaci\'on de mutaciones. Cabe destacar que estas opciones son exclusivas, no es posible utilizar ambas al mismo tiempo.
 	
@@ -178,7 +182,7 @@ La intuici\'on es que si un mutante es detectado por una gran cantidad de tests 
 Esta definici\'on da a lugar a \emph{Dynamic Mutant Subsumption}, y es la que se implement\'o en \emph{$\mu$Java++} y que va a ser utilizada como evaluaci\'on adicional, en este caso para el conjunto de mutantes generados en cada experimento.
 
 \subsection{Dynamic Mutant Subsumption Graph}
-\label{sec:implementation.dynamicSubsumption.dominators}
+\label{sec:implementation.dynamicSubsumption.graph}
 
 A partir del an\'alisis anterior, es posible construir un grafo en el cual un nodo contiene todos los mutantes equivalentes respecto a subsuma, es decir, para cada par de nodos \emph{m$_1$} y \emph{m$_2$} en el nodo, \emph{m$_1$} subsume a \emph{m$_2$} y viceversa. Una arista direccional conectando el nodo \emph{n$_1$} con el nodo \emph{n$_2$} representa la relaci\'on de subsuma:
 \begin{quote}
