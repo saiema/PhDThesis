@@ -2,19 +2,89 @@
 \chapter[Evaluaci\'on]{Evaluaci\'on}
 \label{cap:evaluation}
 
-En la secci\'on \ref{sec:intro.objetivos} definimos las motivaciones y objetivos de esta tesis, donde el principal consta del dise\~no y desarrollo de un operador de mutaci\'on, altamente configurable, para expresiones encadenadas. Luego, en la secci\'on \ref{sec:preliminares.mutation.opevaluation} definimos que propiedades afectan el an\'alisis de \emph{mutation testing}, cantidad de mutantes, mutantes equivalentes, dificultad de detecci\'on, acoplamiento con fallas reales, y redundancia de mutantes (o acoplamiento entre mutantes). En este capitulo realizamos la evaluaci\'on de nuestro ``meta-operador'', \emph{prvo}, para determinar la utilidad pr\'actica de la misma.
+En la secci\'on \ref{sec:intro.objetivos} definimos las motivaciones y objetivos de esta tesis, los cuales constan del dise\~no y desarrollo de un operador de mutaci\'on, altamente configurable, para expresiones de navegaci\'on. Luego, en la secci\'on \ref{sec:preliminares.mutation.opevaluation} definimos que propiedades afectan el an\'alisis de \emph{mutation testing}, cantidad de mutantes, mutantes equivalentes, dificultad de detecci\'on, acoplamiento con fallas reales, y redundancia de mutantes (o acoplamiento entre mutantes). En este capitulo realizamos la evaluaci\'on de nuestro ``meta-operador'', \emph{prvo}, para determinar la utilidad pr\'actica de la misma.
 
 \section{Configuraci\'on}
 \label{sec:evaluation.prvoconfig}
 
-Antes de evaluar a \emph{prvo}, es necesario que definamos una configuraci\'on particular para el mismo. Teniendo en cuenta que la configuraci\'on sobre miembros de clases a utilizar o evitar, es decir, una de las propiedades principales que regula el conjunto de expresiones a utilizar durante la mutaci\'on, es algo que debe definirse por cada proyecto, vamos entonces para este caso, a definir de manera general que criterio vamos a utilizar para configurar esta propiedad para cada proyecto. El primer problema a resolver para poder definir esta configuraci\'on y el criterio para expresiones a utilizar, es especificar que tipo de fallas estamos interesados en representar, puesto que lo mejor no es una configuraci\'on que permita representar m\'ultiples fallas sino una que se centre en un tipo de falla espec\'ifica. De acuerdo a nuestro ejemplo motivador, dado en la secci\'on \ref{sec:intro.objetivos}, el tipo de fallas que queremos representar son aquellas que involucran expresiones de navegaci\'on, es decir, expresiones encadenadas de tama\~no al menos 1, y que resultan de el acceso al miembro incorrecto de una clase. Estas fallas no parecen estar de acuerdo con el ejemplo, recordemos que \'este utiliza un m\'etodo \emph{dequeue()} que solo tiene una l\'inea donde reasigna el valor a un puntero, y la falla est\'a en la falta de c\'odigo, como controles y reasignaci\'on de otros punteros, sin embargo, modificar un miembro en las expresiones halladas en la \'unica sentencia del m\'etodo, genera la necesidad de mejorar el test suite. Por parte de las fallas mencionadas como no acopladas actualmente a fallas reales, descriptas en \ref{sec:prvo.prvoTargetedFaults}, dentro de estas vamos a estar representando a:
+Antes de evaluar a \emph{prvo}, es necesario que definamos una configuraci\'on particular para el mismo. Teniendo en cuenta que la configuraci\'on sobre miembros de clases a utilizar o evitar, es decir, una de las propiedades principales que regula el conjunto de expresiones a utilizar durante la mutaci\'on, es algo que debe definirse por cada proyecto, vamos entonces para este caso, a definir de manera general que criterio vamos a utilizar para configurar esta propiedad para cada proyecto. El primer problema a resolver para poder definir esta configuraci\'on y el criterio para expresiones a utilizar, es especificar que tipo de fallas estamos interesados en representar, puesto que lo mejor no es una configuraci\'on que intente representar m\'ultiples fallas sino una que se centre en un tipo de falla espec\'ifica. De acuerdo a nuestro ejemplo motivador, dado en la secci\'on \ref{sec:intro.objetivos}, el tipo de fallas que queremos representar son aquellas que involucran expresiones de navegaci\'on, es decir, expresiones encadenadas de tama\~no al menos 1, y que resultan de el acceso al miembro incorrecto de una clase. Estas fallas no parecen estar de acuerdo con el ejemplo, recordemos que \'este utiliza un m\'etodo \emph{dequeue()} que solo tiene una l\'inea donde reasigna el valor a un puntero, y la falla est\'a en la falta de c\'odigo, como controles y reasignaci\'on de otros punteros, sin embargo, modificar un miembro en las expresiones halladas en la \'unica sentencia del m\'etodo, genera la necesidad de mejorar el test suite. Por parte de las fallas mencionadas como no acopladas actualmente a fallas reales, descriptas en \ref{sec:prvo.prvoTargetedFaults}, dentro de \'estas, nos vamos a enfocar en las siguientes:
 
 \begin{enumerate}[label=\arabic*), leftmargin=.75cm,align=left]
 	\item Llamada a un m\'etodo similar de la misma librer\'ia
 	\item Acceso directo a un campo\footnote{Solo para campos de las clases bajo evaluaci\'on}
 \end{enumerate}
 
-\'Esto parecer\'ia un objetivo bastante peque\~no con respecto a las fallas a representar, pero todo el desarrollo e investigaci\'on que rodea a \emph{prvo} siempre puso en evidencia cuan f\'acil es que una configuraci\'on poco restrictiva, lleve a una explosi\'on en la cantidad de mutantes generados, no solo \'esto, la cantidad de mutantes irrelevantes generados constitu\'ia un gran porcentaje de los mismos. [NUMEROS DE MUTANTES GENERADOS EN STRYKER PODRIA SERVIR ACA]
+\'Esto parecer\'ia un objetivo bastante peque\~no con respecto a las fallas a representar, pero todo el desarrollo e investigaci\'on que rodea a \emph{prvo} siempre puso en evidencia cuan f\'acil es que una configuraci\'on poco restrictiva, lleve a una explosi\'on en la cantidad de mutantes generados, no solo \'esto, la cantidad de mutantes irrelevantes generados constitu\'ia un gran porcentaje de los mismos.
+
+%TODO: NUMEROS DE MUTANTES GENERADOS SIN RESTRICCIONES?
+
+\begin{figure}
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=1.5em,language=Java]
+  public boolean find( int x ) {
+    Node current = root;
+    while (current != null) {
+      if (current.key == x) {
+        return true;
+      }
+      if (x < current.key) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+    return false;
+  }
+	\end{lstlisting}
+	\caption{M\'etodo \emph{find(int)} de \emph{BSTree}}
+	\label{figures.examples.prvoExpl.findMethod}
+\end{figure}
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true,language=Java]
+  L$\'i$nea 2:
+  Node current = null;
+  Node current = root.right;
+  Node current = root.left;
+  
+  L$\'i$nea 3:
+  while (new java.lang.Double( 1.0d ) != null) {
+  while (getClass().getConstructors() != null) {
+  while (current != root) {
+  while (current.left != null) {
+  while ("" != null) {
+  while (current.toString() != null) {
+  
+  L$\'i$nea 4:
+  if (hashCode() == x) {
+  if (current.key == 1.0f) {
+  if (current.left.key == x) {
+  
+  L$\'i$nea 5:
+  return false;
+  
+  L$\'i$nea 8:
+  current = root.left;
+  current = current.left.left;
+  current = current.left.right;
+  root.right = current.left;
+	\end{lstlisting}
+	\caption{Mutaciones \emph{prvo} (sin restricciones) del m\'etodo \emph{find(int)} de \emph{BSTree} \ref{figures.examples.prvoExpl.findMethod}}
+	\label{figures.examples.prvoExpl.mutations}
+\end{figure}
+
+\begin{table}[]
+	\label{tables.prvoExpl.mutations}
+	%\centering
+	\small
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{@{}l|cccccc|@{}}
+		\cmidrule(l){2-7}
+		& \begin{tabular}[c]{@{}c@{}}Sin\\ restricciones\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sin literales\\ (salvo  null)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Control de\\ tipos estricto\end{tabular} & \begin{tabular}[c]{@{}c@{}}Solo\\ bstree.*\end{tabular} & \begin{tabular}[c]{@{}c@{}}Solo\\ navegaci\'on\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Configuraci\'on\\ tesis\end{tabular}} \\ \midrule
+		\multicolumn{1}{|l|}{prvo mutants} & \multicolumn{1}{c|}{141} & \multicolumn{1}{c|}{114} & \multicolumn{1}{c|}{83} & \multicolumn{1}{c|}{93} & \multicolumn{1}{c|}{42} & 6 \\ \bottomrule
+	\end{tabular}
+	\caption{Mutantes generados para el m\'etodo \emph{find(int)} \ref{figures.examples.prvoExpl.findMethod}}
+\end{table}
 
 Pasemos entonces a definir la configuraci\'on a utilizar:
 
