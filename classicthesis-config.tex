@@ -28,6 +28,8 @@
 %\usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{proof}
+\usepackage{lscape}
+\usepackage{booktabs}
 \usepackage{tikz}
 \usetikzlibrary{matrix,chains,positioning,calc,shadows,fit,arrows, shapes, shapes.geometric, petri} 
 \usetikzlibrary{decorations.text, decorations.markings,decorations.pathreplacing} %calc,decorations.pathmorphing}
@@ -50,83 +52,6 @@
 \definecolor{Lightgray}{gray}{.98}
 \definecolor{bordegray}{gray}{.70}
 \definecolor{gray}{gray}{.3}
-\lstdefinelanguage{FSP}
-{ keywords={assert, progress, fluent, constraint, X, W, U},
-  moredelim=[is][\bfseries]{/+}{+/},
-  morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]//,
-  morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]/*,
-  literate={->}{\ttfamily {->}} 3,
-  basicstyle= \small\ttfamily,%\fontsize{7.2}{7.3}
-  emph={=}, emphstyle=\itshape\bfseries,
-  frame=tb,
-  %frameround=tttt,
-  framerule=.5pt,
-  rulecolor=\color{black},
-  %frame=single,
-  %aboveskip= -.1 cm,
-  %belowskip= -.1 cm,
-  %rulesepcolor=\color{lightgray},
-  %backgroundcolor=\color{Lightgray},
-  columns=[l]flexible,
-  sensitive=false,
-}
-
-\lstdefinestyle{myPromela}{
-  language=Promela,
-  moredelim=[is][\bfseries]{/+}{+/},
-    %morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]\#,
-    basicstyle= \small\ttfamily, %\fontsize{8.0}{8.1}
-    emph={=}, emphstyle=\itshape\bfseries,
-    frame=tb,
-    %frameround=tttt,
-    framerule=.5pt,
-    rulecolor=\color{black},
-    %frame=single,
-    %aboveskip= -.1 cm,
-    %belowskip= -.1 cm,
-    %rulesepcolor=\color{lightgray},
-    %backgroundcolor=\color{Lightgray},
-    columns=[l]flexible,
-    sensitive=false,
-}
-
-\lstdefinelanguage{MSAT}
-{ keywords={INTEGER, BOOLEAN, WORD, REAL, OBJECT, &, |, !, ->, <->, +, -},
-  moredelim=[is][\bfseries]{/+}{+/},
-  morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]\#,
-  basicstyle= \small\ttfamily, %\fontsize{8.0}{8.1}
-  emph={=}, emphstyle=\itshape\bfseries,
-  frame=tb,
-  %frameround=tttt,
-  framerule=.5pt,
-  rulecolor=\color{black},
-  %frame=single,
-  %aboveskip= -.1 cm,
-  %belowskip= -.1 cm,
-  %rulesepcolor=\color{lightgray},
-  %backgroundcolor=\color{Lightgray},
-  columns=[l]flexible,
-  sensitive=false,
-}
-
-\lstdefinelanguage{ALV}
-{ keywords={enumerated, integer, boolean, module, endmodule, restrict, initial, main, spec} %, and, or, & |, !, ->, <->, +, -, },
-  moredelim=[is][\bfseries]{/+}{+/},
-  morecomment=[l][\itshape \color{black!60} \fontsize{7.2}{7.3}]//,
-  basicstyle= \small\ttfamily, %\fontsize{8.0}{8.1}
-  emph={=}, emphstyle=\itshape\bfseries,
-  frame=tb,
-  %frameround=tttt,
-  framerule=.5pt,
-  rulecolor=\color{black},
-  %frame=single,
-  %aboveskip= -.1 cm,
-  %belowskip= -.1 cm,
-  %rulesepcolor=\color{lightgray},
-  %backgroundcolor=\color{Lightgray},
-  columns=[l]flexible,
-  sensitive=false,
-}
 
 % Hyperreferences
 \hypersetup{%
