@@ -14,78 +14,6 @@ Antes de evaluar a \emph{prvo}, es necesario que definamos una configuraci\'on p
 	\item Acceso directo a un campo\footnote{Solo para campos de las clases bajo evaluaci\'on}
 \end{enumerate}
 
-\'Esto parecer\'ia un objetivo bastante peque\~no con respecto a las fallas a representar, pero todo el desarrollo e investigaci\'on que rodea a \emph{prvo} siempre puso en evidencia cuan f\'acil es que una configuraci\'on poco restrictiva, lleve a una explosi\'on en la cantidad de mutantes generados, no solo \'esto, la cantidad de mutantes irrelevantes generados constitu\'ia un gran porcentaje de los mismos.
-
-%TODO: NUMEROS DE MUTANTES GENERADOS SIN RESTRICCIONES?
-
-\begin{figure}
-	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=1.5em,language=Java]
-  public boolean find( int x ) {
-    Node current = root;
-    while (current != null) {
-      if (current.key == x) {
-        return true;
-      }
-      if (x < current.key) {
-        current = current.left;
-      } else {
-        current = current.right;
-      }
-    }
-    return false;
-  }
-	\end{lstlisting}
-	\caption{M\'etodo \emph{find(int)} de \emph{BSTree}}
-	\label{figures.examples.prvoExpl.findMethod}
-\end{figure}
-
-\begin{figure}
-	\begin{lstlisting}[mathescape=true,language=Java]
-  L$\'i$nea 2:
-  Node current = null;
-  Node current = root.right;
-  Node current = root.left;
-  
-  L$\'i$nea 3:
-  while (new java.lang.Double( 1.0d ) != null) {
-  while (getClass().getConstructors() != null) {
-  while (current != root) {
-  while (current.left != null) {
-  while ("" != null) {
-  while (current.toString() != null) {
-  
-  L$\'i$nea 4:
-  if (hashCode() == x) {
-  if (current.key == 1.0f) {
-  if (current.left.key == x) {
-  
-  L$\'i$nea 5:
-  return false;
-  
-  L$\'i$nea 8:
-  current = root.left;
-  current = current.left.left;
-  current = current.left.right;
-  root.right = current.left;
-	\end{lstlisting}
-	\caption{Mutaciones \emph{prvo} (sin restricciones) del m\'etodo \emph{find(int)} de \emph{BSTree} \ref{figures.examples.prvoExpl.findMethod}}
-	\label{figures.examples.prvoExpl.mutations}
-\end{figure}
-
-\begin{table}[]
-	\label{tables.prvoExpl.mutations}
-	%\centering
-	\small
-	\def\arraystretch{0.95}
-	\setlength\tabcolsep{0.5mm}
-	\begin{tabular}{@{}l|cccccc|@{}}
-		\cmidrule(l){2-7}
-		& \begin{tabular}[c]{@{}c@{}}Sin\\ restricciones\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sin literales\\ (salvo  null)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Control de\\ tipos estricto\end{tabular} & \begin{tabular}[c]{@{}c@{}}Solo\\ bstree.*\end{tabular} & \begin{tabular}[c]{@{}c@{}}Solo\\ navegaci\'on\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Configuraci\'on\\ tesis\end{tabular}} \\ \midrule
-		\multicolumn{1}{|l|}{prvo mutants} & \multicolumn{1}{c|}{141} & \multicolumn{1}{c|}{114} & \multicolumn{1}{c|}{83} & \multicolumn{1}{c|}{93} & \multicolumn{1}{c|}{42} & 6 \\ \bottomrule
-	\end{tabular}
-	\caption{Mutantes generados para el m\'etodo \emph{find(int)} \ref{figures.examples.prvoExpl.findMethod}}
-\end{table}
-
 Pasemos entonces a definir la configuraci\'on a utilizar:
 
 \subsubsection{Expresiones objetivo}
@@ -97,6 +25,76 @@ Las expresiones que vamos a mutar son aquellas que sean expresiones de navegaci\
 Con respecto a las expresiones que se van a utilizar al mutar una expresi\'on, se va a restringir el uso a solo aquellas que pertenezcan a la clase principal bajo evaluaci\'on o aquellas relacionadas a la estructura principal que \'esta representa, recordemos que nuestros casos de estudio van a estar compuestos por estructuras de datos. Ejemplo de \'esto es, para la clase \emph{LinkedList} solo se van a poder utilizar miembros de la misma y de la clase \emph{Node} utilizada por \'esta. Es necesario aclarar que las variables alcanzables tambi\'en van a ser consideradas.
 
 El control de tipos va a ser estricto, lo que significa que una subexpresi\'on solo puede intercambiarse por otra con \textbf{exactamente} el mismo tipo. Al tener como objetivo a expresiones de navegaci\'on, el uso de literales no tiene mucho sentido, \'esto no significa no utilizar constantes como por ejemplo definir el puntero al comienzo de la lista con \emph{final}, o definir un nodo ficticio de nuevo con el mismo modificador. El uso de campos est\'aticos solo se va a permitir dentro de un contexto est\'atico, por ejemplo, en el m\'etodo \lstinline|public static int foo()|, se van a permitir miembros est\'aticos, pero en el m\'etodo \lstinline|public int bar()|, no.
+
+Si bien parece una configuraci\'on muy acotada en cuanto a las mutaciones que produce, y a cuantos tipos de fallas reales intenta representar. Incluso con las restricciones impuestas en la implementaci\'on de \emph{prvo}, una configuraci\'on poco restrictiva puede dar lugar a una explosi\'on en la cantidad de mutantes generados. Una elevada cantidad de mutantes no solo tiene como desventaja las implicaciones sobre los recursos necesarios, la cantidad de mutantes irrelevantes que se generan aumenta. Para ver un ejemplo de \'esto, al mutar con \emph{prvo} el c\'odigo del m\'etodo \emph{find(int)} de \emph{BSTree}, el que se muestra en la Figura-\ref{figures.examples.prvoExpl.findMethod}, usando la configuraci\'on m\'as permisiva podemos apreciar en la Figura-\ref{figures.examples.prvoExpl.mutations} algunas de las mutaciones generadas, muchas de \'estas resultando completamente irrelevantes. En la Tabla-\ref{tables.prvoExpl.mutations} se expone como cada configuraci\'on afecta a la cantidad de mutantes producidos. Cabe destacar que la cantidad posible de configuraciones para \emph{prvo} es mucho m\'as grande que las expuestas en la tabla, por ejemplo la capacidad de ajustar las restricciones de tama\~no descriptas en \ref{sec:implementation.prvo.restrictions.size} no est\'a mencionada.
+
+\begin{figure}
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,language=Java]
+public boolean find( int x ) {
+  Node current = root;
+  while (current != null) {
+    if (current.key == x) {
+      return true;
+    }
+    if (x < current.key) {
+      current = current.left;
+    } else {
+      current = current.right;
+    }
+  }
+  return false;
+}
+	\end{lstlisting}
+	\caption{M\'etodo \emph{find(int)} de \emph{BSTree}}
+	\label{figures.examples.prvoExpl.findMethod}
+\end{figure}
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true,language=Java]
+	L$\'i$nea 2:
+	Node current = null;
+	Node current = root.right;
+	Node current = root.left;
+	
+	L$\'i$nea 3:
+	while (new java.lang.Double( 1.0d ) != null) {
+	while (getClass().getConstructors() != null) {
+	while (current != root) {
+	while (current.left != null) {
+	while ("" != null) {
+	while (current.toString() != null) {
+	
+	L$\'i$nea 4:
+	if (hashCode() == x) {
+	if (current.key == 1.0f) {
+	if (current.left.key == x) {
+	
+	L$\'i$nea 5:
+	return false;
+	
+	L$\'i$nea 8:
+	current = root.left;
+	current = current.left.left;
+	current = current.left.right;
+	root.right = current.left;
+	\end{lstlisting}
+	\caption{Mutaciones \emph{prvo} (sin restricciones) del m\'etodo \emph{find(int)} de \emph{BSTree} \ref{figures.examples.prvoExpl.findMethod}}
+	\label{figures.examples.prvoExpl.mutations}
+\end{figure}
+
+\begin{table}[]
+	%\centering
+	\small
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{@{}l|cccccc|@{}}
+		\cmidrule(l){2-7}
+		& \begin{tabular}[c]{@{}c@{}}Sin\\ restricciones\end{tabular} & \begin{tabular}[c]{@{}c@{}}Sin literales\\ (salvo  null)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Control de\\ tipos estricto\end{tabular} & \begin{tabular}[c]{@{}c@{}}Solo\\ bstree.*\end{tabular} & \begin{tabular}[c]{@{}c@{}}Solo\\ navegaci\'on\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Configuraci\'on\\ tesis\end{tabular}} \\ \midrule
+		\multicolumn{1}{|l|}{prvo mutants} & \multicolumn{1}{c|}{141} & \multicolumn{1}{c|}{114} & \multicolumn{1}{c|}{83} & \multicolumn{1}{c|}{93} & \multicolumn{1}{c|}{42} & 6 \\ \bottomrule
+	\end{tabular}
+	\caption{Mutantes generados para el m\'etodo \emph{find(int)} \ref{figures.examples.prvoExpl.findMethod}}
+	\label{tables.prvoExpl.mutations}
+\end{table}
 
 \section{Operadores a utilizar}
 \label{sec:evaluation.operators}
