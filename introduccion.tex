@@ -123,8 +123,11 @@ Esto nos lleva a nuestros objetivos:
 	
 	\item[\textbf{Implementar el operador de mutaci\'on para expresiones de navegaci\'on}] Los operadores existentes actualmente est\'an definidos por reglas de transformaci\'on muy simples, incluso siendo capaz de ser implementados usando expresiones regulares. Modificar una expresi\'on de navegaci\'on requiere informaci\'on de tipos y an\'alisis de alcanzabilidad para determinar las expresiones disponibles al modificar una existente. Nuestro tercer objetivo entonces, es encontrar una herramienta de mutaci\'on que permita realizar el an\'alis necesario para generar estas mutaciones; elegir un lenguaje sobre el cual y para el cual implementar este operador; e implementar tanto el operador como herramientas u extensiones que permitan realizar los an\'alisis apropiados para las evaluaciones necesarias a nuestro operador.
 	
-	\item[\textbf{Evaluaci\'on}]\mbox{}\\
-	Incluso si es cierto que existe una necesidad por la generaci\'on de mutantes para expresiones de navegaci\'on, si el o los operadores que los generan, no cumplen con las propiedades anteriormente descriptas, entonces su utilidad se ve muy reducida. Por eso, nuestro objetivo final, es evaluar el desempe\~no de nuestro operador para analizar su utilidad, con respecto a las propiedades definidas por el primer objetivo.
+	\item[\textbf{Aplicaciones e impacto del operador de mutaci\'on en testing}]\mbox{}\\
+	Incluso si es cierto que existe una necesidad por la generaci\'on de mutantes para expresiones de navegaci\'on, si el o los operadores que los generan no cumplen con las propiedades anteriormente descriptas, entonces su utilidad se ve muy reducida. Por eso, otro de nuestros objetivos es evaluar el desempe\~no de nuestro operador para analizar su utilidad e impacto de su incorporaci\'on como operador de mutaci\'on, en mutation testing. 
+	
+    \item[\textbf{Aplicaciones del operador de mutaci\'on en reparaci\'on}]\mbox{}\\
+	La motivaci\'on central de esta tesis es la introducci\'on de operadores de mutaci\'on para testing. Pero \'esta no es la \'unica aplicaci\'on de este tipo de operadores. Como objetivo final, analizaremos la aplicaci\'on de operadores de mutaci\'on de granularidad fina en el contexto de reparaci\'on autom\'atica de programas (en contraposici\'on con operadores de mutaci\'on tradicionales en reparaci\'on, que optan por una granularidad gruesa). En particular, analizaremos errores comunes en programas orientados a objetos, que tienen que ver con el uso de expresiones de navegaci\'on, y c\'omo el operador de mutaci\'on a introducir contribuye a su reparabilidad. 
 \end{enumerate}
 
 %Objetivos
