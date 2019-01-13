@@ -1,0 +1,146 @@
+ROR_11_DB3F6CD4F25FE29169B384493C216025
+Test class : RegressionTest[false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+Test class : org.apache.commons.collections4.treelist.TreeListESTest[false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, true, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/ROR/129/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [12, 55, -30, 41, -79, 81, 92, -24, 59, 77, -63, 96, -43, -93, -128, -78]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (ROR, s != null, s == null, ID[25482548])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/ROR/130/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [85, -54, -43, 89, -102, -12, 116, 61, 58, -114, 7, 105, -64, -60, -26, -101]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (ROR, s != null, false, ID[25486203])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/ROR/133/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [49, 120, -10, -90, -125, 20, 57, -79, -28, -47, 13, 123, -60, 43, 96, 10]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (ROR, s.height > getHeight( leftSubTree ), s.height < getHeight( leftSubTree ), ID[25572557])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/ROR/135/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [22, 109, -79, 96, 105, 68, 79, -27, 113, 40, 120, 62, -72, 10, 80, -56]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (ROR, s.height > getHeight( leftSubTree ), s.height == getHeight( leftSubTree ), ID[25572557])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/ROR/137/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [84, 16, -122, -98, -4, -92, 1, -65, 8, 11, 73, -109, 51, -62, 17, 11]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (ROR, s.height > getHeight( leftSubTree ), false, ID[25576296])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/COR/167/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [121, -82, -39, -46, 97, -114, -73, 12, 25, 79, 14, 25, 44, -71, 88, -73]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (COR, s != null && s.height > getHeight( leftSubTree ), s != null ^ s.height > getHeight( leftSubTree ), ID[25582558])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/COI/178/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [102, 25, -39, -87, 13, -39, -100, -90, 30, -114, 126, 87, -50, -15, 107, -117]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (COI, s != null && s.height > getHeight( leftSubTree ), !(s != null && s.height > getHeight( leftSubTree )), ID[25586945])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/COI/180/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [98, 80, 41, -88, -117, -126, -14, -74, -2, -119, -105, -104, 117, 66, 6, 95]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (COI, s.height > getHeight( leftSubTree ), !(s.height > getHeight( leftSubTree )), ID[25576978])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/LOI/193/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [120, 51, -64, -95, -118, 79, 26, 33, 50, -95, -88, -18, 50, -91, -29, 61]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (LOI, s.height, ~s.height, ID[25507213])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/ROR/134/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [-74, -43, 62, 73, -29, -91, -78, 41, -18, -39, 71, -13, 84, 107, 87, -48]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (ROR, s.height > getHeight( leftSubTree ), s.height <= getHeight( leftSubTree ), ID[25572557])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/COI/179/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [18, -62, -32, 82, -73, 59, 125, 53, -110, -88, 68, 31, -121, 117, 122, 102]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 9
+    Mutation         : (COI, s != null, !(s != null), ID[25486960])
+
+Subsuming nodes: 
+AOIS_1_2107527105D9204A67022CE7481ADFD5-DOMINATOR
+Subsumed nodes: 
+ROR_2_CB78C9A359C1820CF0174F7D26305BD2
+LOI_1_EDC839FCFC179CF3B5A31127289144C9
+AOIS_1_039C8E65657F16B95F9D77717460E334
+AOIS_1_A00E0697DE44F15DEA4DBC89879408B3
+PRVOR_REFINED_3_0783029CEC19EFE713480CAB3B1E14DE
+PRVOR_REFINED_1_E837928A77DF9D9CA83FB7004915524C
+COI_1_7F95C89415E93FF5FFE3C29CC3B5A137
+AOIU_1_D4ABAA4F53B2792A31AB318318D6147B
+ROR_3_262AE84207B414FE5BF9A4AE43103051
+AOIS_1_D9156B48CF31152915832682D977E473
+ROR_2_55962995520D14EFA78E4AD6C56969EC
+ASRS_1_C34878DE1A09519C7B476D9BB7ED2236
+LOI_1_0BB41A05CE61C3BF6D67AD8224F1F8E0
+PRVOR_REFINED_1_DA6562F0EAF997C7A628953F72B466F2
+ASRS_1_99121761FD7FE9D3186DCB1D078BB8C1
+ROR_4_D859863BEADFC5985668113F0F18042C
+ASRS_1_E0F213B934917968C5A04F94C7AE260E
+PRVOR_REFINED_4_5A3AE7947B10EA14841B2E4E2E00334A
+LOI_1_AC6D652BEB51DD92BE3FED39D9B365B7
+AOIS_1_FFB8C72F674398F85EA17E61A200F89C
+PRVOR_REFINED_1_5957D39D66305C387174A04AF7A70F01
+ROR_1_CD945955582BD7FD5335D44C1AFE736A
+AOIS_1_0EC80E91BC7DA7E585685DD80055B3AC
+ASRS_1_CC83A237B0EE8437C36F22AEC5744C58
+AOIS_2_18F175EC35210314383A4AEE91D4FB5A
+ROR_11_7E260984D30BA3E1DC1884BB89053E76
+PRVOR_REFINED_1_7A368CC438E93A04AE3E5AA79E080B2B
+AOIU_2_DD9EBD801D0F1B9ACA65E8880A42C98B
+AOIU_7_F18B54A48738BF4BAFE28FD9502590FE
+COR_1_C75F2139937AD1EA1C7FEAA1927B0349

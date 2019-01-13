@@ -1,0 +1,143 @@
+AOIS_1_A00E0697DE44F15DEA4DBC89879408B3
+Test class : RegressionTest[false, true, true, false, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+Test class : org.apache.commons.collections4.treelist.TreeListESTest[false, false, true, true, true, true, false, false, false, false, true, true, true, true, true, true, true, true, true, true, false, false, false, true, true, false, true, true, true, false, false, false]
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/size/AOIS/1/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [121, -32, -98, 120, 16, -35, -120, -33, 30, -47, -33, -60, 29, 106, -96, -113]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : size
+    Line             : 1
+    Mutation         : (AOIS, size, size--, ID[35283981])
+
+Subsuming nodes: 
+ROR_1_15BDF36100AA7E65D4A0E80BFF3BB66A
+PRVOR_REFINED_1_192383BCB717BBD002F2B4E5AC0494CE-DOMINATOR
+PRVOR_REFINED_1_39EDAE61B9475FF75BEDF91AF9ED3FFB-DOMINATOR
+AOIS_1_0DDFEEDC611EE55D89FDBB74126A035D-DOMINATOR
+PRVOR_REFINED_1_E837928A77DF9D9CA83FB7004915524C
+ROR_2_A20B0339C32547EA5427A434964F80D5
+ROR_1_A71366C4E1F8A15C7B2A478629B91161
+LOI_1_A0D9262F161D19880BAA1AF52D35834E
+PRVOR_REFINED_3_DE394CE558CB21397D69E2376F3192F5
+AOIS_3_6383C8018E9E54608B4E826281060ADF-DOMINATOR
+PRVOU_REFINED_1_0DAECDC9E28C6F04950E0DB06656EE0B
+AOIS_1_2107527105D9204A67022CE7481ADFD5-DOMINATOR
+PRVOU_REFINED_1_861F297E967EFB7B98482EE4E3D70259
+ROR_1_A08878F11C95C46618DAFB5DC71CE696
+AOIS_1_5AFEFB4D3B6C88E25A2FCE02EDA617DF
+ROR_4_D859863BEADFC5985668113F0F18042C
+PRVOU_REFINED_1_2AFB0FA184196D3865B6FCF7A63BDCF8-DOMINATOR
+PRVOU_REFINED_2_8F97FE878BDBDF19F733BEEA9B59DF54
+ROR_1_5A1B538B769694ED0E76A90865D68164
+LOI_1_626DA84E2A504569A78092E328246984
+PRVOU_REFINED_1_2F9429C0DBB3723647FFA9FBED64E31A
+AOIU_1_29CECFA841C9A65833750F757172EE5D
+AOIU_1_EF905187970236BDE5DC2575A056A7CC
+LOI_1_30EE773485F94E317500481AF07DBEE4
+AOIU_10_678A0E8E83E157ADA7D5825CFA893D9D-DOMINATOR
+LOI_1_2AFFFB51BA0970A4EBD3C8548699BB27
+PRVOU_REFINED_1_89C036EC06892850FDDE183622FEDBD0
+LOI_1_F6DA7191B40778942814903A6DAE87C6-DOMINATOR
+AOIS_1_FFB8C72F674398F85EA17E61A200F89C
+LOI_1_53AA89AD6C5485F360B5713DCDF8251F-DOMINATOR
+AOIU_1_D5F81FF54DCA144D6026F6A4DE56FD57
+AORB_27_8CCBBFB5FE90EAC52EAABE9C2F3C7BE5
+AOIS_1_AC2F28433821C5B86E8206B31D18C734
+LOI_1_99F873506B03A588D9D90DFBBD2B681B
+AOIS_1_0EC80E91BC7DA7E585685DD80055B3AC
+PRVOR_REFINED_1_C0848C4138133E54D6E0F907F7032406-DOMINATOR
+AOIS_1_7E305E03D1F3AE2BE611D5B0B0ACCB80
+AORB_5_79F2F682DF89E3C68C7435ECEA0EB79A
+LOI_1_FE7D70462035155D3BA3AD6F09537FE1
+AOIU_2_DD9EBD801D0F1B9ACA65E8880A42C98B
+COR_1_C75F2139937AD1EA1C7FEAA1927B0349
+AOIS_2_F3A899C2A531B55E2636957FC3E70568
+PRVOU_REFINED_3_D50D69C2DF158F246642875FCAB199A0
+PRVOU_REFINED_1_2303298CF445E723B9170782A880D2F4
+PRVOU_REFINED_3_F0154EC74488704C6C0EA483719CC928
+ROR_11_DB3F6CD4F25FE29169B384493C216025
+PRVOU_REFINED_1_84923460C32C204F51BFF6F9CAB0680B
+PRVOR_REFINED_9_D9079B2CA5E7B3CB8973F8DC0CA5CFE8
+PRVOU_REFINED_1_07A69EC9ED89A845404C1888E082A50E-DOMINATOR
+PRVOR_REFINED_3_9955A7EBB4DF31599F624442649DFF32
+PRVOR_REFINED_1_DA6562F0EAF997C7A628953F72B466F2
+PRVOR_REFINED_2_D9A8EB9756E9E3EB46E13314DCF21C72
+AOIS_1_0D787B12E97A951BD63807754693FED2
+LOI_1_5AA884AC709ED60A98479661B64C3370
+PRVOU_REFINED_1_560AD4F4F951C356347D99860B759588
+AOIU_2_18AE48E7F644AB0F35179483F6C3AB77
+AORB_5_81ABA1FB79D5F3FA1193CF843892E532
+AORB_1_71BD1AA537BA34E99D9B26952750B733
+AOIS_1_36A0BC9C77D2427BC4093FFACE884832
+LOI_1_87E9D1A7CB40D93605012F4820F6017B
+AORS_1_EA9A8B3C4F75E149241743CDFAA11F7B
+AORS_1_EE3AD5F4ABAD53FD35E64F3D5A20253F
+AORB_2_4C183E75ED93418BB812C72912DA44C3-DOMINATOR
+LOI_4_875F325D827BFA3012DCD3D2D690BEC4
+AORB_1_392A50B632B3EEFE6E2B02490E54D9CE
+COR_1_1D8257C4B564C81DDE31925133BBA3D9
+LOI_1_F709809884E66BD0EAC8B7434BED2D47-DOMINATOR
+AOIS_1_98E144A9F92EDC0774AEF87337F3FB5F
+AOIU_7_F18B54A48738BF4BAFE28FD9502590FE
+LOI_2_CF676EB0901D09223B3D4A217B77195B
+PRVOR_REFINED_3_0783029CEC19EFE713480CAB3B1E14DE
+COD_2_ED8A8E95CC3B4DA66FD8713EA618E667
+PRVOU_REFINED_2_37D774134D09ACC58CEBA0E07435B19E-DOMINATOR
+AOIS_4_EAD946C18D6459CFBDE878CEA05C85C5-DOMINATOR
+AORB_1_1E68CB50973BCC178D1453EAA873CA3A
+AOIU_4_8A15836B5961DA7E6D0E25124C1DAD7C
+PRVOU_REFINED_2_2B393B19AB6E49BD1400624DED4E01A1
+PRVOR_REFINED_1_334AD228F5CDEE863AA6A04BAFD69663
+ROR_1_78D5025E765F54C3BBC1A7D2052FB34A
+AOIU_1_1F6E23AAC2A2F9A96BC3C60FA5E80EEE
+ROR_1_75D9F23B915DD23615A1E0DD02FDABC6
+ROR_3_E7C1D1584B9C2743E8C987D8DDEBDF3A
+PRVOR_REFINED_1_1801D8F6EF42F66AF1F47DCBF9F3B2BA
+PRVOR_REFINED_1_17AC86A8541A054BF58EBF6161F1651C
+PRVOR_REFINED_1_070E844A6767786531F5D55A08F4CF02
+AORB_5_2E39AF36DA11BA38A6453FAC09EBBA41
+ROR_1_C6C10D5C712C872909FFFE61AB292694
+AORB_1_104D5FDFF723753E9A7B55F6A68D3AB0
+PRVOR_REFINED_3_A5461CD72EBF5E7F8437D0CCD81E48AA
+LOI_1_427E88855B3F97D086D0476D9021C646-DOMINATOR
+PRVOR_REFINED_4_5A3AE7947B10EA14841B2E4E2E00334A
+AORB_1_1AFF738FFC3EBACA851FC9FFEE659E82
+AORS_1_4FA94954507C1A6CB6A4AD78B8F08BF5-DOMINATOR
+AOIU_1_B1E62473A4BB5D69D27252AB96D4DC6F
+AOIU_1_9665673B4D156EE771C19AFE2452801C
+ROR_3_A0EAC91AD5795D88771232B62DC5C639-DOMINATOR
+PRVOR_REFINED_1_5957D39D66305C387174A04AF7A70F01
+AOIS_3_926A528D74EDD723AD43B86061B8B64D-DOMINATOR
+ROR_11_7E260984D30BA3E1DC1884BB89053E76
+PRVOU_REFINED_1_4A30E888A4F47333BD78926CC2071CED
+LOI_1_34A477ACF695FFD7BF993D11BE6FE510-DOMINATOR
+AOIS_1_B03F3998BEA26A8B3D6E076ACC4953D9
+PRVOU_REFINED_1_B5EF49D65F1EB1F098C899561DE557F5-DOMINATOR
+AOIU_1_ABC413AAF978CB230D75EEC3866E5805
+AOIS_2_AA4E240E33C9E8A8EB73F6CDBFAF411E
+PRVOR_REFINED_1_03C5E3B3322271A5BC285BFC36563327-DOMINATOR
+PRVOR_REFINED_1_C193F48F5EEA583294A36552BB28B669-DOMINATOR
+AOIS_1_29FC2B2445E1D7E534AEEB0FD1CEFC61
+ROR_5_5DEF29329CEFA446DD2AD3E4D1A970E4-DOMINATOR
+PRVOR_REFINED_1_D2F8C679F13E4264786EFB35746A6912
+LOI_1_1B0228B6E789331DC6B233CD8E9A678F
+AOIS_4_4F66D8246EDFB0101FC26BA15D91317C
+LOI_1_5DF411166FEEFB1974D8E2E066B3D332
+AOIU_2_B14E5F81602B9084B773E2DFDA396AE4
+AOIS_1_E27C96E5C9A05E3138469D954304A19B
+AORB_4_A6242F6442771B13861002378E51849A
+COI_1_5D21AA3C4F241F59EDAD2C39261046A3
+AOIS_1_46E2E8903E03BA5E4E84F4E03701B279
+PRVOU_REFINED_1_10516A0E52129D926A14389174EBAE4C
+AOIS_3_A5C518058B7DDAFADA322B2FA706F5AB
+AORS_3_2A44A5E5EE6264A493E6F1C94C43F691-DOMINATOR
+AOIS_1_946D0BB5D2C57D5F14B93C79417C0F43
+PRVOU_REFINED_3_A02748EFB442826944B7A15925743B5A
+PRVOR_REFINED_1_7A368CC438E93A04AE3E5AA79E080B2B
+AOIS_1_0DED1C684950C4BA637FCBDDBE2C6270
+AOIU_1_9D8DD5CAFA8A2C7AD2EDB43D3016F372
+AOIU_8_CFA3633FBACB910225BB809BA4F42D09-DOMINATOR
+Subsumed nodes: 
+AOIS_2_18F175EC35210314383A4AEE91D4FB5A

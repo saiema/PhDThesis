@@ -1,0 +1,71 @@
+PRVOR_REFINED_4_5A3AE7947B10EA14841B2E4E2E00334A
+Test class : RegressionTest[false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+Test class : org.apache.commons.collections4.treelist.TreeListESTest[false, false, true, false, true, false, false, false, false, false, false, true, true, true, false, true, true, true, false, true, false, false, false, false, false, false, false, false, false, false, false, false]
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/PRVOR_REFINED/247/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [96, -36, 65, -58, -125, 13, -83, -12, -95, 121, 2, 127, 67, -26, -63, 4]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 6
+    Mutation         : (PRVOR_REFINED, root.addAll( cTree, size ), root.getRightSubTree(), ID[3627935])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/PRVOR_REFINED/248/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [-66, 87, 40, 4, 6, -61, 67, 126, 94, 76, -107, -42, 87, 99, -53, 63]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 6
+    Mutation         : (PRVOR_REFINED, root.addAll( cTree, size ), root.max(), ID[3627946])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/PRVOR_REFINED/250/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [-88, -41, 31, 66, -91, -60, 38, 94, -17, 108, 39, -43, 32, 23, 32, -71]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 6
+    Mutation         : (PRVOR_REFINED, root.addAll( cTree, size ), root.next(), ID[3627968])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/addAll/PRVOR_REFINED/257/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [20, 36, 89, -27, 95, 22, 108, 105, -45, 71, -85, 89, 24, 92, -29, -1]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : addAll
+    Line             : 6
+    Mutation         : (PRVOR_REFINED, root.addAll( cTree, size ), root.right, ID[3628044])
+
+Subsuming nodes: 
+ROR_4_D859863BEADFC5985668113F0F18042C
+AOIS_1_B03F3998BEA26A8B3D6E076ACC4953D9
+AOIS_4_EAD946C18D6459CFBDE878CEA05C85C5-DOMINATOR
+AOIU_10_678A0E8E83E157ADA7D5825CFA893D9D-DOMINATOR
+LOI_1_F6DA7191B40778942814903A6DAE87C6-DOMINATOR
+AOIS_1_29FC2B2445E1D7E534AEEB0FD1CEFC61
+ROR_11_DB3F6CD4F25FE29169B384493C216025
+AORB_27_8CCBBFB5FE90EAC52EAABE9C2F3C7BE5
+AOIS_1_2107527105D9204A67022CE7481ADFD5-DOMINATOR
+AORS_3_2A44A5E5EE6264A493E6F1C94C43F691-DOMINATOR
+AOIS_3_926A528D74EDD723AD43B86061B8B64D-DOMINATOR
+PRVOR_REFINED_1_DA6562F0EAF997C7A628953F72B466F2
+AORB_5_79F2F682DF89E3C68C7435ECEA0EB79A
+AOIU_7_F18B54A48738BF4BAFE28FD9502590FE
+AOIS_1_5AFEFB4D3B6C88E25A2FCE02EDA617DF
+Subsumed nodes: 
+ROR_2_CB78C9A359C1820CF0174F7D26305BD2
+AOIS_1_039C8E65657F16B95F9D77717460E334
+AOIS_1_A00E0697DE44F15DEA4DBC89879408B3
+ROR_2_55962995520D14EFA78E4AD6C56969EC
+PRVOR_REFINED_3_0783029CEC19EFE713480CAB3B1E14DE
+COI_1_7F95C89415E93FF5FFE3C29CC3B5A137
+AOIS_2_18F175EC35210314383A4AEE91D4FB5A
+AOIU_1_D4ABAA4F53B2792A31AB318318D6147B
+ROR_3_262AE84207B414FE5BF9A4AE43103051
+AOIS_1_D9156B48CF31152915832682D977E473
+LOI_1_AC6D652BEB51DD92BE3FED39D9B365B7

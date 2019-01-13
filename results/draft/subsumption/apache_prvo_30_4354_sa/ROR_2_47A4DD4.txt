@@ -1,0 +1,63 @@
+ROR_2_47A4DD43003FAA21BDBF888CE4740311
+Test class : RegressionTest[false, true, true, false, false, true, false, true, true, true, false, true, true, true, true, false, true, true, true, true, true, false, true, true, false, true, true, false, true, true, true, true, true, false, false, true, true, true, true, false, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, true, true, false, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, true, false, true, true, false, true, true, true, true, true, true, true, true, false, false, true, false, true, true, false, true, false, false, false, true, true, true, true, true, true, true, false, true, true, false, true, true, false, true, true, false, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, false, false, false, true, true, true, true, true, true, false, true, true, true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, false, false, false, true, true, true, true, true, true, true, true, true, false, true, false, true, true, false, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, false, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, false, true, false, true, true, false, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, false, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, false, true, true, false, true, true, true, true, true, true, true, true, false, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, false, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, false, true, true, false, true, true, false, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, false, true, false, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, false, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, false, true, false, false, true, false, true, true, true, true, false, true, true, true, true, true, true, true, true, false, true, false, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, false, true, true, true, true, false, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, false, true, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, false, true, true, false, true, true, true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, false, true, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, false, true, true, true, true, true, false, false, true, true, true, true, true, true, true, true, true, true, false]
+Test class : org.apache.commons.collections4.treelist.TreeListESTest[false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, true, false, false, false, true, true, false, false, false, false, false]
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/indexOf/ROR/8/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [-64, 40, -63, 34, 4, 42, 14, -118, -52, 119, 121, 115, -96, 38, -46, 51]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : indexOf
+    Line             : 1
+    Mutation         : (ROR, root == null, root != null, ID[1680168])
+
+name: org.apache.commons.collections4.treelist.TreeList
+Path                   : mutants/benchmarks/apachetreelist/generation-1/mutant-0/org/apache/commons/collections4/treelist/TreeList/indexOf/COI/11/org/apache/commons/collections4/treelist/TreeList.java
+MD5 hash               : [-86, 12, 72, -126, 90, 116, 10, 102, 109, 26, 26, -123, 76, 18, 2, -14]
+Several mutations      : false
+Mutations              : 
+    Method mutation  : true
+    Method           : indexOf
+    Line             : 1
+    Mutation         : (COI, root == null, !(root == null), ID[1683994])
+
+Subsuming nodes: 
+AOIS_1_B03F3998BEA26A8B3D6E076ACC4953D9
+PRVOU_REFINED_1_B5EF49D65F1EB1F098C899561DE557F5-DOMINATOR
+AOIU_1_ABC413AAF978CB230D75EEC3866E5805
+AOIS_2_AA4E240E33C9E8A8EB73F6CDBFAF411E
+PRVOR_REFINED_1_192383BCB717BBD002F2B4E5AC0494CE-DOMINATOR
+PRVOR_REFINED_1_03C5E3B3322271A5BC285BFC36563327-DOMINATOR
+PRVOR_REFINED_1_39EDAE61B9475FF75BEDF91AF9ED3FFB-DOMINATOR
+ROR_3_23F4B7E63D076C1573C38FF2B3DBBF32
+PRVOR_REFINED_1_C193F48F5EEA583294A36552BB28B669-DOMINATOR
+PRVOU_REFINED_2_37D774134D09ACC58CEBA0E07435B19E-DOMINATOR
+AOIS_1_29FC2B2445E1D7E534AEEB0FD1CEFC61
+LOI_1_A0D9262F161D19880BAA1AF52D35834E
+PRVOR_REFINED_1_334AD228F5CDEE863AA6A04BAFD69663
+AOIS_3_6383C8018E9E54608B4E826281060ADF-DOMINATOR
+PRVOR_REFINED_1_D2F8C679F13E4264786EFB35746A6912
+AOIU_1_0C827E5E9D466C9B36F0B83540BB6C98
+PRVOU_REFINED_1_07A69EC9ED89A845404C1888E082A50E-DOMINATOR
+AORB_5_2E39AF36DA11BA38A6453FAC09EBBA41
+AOIS_4_4F66D8246EDFB0101FC26BA15D91317C
+PRVOU_REFINED_1_2AFB0FA184196D3865B6FCF7A63BDCF8-DOMINATOR
+AOIU_2_B14E5F81602B9084B773E2DFDA396AE4
+PRVOU_REFINED_1_560AD4F4F951C356347D99860B759588
+AORB_5_81ABA1FB79D5F3FA1193CF843892E532
+LOI_1_626DA84E2A504569A78092E328246984
+AOIU_1_EF905187970236BDE5DC2575A056A7CC
+AOIU_10_678A0E8E83E157ADA7D5825CFA893D9D-DOMINATOR
+LOI_1_2AFFFB51BA0970A4EBD3C8548699BB27
+LOI_1_F6DA7191B40778942814903A6DAE87C6-DOMINATOR
+LOI_1_53AA89AD6C5485F360B5713DCDF8251F-DOMINATOR
+ROR_1_84E2906F2E8AEC3D59F8712AB190CAA8
+AORU_4_63317E7CE46E2C016AFCA4D4BBA1A527
+ROR_1_52F0A7A8CD4C0401C2900B3CA7D2AC75
+AORS_3_2A44A5E5EE6264A493E6F1C94C43F691-DOMINATOR
+AOIS_1_946D0BB5D2C57D5F14B93C79417C0F43
+PRVOR_REFINED_1_C0848C4138133E54D6E0F907F7032406-DOMINATOR
+LOI_1_F709809884E66BD0EAC8B7434BED2D47-DOMINATOR
+AORB_5_79F2F682DF89E3C68C7435ECEA0EB79A
+AOIS_1_0DED1C684950C4BA637FCBDDBE2C6270
+AOIU_8_CFA3633FBACB910225BB809BA4F42D09-DOMINATOR

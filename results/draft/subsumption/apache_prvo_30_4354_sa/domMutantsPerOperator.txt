@@ -1,0 +1,11 @@
+Total dominator nodes	:	29
+AOIS	[Dominator nodes involved: 8]	[Domination ratio: 27.586206%]
+AOIU	[Dominator nodes involved: 2]	[Domination ratio: 6.8965516%]
+AORB	[Dominator nodes involved: 2]	[Domination ratio: 6.8965516%]
+AORS	[Dominator nodes involved: 2]	[Domination ratio: 6.8965516%]
+ASRS	[Dominator nodes involved: 2]	[Domination ratio: 6.8965516%]
+COI	[Dominator nodes involved: 3]	[Domination ratio: 10.344828%]
+COR	[Dominator nodes involved: 1]	[Domination ratio: 3.4482758%]
+LOI	[Dominator nodes involved: 8]	[Domination ratio: 27.586206%]
+PRVO	[Dominator nodes involved: 9]	[Domination ratio: 31.034481%]
+ROR	[Dominator nodes involved: 6]	[Domination ratio: 20.689655%]
