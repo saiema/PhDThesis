@@ -31,6 +31,53 @@ Evidentemente, es necesario definir que se usa como especificaciones para el pro
 
 Por ejemplo, \emph{GenProg} \cite{bibliography.repair.GouesNFW12} usa computaci\'on evolutiva para evolucionar sint\'acticamente un programa hasta que una reparaci\'on aceptable es encontrada. Cada reparaci\'on candidata (modificaci\'on sint\'actica) es aplicada al programa original para producir uno nuevo cuya aptitud es evaluada utilizando un test suite. Modificaciones sint\'acticas en partes de una sentencia no son consideradas para limitar el espacio de candidatos, y la funci\'on de aptitud es utilizada para mantener una poblaci\'on reducida de candidatos a lo largo del proceso de computaci\'on evolutiva. 
 
+\subsubsection{Tests como especificaciones}
+\label{sec:repair.specs.testsAsSpecs}
+
+Las herramientas actuales, en general, utilizan tests como especificaciones parciales del programa a reparar. \'Esto, tiene como consecuencia la generaci\'on de reparaciones espurias, es decir, reparaciones que si bien logran hacer ``pasar'' a los tests, no resuelven el problema. En muchos casos, enmascarar un defecto puede causar que los tests que antes detectaban una falla, ahora dejen de hacerlo. A modo de ejemplo, en la Figura-\ref{figures.examples.repair.nullaccessexample} se muestra un m\'etodo \emph{find(int)} que tiene un defecto, la condici\'on del \textbf{while} deber\'ia incluir que \textbf{current} no sea \emph{null} y que el elemento a\'un no fue encontrado. Sin embargo, la reparaci\'on en la Figura-\ref{figures.examples.repair.nullaccessexample.mask} enmascara al defecto. Si nuestros tests solo consta de listas en donde el elemento no est\'a, y por lo tanto se espera que el m\'etodo retorne \emph{false}; o el elemento est\'a en el \'ultimo elemento, para los casos donde se espera que retorne \emph{true}. La reparaci\'on anterior es espuria, es decir, no repara realmente el programa.
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true, language=Java]
+	public boolean find(int e) {
+	if (isEmpty()) return false;
+	Node current = header;
+	boolean found = false;
+	while(true) {
+	found = current.elem == e;
+	current = current.next;
+	}
+	return found;
+	}
+	\end{lstlisting}
+	\caption{Un m\'etodo con un defecto que causa \emph{NullPointerException}}
+	\label{figures.examples.repair.nullaccessexample}
+\end{figure}
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true, language=Java]
+	public boolean find(int e) {
+	if (isEmpty()) return false;
+	Node current = header;
+	boolean found = false;
+	while(true) {
+	try {
+	found = current.elem == e;
+	current = current.next;
+	} catch (NullPointerException e) {
+	return break;
+	}
+	}
+	return found;
+	}
+	\end{lstlisting}
+	\caption{Reparaci\'on que enmascara el defecto en \ref{figures.examples.repair.nullaccessexample}}
+	\label{figures.examples.repair.nullaccessexample.mask}
+\end{figure}
+
+Esta observaci\'on llev\'o a un trabajo de investigaci\'on en donde se evaluaron un conjunto de herramientas actuales de reparaci\'on autom\'atica de programas basadas en tests como or\'aculo de reparaci\'on \cite{bibliography.repair.ZeminBGCDRAF17}. Al contrario de trabajos previos que se basaron en tests o inspecci\'on manual de las reparaciones provistas por las herramientas evaluadas (\emph{GenProg}, \emph{Angelix}, \emph{AutoFix}, y \emph{Nopol}, entre otras), en \'este, se utilizaron especificaciones formales y \emph{PEX} \cite{bibliography.formalver.TillmannH08} para evaluar las reparaciones obtenidas.
+
+Los resultados obtenidos, logrados sobre el benchmark de reparaci\'on de programas \emph{IntroClass} \cite{bibliography.repair.benchmarks.GouesHSBDFW15}, indican que al evaluar las reparaciones producidas utilizando especificaciones formales, \'estas son inv\'alidas, es decir, el programa obtenido no cumple con las especificaciones del problema que deben resolver. El porcentaje de reparaciones para \emph{GenProg}, que son consideradas como efectivas, es solo un 1.57\% (18 de 1.143 fallas fueron reparadas) de las cuales 8 reparan errores de typos en cadenas asociadas a los mensajes de salida del programa. \emph{Angelix} solo es capaz de reparar 41 de 232 (17,67\%), \emph{Nopol} solo 6 de 297 (2\%), y finalmente \emph{AutoFix} no pudo reparar ning\'un programa de manera correcta\footnote{Algunas herramientas no soportaban ciertas caracter\'isticas (retornar una cadena), y en otras que requer\'ian traducir a otro lenguaje, la misma reparaba el defecto}. Por el otro lado, incrementar la cantidad de tests disminu\'ia dr\'asticamente las reparaciones espurias, pero tambi\'en las reparaciones en general. En otros casos, las herramientas no soportaban el aumento en la cantidad de tests.
+
 \subsection{Granularidad de las reparaciones}
 \label{sec:repair.granularity}
 
@@ -69,56 +116,9 @@ boolean add(Object arg) {
 
 Los efectos que tienen estas restricciones sobre el espacio de candidatos a considerar para la reparaci\'on, pueden observarse en la Figura-\ref{figures.examples.repair.exampleCode} donde se muestra el m\'etodo \emph{add(Object)} de un conjunto. \'Este contiene dos defectos: primero, cuando el conjunto no est\'a vaci\'o, se comienza el recorrido del mismo a partir del nodo siguiente al inicial (el cual podr\'ia ser \emph{null}, resultando en un error en la l\'inea siguiente); segundo, cuando un nuevo nodo es agregado a la lista sobre la cual est\'a implementado el conjunto, el tama\~no de la misma (atributo \emph{size}) se decrementa. Para reparar al m\'etodo es necesario realizar dos cambios, ambos dentro de una sentencia. Si bien ser\'ia posible conseguir el c\'odigo correcto en otro lado del programa, \textbf{SListNode current = this.header;} y \textbf{size = size + 1} respectivamente.
 
-\subsection{Tests como especificaciones}
-\label{sec:repair.testsAsSpecs}
 
-Las herramientas actuales, en general, utilizan tests como especificaciones parciales del programa a reparar. \'Esto, tiene como consecuencia la generaci\'on de reparaciones espurias, es decir, reparaciones que si bien logran hacer ``pasar'' a los tests, no resuelven el problema. En muchos casos, enmascarar un defecto puede causar que los tests que antes detectaban una falla, ahora dejen de hacerlo. A modo de ejemplo, en la Figura-\ref{figures.examples.repair.nullaccessexample} se muestra un m\'etodo \emph{find(int)} que tiene un defecto, la condici\'on del \textbf{while} deber\'ia incluir que \textbf{current} no sea \emph{null} y que el elemento a\'un no fue encontrado. Sin embargo, la reparaci\'on en la Figura-\ref{figures.examples.repair.nullaccessexample.mask} enmascara al defecto. Si nuestros tests solo consta de listas en donde el elemento no est\'a, y por lo tanto se espera que el m\'etodo retorne \emph{false}; o el elemento est\'a en el \'ultimo elemento, para los casos donde se espera que retorne \emph{true}. La reparaci\'on anterior es espuria, es decir, no repara realmente el programa.
-
-\begin{figure}
-\begin{lstlisting}[mathescape=true, language=Java]
-public boolean find(int e) {
-  if (isEmpty()) return false;
-  Node current = header;
-  boolean found = false;
-  while(true) {
-    found = current.elem == e;
-    current = current.next;
-  }
-  return found;
-}
-\end{lstlisting}
-\caption{Un m\'etodo con un defecto que causa \emph{NullPointerException}}
-\label{figures.examples.repair.nullaccessexample}
-\end{figure}
-
-\begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java]
-public boolean find(int e) {
-  if (isEmpty()) return false;
-  Node current = header;
-  boolean found = false;
-  while(true) {
-    try {
-      found = current.elem == e;
-      current = current.next;
-    } catch (NullPointerException e) {
-      return break;
-    }
-  }
-  return found;
-}
-	\end{lstlisting}
-	\caption{Reparaci\'on que enmascara el defecto en \ref{figures.examples.repair.nullaccessexample}}
-	\label{figures.examples.repair.nullaccessexample.mask}
-\end{figure}
-
-Esta observaci\'on llev\'o a un trabajo de investigaci\'on en donde se evaluaron un conjunto de herramientas actuales de reparaci\'on autom\'atica de programas basadas en tests como or\'aculo de reparaci\'on \cite{bibliography.repair.ZeminBGCDRAF17}. Al contrario de trabajos previos que se basaron en tests o inspecci\'on manual de las reparaciones provistas por las herramientas evaluadas (\emph{GenProg}, \emph{Angelix}, \emph{AutoFix}, y \emph{Nopol}, entre otras), en \'este, se utilizaron especificaciones formales y \emph{PEX} \cite{bibliography.formalver.TillmannH08} para evaluar las reparaciones obtenidas.
-
-Los resultados obtenidos, logrados sobre el benchmark de reparaci\'on de programas \emph{IntroClass} \cite{bibliography.repair.benchmarks.GouesHSBDFW15}, indican que al evaluar las reparaciones producidas utilizando especificaciones formales, \'estas son inv\'alidas, es decir, el programa obtenido no cumple con las especificaciones del problema que deben resolver. El porcentaje de reparaciones para \emph{GenProg}, que son consideradas como efectivas, es solo un 1.57\% (18 de 1.143 fallas fueron reparadas) de las cuales 8 reparan errores de typos en cadenas asociadas a los mensajes de salida del programa. \emph{Angelix} solo es capaz de reparar 41 de 232 (17,67\%), \emph{Nopol} solo 6 de 297 (2\%), y finalmente \emph{AutoFix} no pudo reparar ning\'un programa de manera correcta\footnote{Algunas herramientas no soportaban ciertas caracter\'isticas (retornar una cadena), y en otras que requer\'ian traducir a otro lenguaje, la misma reparaba el defecto}. Por el otro lado, incrementar la cantidad de tests disminu\'ia dr\'asticamente las reparaciones espurias, pero tambi\'en las reparaciones en general. En otros casos, las herramientas no soportaban el aumento en la cantidad de tests.
-
-
-\subsection{Mutaci\'on en reparaci\'on}
-\label{sec:repair.mutation}
+\subsubsection{Mutaci\'on en reparaci\'on}
+\label{sec:repair.granularity.mutation}
 
 El uso de mutaci\'on en reparaci\'on de programas parece razonable, si se utiliza mutaci\'on para emular defectos reales, podr\'ia utilizarse para emular reparaciones. Herramientas de reparaci\'on basada en mutaci\'on existen, \cite{bibliography.repair.mutation.DebroyW10, bibliography.repair.mutation.AlloyWang18} son ejemplos recientes. El argumento de reparaci\'on basada en mutaci\'on, es que existen mutaciones que si se fueran a combinar, se cancelar\'ian, por ejemplo:
 \begin{lstlisting}[mathescape=true]
@@ -135,6 +135,80 @@ puede ser restaurado, sem\'anticamente, generando el mutante:
   for (int i = 0; i $\textbf{!=}$ lenght; i++)...
 \end{lstlisting}
 Existen tambi\'en casos donde varias mutaciones pueden corregir el comportamiento. Esto lleva a la idea de que si consideramos el programa con fallas \texttt{P$_b$} y el original sin fallas \texttt{P$_o$}, se puede definir el segundo en t\'erminos del primero como \texttt{P$_b$ = mutate(P$_o$, M)} donde \texttt{M} representa una secuencia de mutaciones y \texttt{mutate} es un programa que aplica dicha secuencia a un programa. En general como dijimos anteriormente, toda mutaci\'on tiene su inversa, lo que lleva a definir el problema de reparaci\'on como encontrar una secuencia de mutaciones \texttt{M$\prime$} tal que \texttt{P$_o$ = mutate(P$_b$, M$\prime$)}.
+
+La reparaci\'on de programas mediante mutaci\'on puede describirse como una b\'usqueda exhaustiva que, dado un programa defectuoso y una especificaci\'on del mismo (que como vimos puede ser formal o mediante tests), y un conjunto de operadores de mutaci\'on:
+\begin{enumerate}
+	\item Considera el programa a reparar como el candidato a reparaci\'on inicial.
+	
+	\item Si \textbf{P} es un candidato a reparaci\'on, y \textbf{Q} es el resultado de aplicar una mutaci\'on a \textbf{P}, entonces \textbf{Q} tambi\'en es un candidato a reparaci\'on.
+	
+	\item  Un candidato \textbf{S} es exitoso si satisface las especificaciones provistas.
+\end{enumerate}
+
+\begin{figure}
+	\begin{tikzpicture}%
+	[state/.style ={ellipse, draw, minimum width = 0.7 cm},
+	point/.style = {circle, draw, inner sep=0.04cm,fill,node contents={}},
+	el/.style = {inner sep=2pt, align=left, sloped}]
+	\node[state,rectangle] (init) {$return\:a < b?a:b;$};
+	\node[state,rectangle] (cand1) [below=of init] {$return\:b < b?a:b;$};
+	\node[state,rectangle] (cand2) [right=of cand1] {$return\:a < b?a:0;$};
+	\node[state,rectangle] (succ) [below=of cand1] {$return\:b < a?a:b;$};
+	
+	\path[->] (init) edge node[left] {a -> b} (cand1);
+	\path[->] (init) edge node[right=16pt] {b -> 0} (cand2);
+	\path[->] (cand1) edge node[left] {b -> a} (succ);
+	
+	\node[label=right: {\small Inicial}, draw=blue,dotted,fit=(init)] (initR) {};
+	
+	\node[label=right: {\small Candidatos (Profundidad 1)},draw=blue,dotted,fit=(cand1) (cand2), inner sep=0.2cm] (Candidates) {};
+	
+	\node[label=right: {\small Exitoso (Profundidad 2)},draw=blue,dotted,fit=(succ)] (Succ) {};
+	
+	\end{tikzpicture}
+	\caption{Reparaci\'on del un programa que calcula el m\'aximo de dos n\'umeros}
+	\label{figures.examples.repairWithMutation}
+\end{figure}
+
+La definici\'on previa de reparaci\'on basada en mutaci\'on deja en claro que el espacio de candidatos a reparaci\'on depende del n\'umero de mutaciones (\textbf{b}) a considerar, lo que influye en cuan ``ancho'' es el \'arbol de b\'usqueda, y el n\'umero m\'aximo de mutaciones sucesivas permitidas (\textbf{d}) para generar a los candidatos, lo que afecta la profundidad de la b\'usqueda. El espacio de b\'usqueda queda entonces definido por una suma geom\'etrica $\frac{b^{d+1}-1}{b-1}$ ($O(b^d)$). Si consideramos el m\'etodo en la Figura-\ref{figures.examples.repair.getNode}, y solo cuatro l\'ineas del mismo, al utilizar 18 operadores de mutaci\'on (mediante la herramienta \emph{$\mu$Java++}), podemos ver en la Tabla-\ref{tables.repair.mutation.explosion}, como a medida que aumentamos la cantidad de mutaciones consecutivas (la profundidad en reparaci\'on mediante mutaci\'on), la cantidad de candidatos a evaluar se vuelve r\'apidamente inmanejable.
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true,language=Java]
+  Node getNode(int i) {
+    Node current = this.head;
+    Node result = null;
+    int current_index = 0;
+    while (result == null && current != null) {
+      if (i == current_index ) {
+        result = current;
+      }
+      current_index = current_index + 1;
+      current = current.next;
+    }
+    return result;
+  }
+	\end{lstlisting}
+	\caption{C\'odigo de ejemplo, m\'etodo que obtiene el i-\'esimo nodo de una lista}
+	\label{figures.examples.repair.getNode}
+\end{figure}
+
+\begin{table}[t]
+	\begin{center}
+		\small
+		\begin{tabular}{c r}
+			Search Depth                            &	No. of Mutants (Fix Candidates)        \\
+			\hline
+			1 					&	40		                               	\\
+			2 					&	1,604			                \\
+			3 					&	64,684		        	        \\
+			4 					&	$>$ 20 million		                
+		\end{tabular}
+		\normalsize
+	\end{center}
+	\caption{Mutantes generados para \emph{getNode} \ref{figures.examples.repair.getNode}, considerando 4 l\'ineas y 18 operadores, a medida que la profundidad aumenta.}
+	\label{tables.repair.mutation.explosion}
+\end{table}
+
 
 \subsection{Striker}
 \label{sec:repair.striker}
