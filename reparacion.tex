@@ -38,16 +38,16 @@ Las herramientas actuales, en general, utilizan tests como especificaciones parc
 
 \begin{figure}
 	\begin{lstlisting}[mathescape=true, language=Java]
-	public boolean find(int e) {
-	if (isEmpty()) return false;
-	Node current = header;
-	boolean found = false;
-	while(true) {
-	found = current.elem == e;
-	current = current.next;
-	}
-	return found;
-	}
+  public boolean find(int e) {
+    if (isEmpty()) return false;
+    Node current = header;
+    boolean found = false;
+    while(true) {
+      found = current.elem == e;
+      current = current.next;
+    }
+    return found;
+  }
 	\end{lstlisting}
 	\caption{Un m\'etodo con un defecto que causa \emph{NullPointerException}}
 	\label{figures.examples.repair.nullaccessexample}
@@ -55,20 +55,20 @@ Las herramientas actuales, en general, utilizan tests como especificaciones parc
 
 \begin{figure}
 	\begin{lstlisting}[mathescape=true, language=Java]
-	public boolean find(int e) {
-	if (isEmpty()) return false;
-	Node current = header;
-	boolean found = false;
-	while(true) {
-	try {
-	found = current.elem == e;
-	current = current.next;
-	} catch (NullPointerException e) {
-	return break;
-	}
-	}
-	return found;
-	}
+  public boolean find(int e) {
+    if (isEmpty()) return false;
+    Node current = header;
+    boolean found = false;
+    while(true) {
+      try {
+        found = current.elem == e;
+        current = current.next;
+      } catch (NullPointerException e) {
+        break;
+      }
+    }
+    return found;
+  }
 	\end{lstlisting}
 	\caption{Reparaci\'on que enmascara el defecto en \ref{figures.examples.repair.nullaccessexample}}
 	\label{figures.examples.repair.nullaccessexample.mask}
@@ -173,7 +173,7 @@ La reparaci\'on de programas mediante mutaci\'on puede describirse como una b\'u
 La definici\'on previa de reparaci\'on basada en mutaci\'on deja en claro que el espacio de candidatos a reparaci\'on depende del n\'umero de mutaciones (\textbf{b}) a considerar, lo que influye en cuan ``ancho'' es el \'arbol de b\'usqueda, y el n\'umero m\'aximo de mutaciones sucesivas permitidas (\textbf{d}) para generar a los candidatos, lo que afecta la profundidad de la b\'usqueda. El espacio de b\'usqueda queda entonces definido por una suma geom\'etrica $\frac{b^{d+1}-1}{b-1}$ ($O(b^d)$). Si consideramos el m\'etodo en la Figura-\ref{figures.examples.repair.getNode}, y solo cuatro l\'ineas del mismo, al utilizar 18 operadores de mutaci\'on (mediante la herramienta \emph{$\mu$Java++}), podemos ver en la Tabla-\ref{tables.repair.mutation.explosion}, como a medida que aumentamos la cantidad de mutaciones consecutivas (la profundidad en reparaci\'on mediante mutaci\'on), la cantidad de candidatos a evaluar se vuelve r\'apidamente inmanejable.
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true,language=Java]
+	\begin{lstlisting}[mathescape=true,language=Java,numbers=left,xleftmargin=20pt]
   Node getNode(int i) {
     Node current = this.head;
     Node result = null;
@@ -213,6 +213,30 @@ La definici\'on previa de reparaci\'on basada en mutaci\'on deja en claro que el
 \subsection{Striker}
 \label{sec:repair.striker}
 
+\emph{Striker} es una herramienta de reparaci\'on autom\'atica de programas cuya meta principal es:
+\begin{quote}
+	Proveer una t\'ecnica automatizada y eficiente para reparar programas anotados con especificaciones (en t\'erminos de pre y post condiciones) corrigiendo errores que resultan como una consecuencia de ocurrencias simultaneas de un n\'umero de errores sint\'acticos dentro de sentencias de un programa.
+\end{quote}
+Es necesario remarcar la necesidad de especificaciones asociadas al programa. As\'i tambi\'en, los errores que se consideran son defectos, o mutaciones, dentro de sentencias. En particular no se apunta a reparar programas que requieran agregar c\'odigo. Algunas de los defectos reparables por \emph{Striker} se muestran en la Figura-\ref{figures.examples.repair.faultsGetNode}.
+
 Si bien muchas herramientas de reparaci\'on autom\'atica de programas utilizan mutaci\'on, \emph{Striker} es una de las m\'as flexibles con respecto a operadores soportados, entre ellos \emph{prvo}; soporte para modificaciones a partes de sentencias; y fallas que requieren las modificaci\'on de varias sentencias. Striker utiliza \emph{TACO} \cite{bibliography.mutation.tools.TACOGaleottiRPF13} para evaluar candidatos a reparaci\'on, lo que requiere proveer especificaciones formales en lugar de un test suite, y JML RAC \cite{bibliography.misc.JMLRAC.LeavensCCRC02} como t\'ecnica de evaluaci\'on r\'apida basada en escenarios previamente encontrados para los cuales un candidato a reparaci\'on no cumpl\'ia con las especificaciones. Sin entrar en detalles, esta herramienta es capaz de expandir las fallas soportadas para reparar, agregando varios operadores en los que incluye a \emph{prvo}, y permitir la reparaci\'on de aquellas que requieren modificaciones intra-sentencias as\'i como en m\'ultiples sentencias, mediante el uso de t\'ecnicas de poda innovadoras.
 
-Bajo esta herramienta es que se pudo observar como \emph{prvo} era capaz de reparar ciertas fallas que de otra forma no eran reparables. Si bien el enfoque principal de esta tesis se encuentra en \emph{prvo} como un operador de mutaci\'on en el contexto de mutation testing, es interesante mostrar su contribuci\'on en el contexto de reparaci\'on.
+Bajo esta herramienta es que se pudo observar como \emph{prvo} era capaz de reparar ciertas fallas que de otra forma no eran reparables, como por ejemplo el caso de \emph{add(int)} en la Figura-\ref{figures.examples.repair.exampleCode}, en donde si bien el segundo defecto es reparable por \emph{AORB} el cual reemplaza el operador incorrecto (\emph{-}) por el que corresponde (\emph{+}), el primer defecto solo puede ser reparado por \emph{prvo} al eliminar el acceso al campo \emph{next}. Si bien el enfoque principal de esta tesis se encuentra en \emph{prvo} como un operador de mutaci\'on en el contexto de mutation testing, es interesante mostrar su contribuci\'on en el contexto de reparaci\'on.
+
+\begin{figure}[t]
+	\footnotesize
+	$$
+	\begin{array}{rl}
+	5_a: & (\mathit{result} \mbox{ != }\mathsf{null}\ \&\&\ \mathit{current}\mbox{ != }\mathsf{null})\\
+	5_b: & (\mathit{result} == \mathsf{null}\ \&\&\ \mathit{current} == \mathsf{null})\\
+	5_c: & (\mathit{result} == \mathsf{null}\ ||\ \mathit{current}\mbox{ != }\mathsf{null})\\
+	6_a: & (\mathit{i} == \mathit{current\_index} + 1)\\
+	6_b: & (\mathit{i}\ \mbox{!=}\ \mathit{current\_index})\\
+	9_a: & \mathit{current\_index} = \mathit{current\_index} - 1\\
+	10_a: & \mathit{current.next} = \mathit{current}
+	\end{array}
+	$$
+	\normalsize
+	\caption{Algunos defectos en el m\'etodo \emph{getNode} \ref{figures.examples.repair.getNode} que pueden modelarse mediante mutaciones y ser reparados por \emph{prvo}.}
+	\label{figures.examples.repair.faultsGetNode}
+\end{figure}
