@@ -178,7 +178,43 @@ Para nuestros experimentos vamos a seleccionar todos los operadores b\'asicos, q
 \section{Experimentos}
 \label{sec:evaluation.steps}
 
-[LOS PASOS A SEGUIR, QUIZAS CAMBIAR EL TITULO DE LA SECCION]
+La ejecuci\'on de los experimentos fue automatizada mediante scripts, para por un lado, evitar errores humanos al seguir los pasos de los mismos, y por el otro para no tener que controlar constantemente a los mismos. Cada experimento se define por un conjunto de propiedades que definen la clase a evaluar, datos de localizaci\'on de fuentes y binarios, y configuraci\'on de \emph{prvo} y \emph{$\mu$Java++}. A partir de \'estas, los pasos a seguir son los siguientes:
+
+\begin{enumerate}[leftmargin=.75cm,align=left,style=nextline]
+	\item[Generar tests]\mbox{}\\ Si los tests para un caso particular, con un seed particular a\'un no han sido generados, entonces se generaran a los mismos utilizando \emph{EvoSuite} y \emph{Randoop}. Si los tests ya han sido generados previamente, este paso ser\'a ignorado (por ejemplo, al comparar los efectos de \emph{prvo} para un caso de estudio y un seed particular los tests solo ser\'an generados una vez y reutilizados la segunda).
+	
+	\item[Evaluar la calidad de los tests]\mbox{}\\ Para tener una medida sobre la calidad de los test suites generados, vamos a utilizar cobertura de ramas mediante la herramienta \emph{JaCoCo}. \'Esta genera un archivo \emph{xml} con los datos de cobertura (as\'i como archivos \emph{html} para visualizar los datos), aunque nosotros vamos a utilizar una herramienta propia para recopilar un resumen de los datos generados para su r\'apida visualizaci\'on.
+	
+	\item[Ejecutar \emph{$\mu$Java++}]\mbox{}\\ Como ya hemos mencionado, \emph{prvo} est\'a implementado en esta herramienta, por eso la evaluaci\'on va a ser realizada con la misma. \'Esta funciona tomando un archivo de propiedades como entrada y ejecutando el o los an\'alisis especificados por las mismas. En la Figuras \ref{figures.examples.confFile.part1} y \ref{figures.examples.confFile.part2} se muestra un ejemplo de un archivo de propiedades y m\'as adelante se da una explicaci\'on de las mismas. En la primera se ven las configuraciones generales del an\'alisis y en la segunda la configuraci\'on de los operadores.
+	
+	\item[Recopilaci\'on de informaci\'on]\mbox{}\\ Si bien \emph{$\mu$Java++} genera una salida con la informaci\'on pertinente a su ejecuci\'on, es conveniente poder recopilar en forma resumida la informaci\'on m\'as pertinente para r\'apido acceso.
+\end{enumerate}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\footnotesize]{results/draft/propExample.properties}
+	\caption{Configuraci\'on de ejemplo para \emph{$\mu$Java++} [parte 1]}
+	\label{figures.examples.confFile.part1}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\footnotesize]{results/draft/propExample_ops.properties}
+	\caption{Configuraci\'on de ejemplo para \emph{$\mu$Java++} [parte 2]}
+	\label{figures.examples.confFile.part2}
+\end{figure}
+
+Si bien hay muchas m\'as propiedades en la configuraci\'on que se muestra de las que se puedan (o que tenga sentido) explicar, vamos a mencionar las que afectan significativamente a nuestros experimentos.
+
+Con respecto a las opciones generales, \textbf{GENERAL OPTIONS} \ref{figures.examples.confFile.part1}, \emph{$\mu$Java++} se va a ejecutar sin tener en cuenta las anotaciones $//mutGenLimit K$ que limitan donde y cuantas mutaciones consecutivas se pueden aplicar, \'esto se debe a que: (\textbf{i}), queremos generar mutantes para todas las sentencias posibles; y (\textbf{ii}), solo vamos a generar una sola generaci\'on de mutantes (no m\'as de una mutaci\'on simultanea), definido por la propiedad \textbf{mutation.advanced.generations}. Para cada experimento se va a mutar una \'unica clase, definida por la propiedad \textbf{mutation.basic.class}, y todos los m\'etodos de la misma, definido por la propiedad \textbf{mutation.basic.methods} que al estar en blanco indica que todos los m\'etodos ser\'an mutados. Los operadores a utilizar, previamente nombrados y descriptos en \ref{sec:evaluation.operators}, est\'an definidos por la propiedad \textbf{mutation.basic.operators}. Finalmente los tests a utilizar son los generados por \emph{EvoSuite} y \emph{Randoop}, definidos respectivamente en la propiedad \textbf{mutation.basic.tests}.
+
+Algunas propiedades avanzadas que se van a utilizar en los experimentos, definidas en la secci\'on \textbf{ADVANCED OPTIONS}, son: los tests van a ser ejecutados con un timeout de 1 segundo, \'esto se debe a que teniendo en cuenta los casos de estudio utilizado, esta cantidad de tiempo es suficiente para detectar mutantes que causen ciclos infinitos sin obtener una gran cantidad de falsos positivos (mutantes que solo causan que el algoritmo tarde un poco m\'as pero que no produzca ciclos infinitos), el timeout est\'a definido por la propiedad \textbf{mutation.advanced.timeout}, aunque solo afecta a aquellos tests que no tengan un timeout definido en el test, en la Figura-\ref{figures.examples.confFile.testTimeout} el test \textbf{test1} tiene un timeout de 2 segundos, mientras que \textbf{test2} al no tener un timeout definido ser\'ia ejecutado con el que defina la opci\'on previa; se van a realizar los an\'alisis de mutaci\'on (calcular mutation score), dureza (cuantos tests es capaz de sobrevivir un mutante), dynamic mutants subsumption, definido por las propiedades \textbf{mutation.basic.mutationScore}, \textbf{mutation.advanced.toughness}, y \textbf{mutation.advanced.dynamicSubsumption} respectivamente; finalmente, \emph{$\mu$Java++} va a ejecutar el an\'alisis de cada mutante en un proceso aparte y de hasta 10 mutantes a la vez en paralelo, definido por las propiedades \textbf{mutation.advanced.useExternalJUnit}, para el an\'alisis de mutantes mediante un proceso externo, y las propiedades \textbf{mutation.advanced.useParallelJUnitRunner} y \textbf{mutation.advanced.parallelJUnitRunnerThreads} para definir la ejecuci\'on en paralelo de hasta 10 mutantes.
+
+Con respecto a las propiedades que afectan a los operadores, definidas en la secci\'on \textbf{OPERATORS OPTIONS} \ref{figures.examples.confFile.part1}, [SIGO ACA]
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\small, language=Java]{results/draft/TestExample.java}
+	\caption{Ejemplo de tests afectados por la propiedad de timeout}
+	\label{figures.examples.confFile.testTimeout}
+\end{figure}
 
 \section{Evaluaci\'on}
 \label{sec:evaluation.evaluation}
