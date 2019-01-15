@@ -1,3 +1,4 @@
 Definir propiedades que afectan a los operadores de mutacion y las metodologias para evaluarlas (hecho la primera parte)
-Mostrar una comparación de como distintas configuraciones de PRVO alteran la cantidad de mutantes generados
+Mostrar una comparación de como distintas configuraciones de PRVO alteran la cantidad de mutantes generados (HECHO)
 Las dos figuras de subsumption se usan mucho antes que el capitulo de PRVO y muJava++, a lo mejor habria que moverlos o mencionarlos
+Quizas vale la pena mencionar que muJava define runners propios para soportar tests JUnit de diversos tipos.
