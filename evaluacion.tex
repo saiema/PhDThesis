@@ -4,7 +4,63 @@
 
 En la secci\'on \ref{sec:intro.objetivos} definimos las motivaciones y objetivos de esta tesis, los cuales constan del dise\~no y desarrollo de un operador de mutaci\'on, altamente configurable, para expresiones de navegaci\'on. Luego, en la secci\'on \ref{sec:preliminares.mutation.opevaluation} definimos que propiedades afectan el an\'alisis de \emph{mutation testing}, cantidad de mutantes, mutantes equivalentes, dificultad de detecci\'on, acoplamiento con fallas reales, y redundancia de mutantes (o acoplamiento entre mutantes). En este capitulo realizamos la evaluaci\'on de nuestro ``meta-operador'', \emph{prvo}, para determinar la utilidad pr\'actica de la misma.
 
-\section{Configuraci\'on}
+\section{Casos de estudio}
+\label{sec:evaluation.benchmark}
+
+Como se mencion\'o en la introducci\'on \ref{sec:intro.contribuciones}, los casos de estudio sobre los cuales se va a evaluar a \emph{prvo} en el contexto de mutation testing, son estructuras que representan colecciones implementadas en \emph{Java} y con un uso significativo de caracter\'isticas de programas orientados a objetos, entre ellas, y la m\'as importante para nuestro estudio, el uso de expresiones de navegaci\'on. 
+
+\begin{table}[]
+	\begin{tabular}{l|ccccccc|}
+		\cline{2-8}
+		& TreeList & AvlTree & BinHeap & TreeSet & NCL & BSTree & \multicolumn{1}{l|}{Queue} \\ \hline
+		\multicolumn{1}{|l|}{LOC} & \multicolumn{1}{c|}{378} & \multicolumn{1}{c|}{71} & \multicolumn{1}{c|}{119} & \multicolumn{1}{c|}{204} & \multicolumn{1}{c|}{201} & \multicolumn{1}{c|}{91} & 36 \\ \cline{1-1}
+		\multicolumn{1}{|l|}{Methods} & \multicolumn{1}{c|}{60} & \multicolumn{1}{c|}{18} & \multicolumn{1}{c|}{9} & \multicolumn{1}{c|}{21} & \multicolumn{1}{c|}{48} & \multicolumn{1}{c|}{10} & 9 \\ \hline
+	\end{tabular}
+	\caption{Casos de estudio y cantidad de l\'ineas de c\'odigo (LOC) y m\'etodos de cada uno.}
+	\label{tables.studyCases}
+\end{table}
+
+\begin{enumerate}[leftmargin=.75cm,align=left,style=nextline]
+	\item[TreeList] Una implementaci\'on de listas sobre \'arboles AVL, es decir, \'arboles binarios de b\'usqueda balanceados (la diferencia de altura entre el sub-\'arbol izquierdo y el sub-\'arbol derecho es siempre menor o igual a 1). La implementaci\'on proviene de \emph{Apache Collections}. Una observaci\'on sobre este caso de estudio es que la clase principal contiene una subclase \emph{AVLNode} que b\'asicamente implementa un \'arbol AVL. Considerando \'esto, se har\'a una evaluaci\'on sobre esta clase tambi\'en.
+	
+	\item[AvlTree] Una implementaci\'on de \'arboles binarios de b\'usqueda balanceados (la diferencia de altura entre el sub-\'arbol izquierdo y el sub-\'arbol derecho es siempre menor o igual a 1). La implementaci\'on proviene de [NO SE, STRIKER?]
+	
+	\item[BinomialHeap] Una implementaci\'on de \emph{Binomial Heap}, una secuencia creciente de \'arboles binomiales con respecto al orden de los mismos. Un \'arbol binomial es o bien un nodo, en cuyo caso se trata de un \'arbol de grado 0; o bien un nodo donde los hijos representan \'arboles binomiales de grado \emph{k-1} hasta 0, para un \'arbol de grado \emph{k}. En un \emph{Binomial Heap} los \'arboles binomiales cumplen con la propiedad de que cada nodo en un \'arbol tiene un valor asociado mayor o igual al de su nodo padre. Y en el conjunto de \'arboles binomiales que conforman al \emph{Binomial Heap}, no puede haber m\'as de un \'arbol con un determinado orden. La implementaci\'on proviene de [NO SE, STRIKER?]
+	
+	\item[TreeSet] Un conjunto implementado sobre \'arboles rojos y negros. \'Estos permiten mantener un \'arbol balanceado de tal forma que el camino desde la ra\'iz hasta la hoja m\'as lejana tiene a lo sumo dos veces la distancia de la ra\'iz a la hoja m\'as cercana. Las restricciones de este tipo de \'arboles son:
+	\begin{enumerate}
+		\item Cada nodo es rojo o negro.
+		\item El nodo ra\'iz es negro.
+		\item El camino desde cualquier nodo a cualquiera de sus hojas, tiene la misma cantidad de nodos negros.
+	\end{enumerate}
+	La implementaci\'on de \emph{TreeSet} fue sacada de \emph{Java Collections}. [REVISAR SI ES ASI]
+	
+	\item[NodeCachingList] Una lista simplemente doblemente encadenada (cada nodo, excepto el primero y el \'ultimo, tienen una referencia al nodo siguiente y al anterior) que mantiene y utiliza una \emph{cache} de nodos. El uso de esta cache permite disminuir significativamente las operaciones de alocaci\'on de nodos y a su vez disminuir el uso de memoria (si bien los nodos eliminados son finalmente eliminados de la memoria, este proceso es realizado por el \emph{Garbage Collector}, al usar una cache disminuye la necesidad de limpiar la memoria). La implementaci\'on est\'a basada en \emph{Apache Collections}, pero fue modificada por el hecho de que la implementaci\'on original est\'a dividida en diversas clases, a la vez que la utilizada re\'une todo el c\'odigo relacionado esta implementaci\'on, en tres clases (una clase lista, una nodo, y otra iterador).
+	
+	\item[BinarySearchTree] Una implementaci\'on de un \'arbol binario de b\'usqueda. Se trata de \'arboles binarios en donde se cumple la propiedad de:
+	\begin{quote}
+		Para cada nodo \textbf{n}, todos los nodos alcanzables desde el sub-\'arbol izquierdo (\textbf{n$_i$}) tienen un valor asociado menor al de \textbf{n}; y todos los nodos alcanzables desde el sub-\'arbol derecho (\textbf{n$_d$}) tienen un valor asociado mayor al de \textbf{n}.
+	\end{quote}
+	La implementaci\'on proviene de [NO SE, STRIKER?]
+	
+	\item[Queue] Una implementaci\'on de una cola, basada en el ejemplo de motivaci\'on provisto en \ref{sec:intro.objetivos} (\ref{figures.motivation.queue-class}). \'Esta, al contrario de la provista como motivaci\'on, fue implementada de manera correcta.
+	
+\end{enumerate}
+
+\section{Generaci\'on de tests}
+\label{sec:evaluation.tests}
+
+Los test suites necesarios para poder realizar mutation testing fueron generados por herramientas de generaci\'on autom\'atica (\emph{GenProg} y \emph{Randoop}). La raz\'on se basa en que no solo ambas son herramientas de generaci\'on autom\'atica de tests com\'unmente utilizadas en trabajos de investigaci\'on, sino que adem\'as eliminar cualquier parcialidad introducida si nosotros fueramos a generar los tests.
+
+Ambas herramientas son no determin\'isticas, principalmente por utilizar procedimientos aleatorios. El impacto de \'esto en los experimentos puede ser minimizado al proveer a estas herramientas con un ``seed'', un n\'umero que va a ser utilizado como semilla para los generadores aleatorios que utilizan ambas herramientas. A su vez, los experimentos fueron repetidos [REPETICIONES] con distintas semillas para garantizar que una semilla particular no afectaba los resultados. \'Estas, fueron generadas una vez, mediante generaci\'on aleatoria, y se guardaron en un archivo para poder ser reutilizadas. La forma en que se ejecutan los experimentos garantiza que cada vez que se ejecute el i-\'esimo experimento, se va a utilizar la misma semilla.
+
+Tanto \emph{EvoSuite} como \emph{Randoop} permiten definir un ``presupuesto'' o \emph{budget} de tiempo para la generaci\'on de tests. En experimentos previos, al correr las herramientas con 30, 60, y 120 segundos, pudimos comprobar que la diferencia que puede haber entre los dos primeros tiempos, con respecto a mutation testing y cobertura de ramas, es peque\~na (beneficiando al segundo caso), mientras que entre 60 y 120 segundos, la diferencia es despreciable. Es por esto que decidimos utilizar \textbf{60 segundos} como presupuesto de tiempo para ambas herramientas.
+
+A su vez, \emph{EvoSuite} permite definir que m\'etricas de evaluaci\'on de tests se van a utilizar durante la generaci\'on de tests, siendo \emph{EvoSuite} una t\'ecnica que se basa en algoritmos gen\'eticos, la forma de guiar la evoluci\'on de tests es al intentar maximizar las m\'etricas seleccionadas. Nuevamente, basados en estudios previos (trabajos de investigaci\'on del grupo) notamos que utilizar \textbf{cobertura de ramas} y \textbf{weak mutation\footnote{Esta t\'ecnica difiere del concepto usual de mutation testing (Strong mutation) al considerar un mutante detectado si en la siguiente instrucci\'on luego de la mutaci\'on, el estado del programa es distinto al del original}} resultan en suites de mejor calidad (mayor capacidad de detectar mutantes y mejor cobertura de ramas).
+
+Para garantizar que la evaluaci\'on entre usar o no \emph{prvo} se lo menos afectada posible por el no determinismo de la generaci\'on de tests, \'estos se van a generar una \'unica vez para cada caso de estudio (y cada semilla) para luego utilizar exactamente el mismo suite para evaluar ambos casos (utilizando solo los operadores suficientes, y agregando \emph{prvo}).
+
+\section{Configuraci\'on de PRVO}
 \label{sec:evaluation.prvoconfig}
 
 Antes de evaluar a \emph{prvo}, es necesario que definamos una configuraci\'on particular para el mismo. Teniendo en cuenta que la configuraci\'on sobre miembros de clases a utilizar o evitar, es decir, una de las propiedades principales que regula el conjunto de expresiones a utilizar durante la mutaci\'on, es algo que debe definirse por cada proyecto, vamos entonces para este caso, a definir de manera general que criterio vamos a utilizar para configurar esta propiedad para cada proyecto. El primer problema a resolver para poder definir esta configuraci\'on y el criterio para expresiones a utilizar, es especificar que tipo de fallas estamos interesados en representar, puesto que lo mejor no es una configuraci\'on que intente representar m\'ultiples fallas sino una que se centre en un tipo de falla espec\'ifica. De acuerdo a nuestro ejemplo motivador, dado en la secci\'on \ref{sec:intro.objetivos}, el tipo de fallas que queremos representar son aquellas que involucran expresiones de navegaci\'on, es decir, expresiones encadenadas de tama\~no al menos 1, y que resultan de el acceso al miembro incorrecto de una clase. Estas fallas no parecen estar de acuerdo con el ejemplo, recordemos que \'este utiliza un m\'etodo \emph{dequeue()} que solo tiene una l\'inea donde reasigna el valor a un puntero, y la falla est\'a en la falta de c\'odigo, como controles y reasignaci\'on de otros punteros, sin embargo, modificar un miembro en las expresiones halladas en la \'unica sentencia del m\'etodo, genera la necesidad de mejorar el test suite. Por parte de las fallas mencionadas como no acopladas actualmente a fallas reales, descriptas en \ref{sec:prvo.prvoTargetedFaults}, dentro de \'estas, nos vamos a enfocar en las siguientes:
@@ -118,6 +174,11 @@ Para nuestros experimentos vamos a seleccionar todos los operadores b\'asicos, q
 	\item[LOR] Reemplaza operadores l\'ogicos binarios por otros (\emph{\&}, \emph{|}, \emph{\^}).
 	\item[ROR] Reemplaza operadores relacionales con otros (\emph{<}, \emph{<=}, \emph{>}, y \emph{>=}), y reemplaza todo un predicado por \emph{verdadero} y \emph{falso}.
 \end{description}
+
+\section{Experimentos}
+\label{sec:evaluation.steps}
+
+[LOS PASOS A SEGUIR, QUIZAS CAMBIAR EL TITULO DE LA SECCION]
 
 \section{Evaluaci\'on}
 \label{sec:evaluation.evaluation}
