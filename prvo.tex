@@ -2,23 +2,65 @@
 \chapter[PRVO]{PRVO: un meta-operador para expresiones de navegaci\'on}
 \label{cap:prvo}
 
-\section{Expresiones de navegaci\'on}
-\label{sec:prvo.navigationalExpressions}
-
-Para definir a nuestro operador, primero necesitamos definir que consideramos como una \emph{expresi\'on encadenada}. Una expresi\'on encadenada involucra un \emph{operador de navegaci\'on}. En lenguajes orientados a objetos, el operador de navegaci\'on puede tomar distintas formas sint\'acticas, con la notaci\'on \emph{punto} siendo la m\'as com\'un. Su prop\'osito es acceder a miembros de una clase. Por simplicidad nos referiremos a una expresi\'on encadenada, a una que cuenta con cero o m\'as de estos operadores. El tama\~no de una expresi\'on encadenada est\'a dada por el n\'umero de operadores de navegaci\'on involucrados. Una \emph{expresi\'on de navegaci\'on} es una expresi\'on encadenada de tama\~no 1 o m\'as. Ejemplos de distintas expresiones encadenadas se pueden ver en la Figura-\ref{figures.examples.chainedExpr}.
+\section{Historia de PRVO}
+\label{sec:prvo.history}
+En \emph{$\mu$Java} existe un operador de mutaci\'on \emph{PRV}, un operador de \textbf{P}olimorfismo para asignaciones de \textbf{R}eferencias que reemplaza la \textbf{V}ariable asignada por otra de un tipo comparable, o compatible \cite{muJavaCOPS, bibliography.mutation.operators.MaKO02}. \'Este modifica una variable que est\'a siendo asignada a una referencia (un objeto), por otra que sea compatible con la referencia, en la Figura-\ref{figures.examples.PRV} vemos un ejemplo de una mutaci\'on producida por este operador. Una clara limitaci\'on de este operador es que solo aplica a asignaciones, mientras que su aplicaci\'on a otro tipo de expresiones o sentencias ser\'ia deseable. La segunda limitaci\'on est\'a precisamente en solo considerar variables. La segunda limitaci\'on est\'a relacionada al objetivo que tiene el operador. En lenguajes orientados a objetos, el polimorfismo permite definir m\'etodos o expresiones utilizando variables que pueden ser instanciadas por un conjunto de tipos distintos, la Figura-\ref{figures.examples.polimorfism} muestra ejemplos de polimorfismo por sobrecarga y herencia, en el primer caso, para cubrir los tres m\'etodos definidos es necesario que la expresi\'on con la que se llama al m\'etodo \emph{foo} sea de tres tipos distintos, \'esto no es posible con \emph{PRV}, si antes de la llamada al m\'etodo se tiene una asignaci\'on \textbf{Object o = v;}, cambiar la variable por otra, como lo har\'ia este operador, no causar\'ia que se llame a otro m\'etodo m\'as que a \emph{foo} que toma un \emph{Object}. Sin embargo modificando la variable con la que est\'a llamando al m\'etodo si causar\'ia, dependiendo del tipo de la variable, la llamada a otra definici\'on del m\'etodo. 
 
 \begin{figure}
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
-current //expresi$\'o$n encadenada de tama$\~n$o 0
-null 	//expresi$\'o$n encadenada de tama$\~n$o 0
+  List l = null;
+  LinkedList ll = new LinkedList();
+  ArrayList al = new ArrayList();
+  l = ll;
+  $\delta$ l = al;
+	\end{lstlisting}
+	\caption{Un ejemplo de una mutaci\'on de \emph{PRV} donde se reemplaza \emph{ll} por \emph{al} en la asignaci\'on original a \emph{l}}
+	\label{figures.examples.PRV}
+\end{figure}
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+  //(i) : polimorfismo por sobrecarga
+  public void foo(Integer i) {...}
+  public void foo(String s) {...}
+  public void foo(Object o) {...}
+  ...
+  foo("Test");
+  foo(1);
+  foo(new LinkedList());
+  
+  //(ii) : polimorfismo por herencia
+  public void append(List a, List b) {
+    for (Object o : b) {
+      a.add(o);
+    }
+  }
+  
+	\end{lstlisting}
+	\caption{Ejemplos de polimorfismo por sobrecarga (\emph{i}) y por herencia (\emph{ii})}
+	\label{figures.examples.polimorfism}
+\end{figure}
+
+Nuestro operador, \emph{PRVO}, surge como una extensi\'on a \emph{PRV}. No solo incluyendo las mutaciones generadas por el operador original, ahora aplicadas en cualquier contexto y no solo en la parte derecha de asignaciones, sin\'o tambi\'en la mutaci\'on de expresiones de navegaci\'on.
+
+
+\section{Expresiones de navegaci\'on}
+\label{sec:prvo.navigationalExpressions}
+
+Para definir a nuestro operador, primero necesitamos definir que consideramos como una \emph{expresi\'on de navegaci\'on}. En lenguajes orientados a objetos, el acceso a miembros de una clase es de uso com\'un, y se realiza mediante un operador de navegaci\'on que puede tomar distintas formas sint\'acticas, con la notaci\'on \emph{punto} siendo la m\'as com\'un. \'Este permite encadenar expresiones, donde la expresi\'on encadenada comienza por un miembro de la expresi\'on anterior. Nos referiremos a una expresi\'on de navegaci\'on, a una que cuenta con uno o m\'as de estos operadores. El tama\~no de una expresi\'on de navegaci\'on est\'a dada por el n\'umero de operadores de navegaci\'on involucrados. Una expresi\'on de navegaci\'on de tama\~no 1 entonces tendr\'ia la forma \emph{a.b}. Ejemplos de distintas expresiones de navegaci\'on se pueden ver en la Figura-\ref{figures.examples.chainedExpr}, donde vale la aclarar que una vez que una expresi\'on de navegaci\'on se reduce a menos de una utilizaci\'on del operador de navegaci\'on, \'esta se considera de tama\~no 0 y ya no puede seguir siendo considerar de navegaci\'on.
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+current //expresi$\'o$n de tama$\~n$o 0
+null 	//expresi$\'o$n de tama$\~n$o 0
 current.next //expresi$\'o$n de navegaci$\'o$n de tama$\~n$o 1
 current.next.value //expresi$\'o$n de navegaci$\'o$n de tama$\~n$o 2
 	\end{lstlisting}
-	\caption{Ejemplos de cadenas encadenadas}
+	\caption{Ejemplos de expresiones de navegaci\'on}
 	\label{figures.examples.chainedExpr}
 \end{figure}
 
-En una expresi\'on encadenada, el tipo de la misma est\'a dado por la \'ultima expresi\'on en la cadena. Por ejemplo \lstinline|a.b.c| es una expresi\'on encadenada de tama\~no dos, cuyo tipo est\'a dado por el de \emph{c}. Una expresi\'on de navegaci\'on bien tipada se puede definir de dos formas. Por pertenencia, para toda cadena \texttt{a.b}, \texttt{b} es un miembro de la clase de \texttt{a}. O mediante grafos, si cada tipo representa un nodo, y los miembros de una clase se representan como una arista que une al nodo desde el cual el miembro es alcanzable, con el nodo que representa al tipo alcanzado (no necesariamente distintos), entonces es posible generar un grafo con las posibles expresiones encadenadas v\'alidas siendo representadas por caminos dentro del grafo. Por ejemplo, la expresi\'on \lstinline|header.next.value.toString()|, es una expresi\'on de navegaci\'on de tama\~no 3, modelada mediante el grafo de la Figura-\ref{figures.examples.navegationExprGraph}.
+En una expresi\'on de navegaci\'on, el tipo de la misma est\'a dado por la \'ultima expresi\'on en la cadena. Por ejemplo \lstinline|a.b.c| es una expresi\'on encadenada de tama\~no dos, cuyo tipo est\'a dado por el de \emph{c}. Una expresi\'on de navegaci\'on bien tipada se puede definir de dos formas. Por pertenencia, para toda cadena \texttt{a.b}, \texttt{b} es un miembro de la clase de \texttt{a}. O mediante grafos, si cada tipo representa un nodo, y los miembros de una clase se representan como una arista que une al nodo desde el cual el miembro es alcanzable, con el nodo que representa al tipo alcanzado (no necesariamente distintos), entonces es posible generar un grafo con las posibles expresiones encadenadas v\'alidas siendo representadas por caminos dentro del grafo. Por ejemplo, la expresi\'on \lstinline|header.next.value.toString()|, es una expresi\'on de navegaci\'on de tama\~no 3, modelada mediante el grafo de la Figura-\ref{figures.examples.navegationExprGraph}.
 
 \begin{figure}
 	\begin{center}
@@ -52,13 +94,14 @@ En una expresi\'on encadenada, el tipo de la misma est\'a dado por la \'ultima e
 
 \section{PRVO}
 \label{sec:prvo.prvo}
-%DEFINIR OPERADORES DE PRVO COMO CONFIGURACIONES PARECE INTERESANTE
 
-Todas las mutaciones que van a ser generadas est\'an centradas en expresiones encadenadas, que como definimos anteriormente, son aquellas expresiones que involucran cero o m\'as operadores de navegaci\'on, el punto en el caso de \emph{Java}. Esto significa que mutar una variable por otra es una posible mutaci\'on. En \emph{$\mu$Java}, un operador as\'i ya existe, llamado \emph{PRV} \cite{bibliography.mutation.operators.MaKO02}. En \emph{$\mu$Java++} este operador est\'a incluido en el nuestro. Teniendo en cuenta que \'este, ya es capaz de generar una cantidad significativa de mutaciones, y que pretendemos agregar mutaciones a mayor cantidad de expresiones, nos lleva a la necesidad de definir un ciertas restricciones. De todas formas, es posible dar una definici\'on general de \emph{prvo} de la siguiente manera:
+Como mencionamos anteriormente, nuestro operador extiende a \emph{PRV}, \'esto lo hace de dos formas. Por un lado extiende el reemplazo de variables en asignaciones a expresiones en general y extendiendo en que tipo de contextos \'estas son reemplazadas. Por el otro lado, a\~nade la modificaci\'on de expresiones de navegaci\'on. Para poder unir ambas extensiones necesitamos considerar el tama\~no de una expresi\'on como la cantidad de operadores de navegaci\'on que posee, destacando que una expresi\'on de tama\~no 0 no es considerada de navegaci\'on. Comenzaremos dando una definci\'on general de \emph{prvo}:
+
+%Todas las mutaciones que van a ser generadas est\'an centradas en expresiones encadenadas, que como definimos anteriormente, son aquellas expresiones que involucran cero o m\'as operadores de navegaci\'on, el punto en el caso de \emph{Java}. Esto significa que mutar una variable por otra es una posible mutaci\'on. En \emph{$\mu$Java}, un operador as\'i ya existe, llamado \emph{PRV} \cite{bibliography.mutation.operators.MaKO02}. En \emph{$\mu$Java++} este operador est\'a incluido en el nuestro. Teniendo en cuenta que \'este, ya es capaz de generar una cantidad significativa de mutaciones, y que pretendemos agregar mutaciones a mayor cantidad de expresiones, nos lleva a la necesidad de definir un ciertas restricciones. De todas formas, es posible dar una definici\'on general de \emph{prvo} de la siguiente manera:
 \begin{quote}
-	Dada una expresi\'on encadenada $e$, \emph{prvo} va a generar mutaciones al reemplazar sub-expresiones en $e$, respetando el tipo de la expresi\'on, y manteniendo, incrementando, o decrementando su tama\~no.
+	Dada una expresi\'on $e$, \emph{prvo} va a generar mutaciones al reemplazar sub-expresiones en $e$ (incluyendo a la misma $e$), respetando el tipo de la expresi\'on, y manteniendo, incrementando, o decrementando su tama\~no.
 \end{quote}
-La Figura-\ref{figures.definitions.prvo.simple_def} da una definici\'on libre, es decir, sin ning\'un tipo de restricciones, de \emph{prvo} como una gram\'atica. Como un ejemplo simple de mutaciones de \emph{prvo}, consideremos la expresi\'on \texttt{front}, las mutaciones generadas incluyen \texttt{front.next}, \texttt{null}, \texttt{front.next.next}, \texttt{front.next.elem}, \texttt{front.next.next.next}, entre otras. Un claro problema con la definici\'on anterior es que es lleva a un n\'umero potencialmente infinito de mutaciones, al no haber restricciones, como un l\'imite sobre cuanto puede incrementarse o decrementarse el tama\~no de una expresi\'on.
+La Figura-\ref{figures.definitions.prvo.simple_def} da una definici\'on libre, es decir, sin ning\'un tipo de restricciones, de \emph{prvo} como una gram\'atica. Como un ejemplo simple de mutaciones de \emph{prvo}, consideremos la expresi\'on \texttt{front}, las mutaciones generadas incluyen \texttt{front.next}, \texttt{null}, \texttt{front.next.next}, \texttt{front.next.elem}, \texttt{front.next.next.next}, entre otras. Un claro problema con la definici\'on anterior es que lleva a un n\'umero potencialmente infinito de mutaciones, al no haber restricciones, como un l\'imite sobre cuanto puede incrementarse o decrementarse el tama\~no de una expresi\'on.
 
 \begin{figure}
 	\begin{displaymath}
@@ -133,7 +176,7 @@ Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un cic
 	\label{figures.examples.localVariableHidingField}
 \end{figure}
 
-En principio, ya existen operadores que realizan este tipo de mutaciones. No solo eso, sino que adem\'as no parece ser un tipo de fallas asociada mutaciones de expresiones encadenadas.
+En principio, ya existen operadores que realizan este tipo de mutaciones. No solo eso, sino que adem\'as no parece ser un tipo de fallas asociada mutaciones de expresiones de navegaci\'on.
 
 \begin{figure}
 	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
@@ -181,7 +224,7 @@ Este tipo de fallas involucra utilizar argumentos con tipos correctos, pero en e
 	\label{figures.examples.argumentSwap.example1}
 \end{figure}
 
-Este tipo de fallas es equivalente a aplicar dos mutaciones de cambio de referencias, \lstinline|append(thiz,that) -> append(that,that) -> append(that,thiz)|. Un tipo de mutaci\'on de expresiones encadenadas, que no modifica su tama\~no, salvo que requiere dos cambios en una misma mutaci\'on. Este tipo de mutaciones no puede definirse como una serie de restricciones a la definici\'on de \emph{prvo} ya que incluye definiciones extra para incluir m\'ultiples cambios. Sin embargo vale la pena notar que con dos mutaciones de \emph{prvo} podr\'ia lograrse.
+Este tipo de fallas es equivalente a aplicar dos mutaciones de cambio de referencias, \lstinline|append(thiz,that) -> append(that,that) -> append(that,thiz)|. Un tipo de mutaci\'on de expresiones como las heredadas de \emph{PRV}, salvo que requiere dos cambios en una misma mutaci\'on. Este tipo de mutaciones no puede definirse como una serie de restricciones a la definici\'on de \emph{prvo} ya que incluye definiciones extra para incluir m\'ultiples cambios. Sin embargo vale la pena notar que con dos mutaciones de \emph{prvo} podr\'ia lograrse.
 
 \subsubsection{Llamada a un m\'etodo similar de la misma librer\'ia}
 
