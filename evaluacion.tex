@@ -21,7 +21,7 @@ Como se mencion\'o en la introducci\'on \ref{sec:intro.contribuciones}, los caso
 \end{table}
 
 \begin{enumerate}[leftmargin=.75cm,align=left,style=nextline]
-	\item[TreeList] Una implementaci\'on de listas sobre \'arboles AVL, es decir, \'arboles binarios de b\'usqueda balanceados (la diferencia de altura entre el sub-\'arbol izquierdo y el sub-\'arbol derecho es siempre menor o igual a 1). La implementaci\'on proviene de \emph{Apache Collections}. Una observaci\'on sobre este caso de estudio es que la clase principal contiene una subclase \emph{AVLNode} que b\'asicamente implementa un \'arbol AVL. Considerando \'esto, se har\'a una evaluaci\'on sobre esta clase tambi\'en.
+	\item[TreeList] Una implementaci\'on de listas sobre \'arboles AVL, es decir, \'arboles binarios de b\'usqueda balanceados (la diferencia de altura entre el sub-\'arbol izquierdo y el sub-\'arbol derecho es siempre menor o igual a 1). La implementaci\'on proviene de \emph{Apache Collections}.
 	
 	\item[AvlTree] Una implementaci\'on de \'arboles binarios de b\'usqueda balanceados (la diferencia de altura entre el sub-\'arbol izquierdo y el sub-\'arbol derecho es siempre menor o igual a 1). La implementaci\'on proviene de [NO SE, STRIKER?]
 	
@@ -46,6 +46,8 @@ Como se mencion\'o en la introducci\'on \ref{sec:intro.contribuciones}, los caso
 	\item[Queue] Una implementaci\'on de una cola, basada en el ejemplo de motivaci\'on provisto en \ref{sec:intro.objetivos} (\ref{figures.motivation.queue-class}). \'Esta, al contrario de la provista como motivaci\'on, fue implementada de manera correcta.
 	
 \end{enumerate}
+
+Es necesario aclarar la raz\'on para elegir un conjunto de casos de estudio que en principio parece ``armado'' para \emph{prvo}. De acuerdo a la configuraci\'on que vamos a utilizar, las mutaciones se aplicar\'an a expresiones de navegaci\'on, es decir, si no hay expresiones de este tipo no van a haber mutaciones. El hecho de que los casos de estudio involucren estructuras de datos en donde hay una gran cantidad de expresiones de navegaci\'on no representa de por s\'i una ventaja para \emph{prvo}, ya que generar una mayor cantidad de mutantes, impone un mayor peso a cubrir las otras propiedades bajo an\'alisis, es decir, mientras m\'as mutantes generemos vamos a necesitar que \'estos tengan un mayor grado de dominancia y menor cantidad de mutantes equivalentes.
 
 \section{Generaci\'on de tests}
 \label{sec:evaluation.tests}
@@ -174,6 +176,8 @@ Para nuestros experimentos vamos a seleccionar todos los operadores b\'asicos, q
 	\item[LOR] Reemplaza operadores l\'ogicos binarios por otros (\emph{\&}, \emph{|}, \emph{\^}).
 	\item[ROR] Reemplaza operadores relacionales con otros (\emph{<}, \emph{<=}, \emph{>}, y \emph{>=}), y reemplaza todo un predicado por \emph{verdadero} y \emph{falso}.
 \end{description}
+
+Si bien la elecci\'on de \'este conjunto de operadores parece dejar de lado desarrollos m\'as recientes en mutation testing, como por ejemplo, mutantes de alto orden \emph{HOMs} \cite{bibliography.mutation.highorder.JiaH09}, una t\'ecnica que combina mutantes de primer orden, como los generados por las herramientas de mutation testing como \emph{$\mu$Java}, \emph{PITest}, \emph{Major}, la raz\'on se basa en que por un lado las herramientas de mutation testing disponibles (principalmente para \emph{Java}) no suelen implementar esta t\'ecnica; por otra parte, no existen operadores de alto orden, sin\'o mutantes que son generados mediante distintas t\'ecnica como combinaci\'on aleatoria, algoritmos gen\'eticos, combinaci\'on de mutantes correspondientes a distintas sentencias, etc. \'Esto hace que comparar con \emph{HOMs} requiera comparar con distintas t\'ecnicas que a su vez dependen en que operadores se utilizan para generar los mutantes de primer orden. A la vez que comparar mutantes generados solo por una mutaci\'on de \emph{prvo} con aquellos donde se combinan varios mutantes pondr\'ia en desventaja a \emph{prvo} (se est\'a comparando contra los operadores m\'as la t\'ecnica de selecci\'on), y si se usa \emph{prvo} en combinaci\'on con otros entonces solo se estar\'ia evaluando cuanto aporta nuestro operador sin poder realizar una an\'alisis de subsuma por que los mutantes son mixtos (se componen por varios mutantes generados por los mismos o distintos operadores). Nosotros creemos que dada la ``estabilidad'' del conjunto de operadores suficientes con respecto a que el mismo se ha mantenido casi sin cambios durante a\~nos (vs las t\'ecnicas de generaci\'on de \emph{HOMs} que a\'un est\'an constantemente evolucionando) y el hecho de que la mayor\'ia de las herramientas de mutation testing no solo que no generan \emph{HOMs}, sino que adem\'as utilizan operadores que en su mayor\'ia corresponden al conjunto de los operadores suficientes, el utilizar el conjunto anterior representa una comparaci\'on justa y relevante para nuestro operador.
 
 \section{Experimentos}
 \label{sec:evaluation.steps}
