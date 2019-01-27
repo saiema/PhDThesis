@@ -397,27 +397,27 @@ Nuestro an\'alisis est\'a tambi\'en limitado a un conjunto arbitrario de operado
 Finalmente necesitamos remarcar que subsuma de operadores, no es lo mismo que subsuma de mutantes. El primero es una relaci\'on entre operadores que es independiente de que programa se est\'e mutando, se trata de una relaci\'on que o bien se explica por la misma definici\'on de los operadores, o bien (como sucede en la mayor\'ia de los casos) requiere numerosos experimentos para determinar si es posible concluir si un operador subsume a otro. Sin embargo nuestra evaluaci\'on de subsuma din\'amica de mutantes, permite, de manera indirecta, una evaluaci\'on de la primera.
 
 \begin{table}[]
+	\centering
+	\begin{tabular}{l|cccccc|}
+		\cline{2-7}
+		& \multicolumn{1}{l}{TreeList} & \multicolumn{1}{l}{AvlTree} & \multicolumn{1}{l}{BinHeap} & \multicolumn{1}{l}{TreeSet} & \multicolumn{1}{l}{NCLL} & \multicolumn{1}{l|}{Queue} \\ \hline
+		\multicolumn{1}{|l|}{Sin PRVO} & 380 & 233 & 352 & 410 & 504 & 68 \\ \cline{1-1}
+		\multicolumn{1}{|l|}{Con PRVO} & 458 & 304 & 788 & 700 & 519 & 78 \\ \hline
+	\end{tabular}
 	\caption{Mutantes generados por caso de estudio}
 	\label{tables.results.mutants}
-	\centering
-	\begin{tabular}{@{}l|lllll|@{}}
-		\cmidrule(l){2-6}
-		& TreeList & AvlTree & BinHeap & TreeSet & NCLL \\ \midrule
-		\multicolumn{1}{|l|}{Sin PRVO} & 380 & 233 & 352 & 410 & 504 \\ \cmidrule(r){1-1}
-		\multicolumn{1}{|l|}{Con PRVO} & 458 & 304 & 788 & 700 & 519 \\ \bottomrule
-	\end{tabular}
 \end{table}
 
 \begin{table}[]
+	\centering
+	\begin{tabular}{l|cccccc|}
+		\cline{2-7}
+		& \multicolumn{1}{l}{Apache} & \multicolumn{1}{l}{AvlTree} & \multicolumn{1}{l}{BinHeap} & \multicolumn{1}{l}{TreeSet} & \multicolumn{1}{l}{NCLL} & \multicolumn{1}{l|}{Queue} \\ \hline
+		\multicolumn{1}{|l|}{Mutantes totales} & 78 & 71 & 436 & 290 & 15 & 10 \\ \cline{1-1}
+		\multicolumn{1}{|l|}{Equivalentes} & 2 & 14 & 27 & 31 & 2 & 0 \\ \hline
+	\end{tabular}
 	\caption{Mutantes \emph{prvo} equivalentes por caso de estudio}
 	\label{tables.results.equivalents}
-	\centering
-	\begin{tabular}{@{}l|lllll|@{}}
-		\cmidrule(l){2-6}
-		& Apache & AvlTree & BinHeap & TreeSet & NCLL \\ \midrule
-		\multicolumn{1}{|l|}{Mutantes totales} & 78 & 71 & 436 & 290 & 15 \\ \cmidrule(r){1-1}
-		\multicolumn{1}{|l|}{Equivalentes} & 2 & 14 & 27 & 31 & 2 \\ \bottomrule
-	\end{tabular}
 \end{table}
 
 \begin{table}[]
@@ -753,5 +753,89 @@ Finalmente necesitamos remarcar que subsuma de operadores, no es lo mismo que su
 		65 & 2 & 0 & 17 & 10 & 5 & 3 & 0 & 6 & 3 & 8 & 18 & 2 \\
 		63 & 2 & 0 & 12 & 11 & 5 & 4 & 0 & 3 & 2 & 17 & 17 & 2 \\
 		58 & 2 & 0 & 15 & 10 & 3 & 4 & 1 & 5 & 3 & 14 & 19 & 2
+	\end{tabular}
+\end{table}
+
+\begin{table}[]
+	\caption{Resultados de \emph{Dynamic Mutant Subsumption} para \emph{Queue}, sin \emph{prvo}}
+	\label{tables.results.subsumption.queue.noprvo}
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{rrrrrrr}
+		DOM NODES & AOIS & AOIU & AORS & COI & LOI & ROR \\
+		8 & 2 & 1 & 1 & 2 & 1 & 4 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		9 & 2 & 1 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5 \\
+		9 & 2 & 1 & 1 & 3 & 1 & 5 \\
+		11 & 2 & 3 & 1 & 3 & 1 & 5 \\
+		10 & 2 & 2 & 1 & 3 & 1 & 5
+	\end{tabular}
+\end{table}
+
+\begin{table}[]
+	\caption{Resultados de \emph{Dynamic Mutant Subsumption} para \emph{Queue}, con \emph{prvo}}
+	\label{tables.results.subsumption.queue.prvo}
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{rrrrrrrrr}
+		DOM NODES & PRVO & AOIS & AOIU & AORS & COI & LOI & ROR & PRVO PURE \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		12 & 5 & 2 & 2 & 1 & 1 & 1 & 2 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		12 & 5 & 2 & 2 & 1 & 1 & 1 & 2 & 5 \\
+		11 & 5 & 2 & 1 & 1 & 1 & 1 & 2 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		12 & 5 & 2 & 1 & 1 & 2 & 1 & 3 & 5 \\
+		12 & 5 & 2 & 1 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5 \\
+		13 & 5 & 2 & 2 & 1 & 2 & 1 & 3 & 5
 	\end{tabular}
 \end{table}
