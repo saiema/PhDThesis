@@ -124,6 +124,36 @@ En el ejemplo siguiente pueden verse algunas de las distintas mutaciones que cor
   $\delta$previous = header.next; //1x2
 \end{lstlisting}
 
+\begin{figure}
+	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/PRVO_sameLength.java}
+	\caption{M\'etodo de generaci\'on de mutantes de \emph{prvo} para generar expresiones donde el tama\~no de la misma se mantiene.}
+	\label{figures.code.prvoMethods.sameLength}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/PRVO_increaseLength.java}
+	\caption{M\'etodo de generaci\'on de mutantes de \emph{prvo} para generar expresiones donde el tama\~no de la misma se incrementa a\~nadiendo un nuevo elemento a la expresi\'on.}
+	\label{figures.code.prvoMethods.increaseLength}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/PRVO_decreaseLength.java}
+	\caption{M\'etodo de generaci\'on de mutantes de \emph{prvo} para generar expresiones donde el tama\~no de la misma se decrementa eliminando un elemento de la expresi\'on.}
+	\label{figures.code.prvoMethods.decreaseLength}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/PRVO_twoByOne.java}
+	\caption{M\'etodo de generaci\'on de mutantes de \emph{prvo} para generar expresiones donde el tama\~no de la misma se decrementa reemplazando dos elementos de una expressi\'on por uno.}
+	\label{figures.code.prvoMethods.twoByOne}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/PRVO_oneByTwo.java}
+	\caption{M\'etodo de generaci\'on de mutantes de \emph{prvo} para generar expresiones donde el tama\~no de la misma se incrementa reemplazando un elemento de una expressi\'on por dos.}
+	\label{figures.code.prvoMethods.oneByTwo}
+\end{figure}
+
 \subsubsection{Restricciones de puntos de mutaci\'on}
 
 Una expresi\'on encadenada como las que muta \emph{prvo} puede encontrarse en una gran cantidad de lugares distintos en el c\'odigo fuente. Si bien en el ejemplo anterior las expresiones mutadas fueron siempre sobre asignaciones y solo se aplicaban mutaciones a la parte derecha de la misma, \emph{prvo} cuenta actualmente con las siguientes restricciones configurables:
