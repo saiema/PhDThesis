@@ -124,6 +124,32 @@ En el ejemplo siguiente pueden verse algunas de las distintas mutaciones que cor
   $\delta$previous = header.next; //1x2
 \end{lstlisting}
 
+En las Figuras \ref{figures.code.prvoMethods.sameLength}, \ref{figures.code.prvoMethods.increaseLength}, \ref{figures.code.prvoMethods.decreaseLength}, \ref{figures.code.prvoMethods.twoByOne}, y \ref{figures.code.prvoMethods.oneByTwo}, se muestran versiones muy simplificadas de los m\'etodos de \emph{prvo} para generar mutaciones (reemplazo por literales por ejemplo no se muestra). M\'etodos auxiliares utilizados por \'estos incluyen a:
+
+\begin{enumerate}[leftmargin=.75cm,align=left]
+	\item[\textbf{generateMutant(Expression, Expression)}]\mbox{}\\ Este m\'etodo toma la expresi\'on original (primer par\'ametro) y la reemplaza por la expresi\'on mutada (segundo argumento).
+	
+	\item[\textbf{append(Expression...)}]\mbox{}\\ Este m\'etodo toma una secuencia de expresiones y las une mediante el operador de navegaci\'on (\emph{punto}), los argumentos nulos son ignorados.
+	
+	\item[\textbf{isReachable(Expression, Expression)}]\mbox{}\\ Este m\'etodo verifica si la primer expresi\'on es alcanzable desde la segunda, es decir, si el primer elemento de la primer expresi\'on representa un miembro del tipo del \'ultimo elemento de la segunda. Por ejemplo \emph{next.value} es alcanzable desde \emph{this.header} en una lista (ver Figura-\ref{figures.examples.navegationExprGraph}).
+	
+	\item[\textbf{elements(Expression)}]\mbox{}\\ Retorna una lista de todos los elementos que conforman una expresi\'on con respecto al operador de navegaci\'on. Por ejemplo, la expresi\'on \emph{current.next.value} retorna\'ia una lista con \emph{current}, \emph{next}, y \emph{value}.
+	
+	\item[\textbf{getType(Expression)}]\mbox{}\\ Este m\'etodo retorna el tipo asociado al \'ultimo elemento de una expresi\'on. Por ejemplo, para la expresi\'on \emph{current.next} retornar\'ia \emph{Node} (ver Figura-\ref{figures.examples.navegationExprGraph}).
+	
+	\item[\textbf{compatibleTypes(Type, Type)}]\mbox{}\\ Este m\'etodo verifica si el primer tipo es compatible con el segundo. La compatibilidad ser\'a verificada de acuerdo a la configuraci\'on de \emph{prvo}, si el chequeo de tipos es relajada, entonces se verifica si el primer tipo es asignable al segundo; si por el contrario se est\'a utilizando un chequeo de tipos estricto, entonces solo son compatibles los tipos iguales.
+	
+	\item[\textbf{fieldsAndMethodsFrom(Expression)}]\mbox{}\\ Retorna todos los miembros accesibles desde el \'ultimo elemento de una expresi\'on (no nula).
+	
+	\item[\textbf{reachableVarsFieldsAndMethods()}]\mbox{}\\ Retorna todas las variables, campos y m\'etodos que son alcanzables desde el punto actual.
+	
+	\item[\textbf{nextExpression(Expression)}]\mbox{}\\ Dada una expresi\'on retorna \emph{null} si la expresi\'on no estaba conectada mediante el operador de navegaci\'on o otra, y retorna la expresi\'on a la cual est\'a conectada mediante el operador de navegaci\'on en caso contrario. Cabe destacar que si bien el m\'etodo \emph{elements(Expression)} retorna elementos desconectados, \'estos tienen asociados a que expresiones estaban previamente conectados.
+	
+	\item[\textbf{previousExpression(Expression)}]\mbox{}\\ Equivalente a \emph{nextExpression(Expression)} pero retornando la expresi\'on a la cual \'esta estaba conectada (o \emph{null} si no lo estaba).
+	
+	\item[\textbf{lastExpressionFrom(Expression)}]\mbox{}\\ Retorna el \'ultimo elemento en una expresi\'on, el cual es o la misma expresi\'on original si \'esta no es de navegaci\'on, o el \'ultimo miembro en caso contrario. Por ejemplo \emph{lastExpressionFrom(current.next.value)} retornar\'ia \emph{value}.
+\end{enumerate}
+
 \begin{figure}
 	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/PRVO_sameLength.java}
 	\caption{M\'etodo de generaci\'on de mutantes de \emph{prvo} para generar expresiones donde el tama\~no de la misma se mantiene.}
