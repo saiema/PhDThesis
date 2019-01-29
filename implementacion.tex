@@ -227,7 +227,8 @@ Por esto, \emph{prvo} cuenta con las siguientes restricciones configurables:
 \section{Dynamic mutant subsumption}
 \label{sec:implementation.dynamicSubsumption}
 
-El uso de \emph{mutation score}, la relaci\'on de mutantes detectados sobre el total, como m\'etrica de evaluaci\'on para test suites, trae varios problemas sobre que conclusiones se pueden derivar del mismo. Entre \'estos, hemos mencionado el detectar mutantes triviales, incrementando el valor de mutation score sin implicar una mejora en la capacidad de detectar fallas del test suite; la existencia de mutantes que son sem\'anticamente equivalentes al programa original, y por lo tanto imposibles de detectar, bajando el valor del mutation score sin significar una menor capacidad de detectar fallas; finalmente el acoplamiento, es decir, que tan bien los mutantes representan fallas reales, y los mutantes redundantes. Estos problemas hacen que el an\'alisis de \emph{mutation testing} requiera cuidado al interpretar los resultados, y estudios m\'as profundos para dar mayor validez a los mismos. Estos estudios a\~naden complejidad al an\'alisis y, en la mayor\'ia de los casos, requiere resolver problemas indecidibles o altamente complejos. \texttt{Mutant Subsumption} representa un an\'alisis que eval\'ua redundancia de mutantes respecto a su la capacidad de evaluar a los tests, as\'i como que mutantes resultan indispensables.
+El uso de \emph{mutation score}, la relaci\'on de mutantes detectados sobre el total, como m\'etrica de evaluaci\'on para test suites, trae varios problemas sobre que conclusiones se pueden derivar del mismo. Entre \'estos, hemos mencionado el detectar mutantes triviales, incrementando el valor de mutation score sin implicar una mejora en la capacidad de detectar fallas del test suite; la existencia de mutantes que son sem\'anticamente equivalentes al programa original, y por lo tanto imposibles de detectar, bajando el valor del mutation score sin significar una menor capacidad de detectar fallas; finalmente el acoplamiento, es decir, que tan bien los mutantes representan fallas reales, y los mutantes redundantes. Estos problemas hacen que el an\'alisis de \emph{mutation testing} requiera cuidado al interpretar los resultados, y estudios m\'as profundos para dar mayor validez a los mismos. Estos estudios a\~naden complejidad al an\'alisis y, en la mayor\'ia de los casos, requiere resolver problemas indecidibles o altamente complejos. Particularmente, como la meta de este trabajo es evaluar un nuevo operador de mutaci\'on, cuan significativo es el valor de mutation score se torna a\'un m\'as importancia. Al mismo tiempo, si bien analizar cuantos mutantes equivalentes genera \emph{prvo} solo muestra una parte de los resultados, siendo posible tener un operador que no genere mutantes equivalentes pero que \'estos sean altamente redundantes con respecto a los producidos con otros operadores (o incluso redundantes entre mutantes de \emph{prvo}). La utilizaci\'on de \'este an\'alisis (\emph{Dynamic Mutant Subsumption}) es entonces una buena forma de evaluar la utilidad de los mutantes generados por \emph{prvo} con respecto a su capacidad para evaluar tests.
+Recordemos primero la definici\'on de \emph{Mutant Subsumption} antes de discutir sobre la m\'as acotada definici\'on de \emph{Dynamic Mutant Subsumption}.
 \begin{quote}
 	Para dos mutantes \emph{m$_1$} y \emph{m$_2$}, producidos a partir del programa original \emph{p}. Se define la relaci\'on \emph{m$_1$} subsume a \emph{m$_2$}, si existe al menos un test para el cual el comportamiento de \emph{m$_1$} difiera del de \emph{p}, y para todo test \emph{t} para el cual el comportamiento entre \emph{m$_1$} y \emph{p} difiera, el comportamiento entre \emph{m$_2$} y \emph{p} tambi\'en debe hacerlo.
 \end{quote}
@@ -245,7 +246,74 @@ A partir del an\'alisis anterior, es posible construir un grafo en el cual un no
 \begin{quote}
 	Para cada mutante \emph{m$_i$} en el nodo \emph{n$_1$}, y para cada mutante \emph{m$_j$} en el nodo \emph{n$_2$}, se cumple que \emph{m$_i$} subsume a \emph{m$_j$}.
 \end{quote}
+Un ejemplo de la generaci\'on de estos grafos se puede ver comenzando con la Tabla-\ref{tables.examples.subsumptionInit} la cual es generada al final del an\'alisis de mutation testing, cada mutante analizado se almacena en un nodo \'unico con la informaci\'on de que tests detectaron al mismo. A partir de estos datos se eliminan los nodos que corresponden a mutantes que sobrevivieron (recordemos que la primer condici\'on para la relaci\'on de subsuma es que los mutantes en la relaci\'on hayan sido detectados) y todos los nodos que corresponden a mutantes detectados por los mismos tests, es decir, se subsumen el uno al otro, se fusionan en un mismo nodo, \'esto se puede apreciar en la Tabla-\ref{tables.examples.subsumptionEquivAndKilled} donde por ejemplo el nodo \textbf{4} fue eliminado, el nodo \textbf{7} fue fusionado con el nodo \textbf{2} y lo mismo ocurri\'o con los nodos \textbf{3} y \textbf{5}. A partir de la \'ultima tabla (o a partir de los nodos representados en la misma) se puede construir el grafo de subsuma din\'amica de la Figura-\ref{figures.examples.dynamicSubsumptionGraph}.
 A partir de este grafo se observan nodos que son subsumidos pero no subsumen a nadie, a los mutantes en estos nodos se los considera los m\'as redundantes de todos. Nodos que subsumen a otros y son a su vez subsumidos, \'estos siguen siendo redundantes pero en un grado menor a los anteriores. Finalmente los nodos que subsumen a otros pero no son a su vez subsumidos, son denominados ``dominadores''. Dado que en esta tesis presentamos una familia particular de operadores, y que son el objetivos de nuestra evaluaciones, lograr que los mutantes generados por \emph{prvo} ocupen una mayor\'ia de los nodos dominadores, no alcanza, \'esto es causa de que cualquier mutante generado por otro operador e inclu\'ido en el nodo, es equivalente a los de \emph{prvo}. Este problema se extiende a la evaluaci\'on de cualquier operador utilizando grafos de dynamic mutant subsumtion. Por esto, este an\'alisis incluye la propiedad de pureza en los nodos.
 \begin{quote}
 	Un nodo en un grafo de dynamic mutant subsumption es considerado puro, si para cada mutante contenido en el mismo, \'este fue generado por el mismo operador.
 \end{quote}
+En la pr\'actica \'estos grafos son impr\'acticos de utilizar por ser demasiado grandes como para poder extraer informaci\'on del mismo. Sin embargo la estructura de grafos permite f\'acilmente definir los conceptos de nodos dominadores y redundantes.
+Una clara desventaja de este an\'alisis es que requiere ejecutar todos los tests por cada mutante, contrariamente al an\'alisis b\'asico de mutation testing (cuando solo interesa obtener el valor de mutation score) que solo se ejecutan todos los tests para un mutante para aquellos que sobreviven, pero solo siendo necesario ejecutar los tests hasta encontrar el primero que detecta al mutante en los casos donde \'este no sobrevive.
+
+\begin{table}[]
+	\begin{tabular}{|cccccccc|}
+		\hline
+		Node & Mutants & Test1 & Test2 & Test3 & Test4 & Test5 & Test6 \\ \hline
+		1 & m1 & $\bullet$ &  & $\bullet$ & $\bullet$ &  & $\bullet$ \\ \hline
+		2 & m2 & $\bullet$ &  & $\bullet$ &  &  &  \\ \hline
+		3 & m3 & $\bullet$ & $\bullet$ & $\bullet$ &  &  &  \\ \hline
+		4 & m4 &  &  &  &  &  &  \\ \hline
+		5 & m5 & $\bullet$ & $\bullet$ & $\bullet$ &  &  &  \\ \hline
+		6 & m6 & $\bullet$ &  &  & $\bullet$ &  & $\bullet$ \\ \hline
+		7 & m7 & $\bullet$ &  & $\bullet$ &  &  &  \\ \hline
+		8 & m8 &  &  & $\bullet$ &  &  &  \\ \hline
+	\end{tabular}
+	\caption{Nodos iniciales con un solo mutante asociado y los tests que detectan al mismo.}
+	\label{tables.examples.subsumptionInit}
+\end{table}
+
+\begin{table}[]
+	\begin{tabular}{|cccccccc|}
+		\hline
+		Node & Mutants & Test1 & Test2 & Test3 & Test4 & Test5 & Test6 \\ \hline
+		1 & m1 & $\bullet$ &  & $\bullet$ & $\bullet$ &  & $\bullet$ \\ \hline
+		2 & m2, m7 & $\bullet$ &  & $\bullet$ &  &  &  \\ \hline
+		3 & m3, m5 & $\bullet$ & $\bullet$ & $\bullet$ &  &  &  \\ \hline
+		6 & m6 & $\bullet$ &  &  & $\bullet$ &  & $\bullet$ \\ \hline
+		8 & m8 &  &  & $\bullet$ &  &  &  \\ \hline
+	\end{tabular}
+	\caption{Nodos equivalentes fusionados y nodos que representan mutantes sobrevivientes eliminados.}
+	\label{tables.examples.subsumptionEquivAndKilled}
+\end{table}
+
+\begin{figure}
+	\begin{center}
+		\usetikzlibrary{positioning}
+		\begin{tikzpicture}%
+		[>=stealth,
+		shorten >=1pt,
+		node distance=3cm,
+		on grid,
+		auto,
+		every state/.style={draw=black!60, fill=black!5, very thick}
+		]
+		\tikzstyle{v}=[circle, minimum size=1mm,draw,thick]
+		\node[v, label=above: {\small 1}] (n1) {m1};
+		\node[v, label=above: {\small 2}] (n2)[above=of n1] {m2,m7};
+		\node[v, label=above: {\small 3}] (n3)[right=of n1] {m3,m5};
+		\node[v, label=above: {\small 6}] (n6)[right=of n2] {m6};
+		\node[v, label=above: {\small 8}] (n8)[right=of n6] {m8};
+		
+		\path[->]
+%		%   FROM  BEND/LOOP  POSITION OF LABEL   LABEL   TO
+		(n8) edge (n1)
+		(n8) edge[bend right=40] (n2)
+		(n8) edge (n3)
+		(n2) edge (n3)
+		(n2) edge[bend right=30] (n1)
+		(n6) edge (n1)
+		;
+		\end{tikzpicture}
+	\end{center}
+	\caption{Grafo de \emph{Dynamic Mutant Subsumption} generado mediante la informaci\'on de la Tabla-\ref{tables.examples.subsumptionEquivAndKilled}}
+	\label{figures.examples.dynamicSubsumptionGraph}
+\end{figure}
