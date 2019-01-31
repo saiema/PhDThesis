@@ -39,7 +39,7 @@ Adem\'as de la aplicaci\'on tradicional de operadores de mutaci\'on para mutatio
 
 
 \begin{figure}[t]
-	\begin{lstlisting}[frame=tlrb, mathescape=true]
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java]
     public class Queue {
 	
       private Node front;
@@ -67,7 +67,7 @@ En la actualidad, los lenguajes orientados a objetos, o que contienen caracter\'
 Consideremos una implementaci\'on de una cola sobre una lista simplemente encadenada ac\'iclica, con una referencia al primer nodo, \emph{front}, y otra al \'ultimo, \emph{last}, y un m\'etodo \emph{dequeue()}, tal como se muestra en la Figura~\ref{figures.motivation.queue-class}. Notemos que esta implementaci\'on es defectuosa, dado que no trata adecuadamente los casos en los cuales la cola est\'a vac\'ia o consta de un \'unico elemento. Desde el punto de vista de los criterios cl\'asicos de caja blanca, y dado que la implementaci\'on de este m\'etodo no contiene bifurcaciones en su flujo de control, cualquier test que haga una llamada a este m\'etodo va a lograr una cobertura estructural (ramas, por ejemplo) del 100\%. En lo que respecta a mutation testing, cabe resaltar que ninguna de las herramientas modernas de mutation testing, por ejemplo, \emph{PITest}, \emph{Major}, o \emph{$\mu$Java}, generan mutaciones para el c\'odigo en \emph{dequeue()}. Luego, resulta trivial para cualquier test lograr una ``cobertura'' perfecta de mutaci\'on. Concretamente, tener un \'unico test para este m\'etodo, como el siguiente:
 
 \begin{center}
-	\begin{lstlisting}[frame=tlrb, mathescape=true]
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java]
     @Test
     public void dequeueTest() {
       Queue q = new Queue();
@@ -84,7 +84,7 @@ Evidentemente, el problema en este caso se debe a que, en el contexto de mutatio
 
 Consideremos por ejemplo el patr\'on \emph{Builder}. Este patr\'on es utilizado para construir instancias de objetos que suelen contener una gran cantidad de atributos opcionales, sin la necesidad de definir en la clase correspondiente un alto n\'umero de constructores distintos. M\'as a\'un, este patr\'on permite tambi\'en que la construcci\'on de un objeto complejo sea legible, en el c\'odigo fuente. Un ejemplo de una biblioteca que utiliza este patr\'on es \emph{Apache Commons CLI}, una biblioteca para manejar los argumentos de entrada de una aplicaci\'on con interfaz de l\'inea de comandos. Un ejemplo del uso de \'esta se muestra a continuaci\'on:
 \begin{center}
-	\begin{lstlisting}[mathescape=true]
+	\begin{lstlisting}[mathescape=true, language=Java]
     Option inputOption = Option.builder("V")
       .longOpt("Value")
       .desc("The input value")
@@ -102,7 +102,7 @@ Este ejemplo muestra la creaci\'on de un argumento para un programa que utiliza 
 
 Otro patr\'on que realiza una utilizaci\'on extensiva de expresiones de navegaci\'on es \emph{Fluent Interfaces}, o interfaces fluentes. El mismo permite organizar programas alrededor de la utilizaci\'on de una jerarqu\'ia de clases (asociada a los lenguajes orientados a objetos), para definir una \emph{gram\'atica}, que permita caracterizar un lenguaje de dominio espec\'ifico. Veamos aqu\'i un ejemplo, con una biblioteca de SQL en Java:
 \begin{center}
-	\begin{lstlisting}[mathescape=true]
+	\begin{lstlisting}[mathescape=true, language=Java]
 	dbconnector.from("Songs").select().where()
 	.attribute("year").ge().value(1980)
 	.and()
@@ -117,7 +117,7 @@ Un punto importante a destacar en relaci\'on al ejemplo anterior es que si bien 
 El conjunto de \emph{operadores suficientes} de mutaci\'on ha permanecido pr\'acticamente inalterado desde hace a\~nos, a\'un cuando el primer trabajo que ofrece un conjunto de operadores formalmente definido lo hace para el lenguaje Fortran \cite{bibliography.mutation.definitions.fortranOffut87, bibliography.mutation.definitions.fortranKing91}. Mutation testing ha sido aplicado y evaluado en varios lenguajes, incluyendo aquellos considerados orientados a objetos como Ada y Java, por dar un par de ejemplos. Sin embargo los operadores de mutaci\'on espec\'ificos para lenguajes orientados a objetos s\'olo afectan, en general, jerarqu\'ias de clases, visibilidad, y sobre-escritura. 
 
 Un problema similar, en relaci\'on a las expresiones de navegaci\'on, se observa en el contexto de reparaci\'on de programas. Consideremos nuevamente la implementaci\'on de colas sobre listas enlazadas ac\'iclicas, y el c\'odigo del m\'etodo \emph{enqueue()} que se muestra a continuaci\'on:
-\begin{lstlisting}[frame=tlrb, mathescape=true]
+\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java]
 public void enqueue(int elem) {
         QueueNode newNode = new QueueNode(elem);
         if (front == null) {
