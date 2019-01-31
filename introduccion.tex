@@ -84,7 +84,7 @@ Evidentemente, el problema en este caso se debe a que, en el contexto de mutatio
 
 Consideremos por ejemplo el patr\'on \emph{Builder}. Este patr\'on es utilizado para construir instancias de objetos que suelen contener una gran cantidad de atributos opcionales, sin la necesidad de definir en la clase correspondiente un alto n\'umero de constructores distintos. M\'as a\'un, este patr\'on permite tambi\'en que la construcci\'on de un objeto complejo sea legible, en el c\'odigo fuente. Un ejemplo de una biblioteca que utiliza este patr\'on es \emph{Apache Commons CLI}, una biblioteca para manejar los argumentos de entrada de una aplicaci\'on con interfaz de l\'inea de comandos. Un ejemplo del uso de \'esta se muestra a continuaci\'on:
 \begin{center}
-	\begin{lstlisting}[mathescape=true, language=Java]
+	\begin{lstlisting}[mathescape=true, language=Java,showstringspaces=false]
     Option inputOption = Option.builder("V")
       .longOpt("Value")
       .desc("The input value")
@@ -130,7 +130,7 @@ public void enqueue(int elem) {
         size++;
 }
 \end{lstlisting}
-Esta implementaci\'on es err\'onea dado que, cuando la cola no est\'a vac\'ia, inserta el nuevo elemento como el siguiente del comienzo, en lugar d e insertar al final, como exige la pol\'itica de visita de elementos en una cola. El error y su reparaci\'on son simples: la expresi\'on \texttt{front.next = newNode} deber\'ia en realizar ser \texttt{last.next = newNode}. Sin embargo, herramientas de reparaci\'on autom\'atica como GenProg son incapaces de reparar este c\'odigo, pues sus mutaciones de granularidad gruesa no consiguen reproducir el comportamiento esperado para \emph{enqueue()}. 
+Esta implementaci\'on es err\'onea dado que, cuando la cola no est\'a vac\'ia, inserta el nuevo elemento como el siguiente del comienzo, en lugar de insertar al final, como exige la pol\'itica de visita de elementos en una cola. El error y su reparaci\'on son simples: la expresi\'on \texttt{front.next = newNode} deber\'ia en realizar ser \texttt{last.next = newNode}. Sin embargo, herramientas de reparaci\'on autom\'atica como GenProg son incapaces de reparar este c\'odigo, pues sus mutaciones de granularidad gruesa no consiguen reproducir el comportamiento esperado para \emph{enqueue()}. 
 
 Esto nos lleva a nuestros objetivos:
 
