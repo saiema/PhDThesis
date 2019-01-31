@@ -65,20 +65,20 @@ Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atic
 \begin{figure}
 	\begin{displaymath}
 	\begin{array}{lll}
-  PRVO(x)		& :=	& expression^{|1|} \\
-  & := & x.expression^{|1-2|} \\
-  & := & expression^{|1-2|}.x \\
+  PRVO(x)		& :=	& expression^{|0-1|} \\
+  & := & x.expression^{|0|} \\
+  & := & expression^{|0|}.x \\
   & := & null \\
 	
   \\
   PRVO(x.y)	& :=	& x \\
   & :=	& 	y \\
-  & :=	& expression^{|1-2|}.y \\
-  & :=	& y.expression^{|1-2|} \\
-  & :=	& expression^{|1-2|} \\
-  & :=	& x.y.expression^{|1|} \\
-  & :=	& x.expression^{|1|}.y \\
-  & :=	& expression^{|1|}.x.y \\
+  & :=	& expression^{|0-1|}.y \\
+  & :=	& y.expression^{|0-1|} \\
+  & :=	& expression^{|0|} \\
+  & :=	& x.y.expression^{|0|} \\
+  & :=	& x.expression^{|0|}.y \\
+  & :=	& expression^{|0|}.x.y \\
   \\
 	
 	\end{array}
@@ -87,7 +87,7 @@ Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atic
 	\label{figures.definitions.prvo.impl_def}
 \end{figure}
 
-En la Figura-\ref{figures.definitions.prvo.impl_def} se restringe la definici\'on abstracta de \emph{prvo} [\ref{figures.definitions.prvo.simple_def}] en base a cuanto se puede cambiar la longitud de la expresi\'on original. La notaci\'on \emph{expression$^{|R|}$} denota una expresi\'on encadenada de un tama\~no particular o un rango de tama\~nos, por ejemplo, de 1 a 2.
+En la Figura-\ref{figures.definitions.prvo.impl_def} se restringe la definici\'on abstracta de \emph{prvo} [\ref{figures.definitions.prvo.simple_def}] en base a cuanto se puede cambiar la longitud de la expresi\'on original. La notaci\'on \emph{expression$^{|R|}$} denota una expresi\'on encadenada de un tama\~no particular o un rango de tama\~nos, por ejemplo, de 0 a 1. El valor \emph{null} es un caso especial, no es posible incrementar el tama\~no de una expresi\'on encadenando nuevos elementos ni tampoco reemplazar \emph{null} por una expresi\'on de tama\~no 1, solo es posible reemplazarlo por otra expresi\'on de tama\~no 0.
 
 \subsection{Configuraci\'on de PRVO}
 
@@ -182,7 +182,7 @@ En las Figuras \ref{figures.code.prvoMethods.sameLength}, \ref{figures.code.prvo
 
 \subsubsection{Restricciones de puntos de mutaci\'on}
 
-Una expresi\'on encadenada como las que muta \emph{prvo} puede encontrarse en una gran cantidad de lugares distintos en el c\'odigo fuente. Si bien en el ejemplo anterior las expresiones mutadas fueron siempre sobre asignaciones y solo se aplicaban mutaciones a la parte derecha de la misma, \emph{prvo} cuenta actualmente con las siguientes restricciones configurables:
+El tipo de expresiones que muta \emph{prvo} puede encontrarse en una gran cantidad de lugares distintos en el c\'odigo fuente. Si bien en el ejemplo anterior las expresiones mutadas fueron siempre sobre asignaciones y solo se aplicaban mutaciones a la parte derecha de la misma, \emph{prvo} cuenta actualmente con las siguientes restricciones configurables:
 
 \begin{enumerate}[leftmargin=.75cm,align=left]
 	\item[\textbf{Parte izquierda de asignaciones}] En una asignaci\'on \texttt{a = b}, \emph{prvo} puede o no generar mutaciones para \texttt{a}. Es necesario destacar que estas mutaciones no se aplican en declaraciones de variables, es decir, expresiones \texttt{T a = b}, dado que modificar \texttt{a} en este caso tender\'ia a generar mutantes que no compilan. Si bien es cierto que existen fallas en donde un desarrollador puede olvidar declarar una variable local, y de esta forma hacer menci\'on a un atributo/campo de clase, este tipo de fallas no corresponde con las que se desea representar mediante \emph{prvo}.
@@ -194,7 +194,7 @@ Una expresi\'on encadenada como las que muta \emph{prvo} puede encontrarse en un
 
 \subsubsection{Restricciones de expresiones a utilizar}
 
-Incluso luego de configurar restricciones sobre cuanto disminuir o incrementar la expresi\'on encadenada original, y en que partes del c\'odigo aplicar \emph{prvo}. La cantidad de expresiones v\'alidas disponibles para mutar la expresi\'on, sigue siendo demasiado grande. Esto trae aparejado problemas de eficiencia (la cantidad de mutantes afecta los recursos necesarios para mutation testing), generaci\'on de mutantes triviales o con poca dificultad para ser detectados, y mutantes redundantes.
+Incluso luego de configurar restricciones sobre cuanto disminuir o incrementar una expresi\'on, y en que partes del c\'odigo aplicar \emph{prvo}. La cantidad de expresiones v\'alidas disponibles para mutar la expresi\'on, sigue siendo demasiado grande. Esto trae aparejado problemas de eficiencia (la cantidad de mutantes afecta los recursos necesarios para mutation testing), generaci\'on de mutantes triviales o con poca dificultad para ser detectados, y mutantes redundantes.
 
 La expresi\'on \lstinline|Object obj = current.next;|, puede dar lugar a una enorme cantidad de mutaciones v\'alidas, dado que no solo cualquier tipo no primitivo hereda de \texttt{Object}, sino que adem\'as, \emph{Java} permite ``autoboxing'' de tipos primitivos. Esta t\'ecnica permite que expresiones como \lstinline|Integer i = 1;| sean v\'alidas e internamente se traducen a \lstinline|Integer i = new Integer(1);|. Volviendo al ejemplo anterior podemos ver que es posible generar una gran cantidad de mutaciones completamente v\'alidas desde un punto de vista de tipos, pero completamente independientes de los tipos que pueden ser de inter\'es o que est\'an involucrados en la expresi\'on original. Ejemplos de \'estas son:
 \begin{lstlisting}
@@ -213,13 +213,13 @@ Por esto, \emph{prvo} cuenta con las siguientes restricciones configurables:
 	\begin{lstlisting}[mathescape=true]
 	java\\.lang\\.String\\$\#$.*
 	\end{lstlisting}
-	restringe cualquier m\'etodo y campo de \emph{java.lang.String}. Durante la generaci\'on de mutaciones, \emph{prvo} verifica que cualquier m\'etodo o campo que vaya a utilizar para mutar una expresi\'on encadenada, no est\'e restringida, la verificaci\'on se hace sobre el nombre completo de un miembro de clase, el cual se define con \emph{<nombre completo de la clase>\#<nombre del miembro>[(<tipos de los argumentos separados por coma>)]}.
+	restringe cualquier m\'etodo y campo de \emph{java.lang.String}. Durante la generaci\'on de mutaciones, \emph{prvo} verifica que cualquier m\'etodo o campo que vaya a utilizar para mutar una expresi\'on encadenada, no est\'e restringida, la verificaci\'on se hace sobre el nombre completo de un miembro de clase, el cual se define con \emph{<nombre completo de la clase>\#<nombre del miembro>[(<tipos de los argumentos separados por coma>)]} por ejemplo \emph{java.lang.String\#substring(int, int)}.
 	
 	\item[\textbf{M\'etodos y campos permitidos}] En muchos casos, la cantidad de m\'etodos y campos a restringir es muy grande y solo se quieren permitir aquellos que pertenezcan a ciertas clases, por ejemplo, en el caso de una lista puede solo desearse utilizar aquellos que pertenezcan a la clase \emph{Lista} y \emph{Nodo}. Es posible definir, de la misma forma que en el caso anterior, que m\'etodos y campos son permitidos para que \emph{prvo} los utilice durante la generaci\'on de mutaciones. Cabe destacar que estas opciones son exclusivas, no es posible utilizar ambas al mismo tiempo.
 	
 	\item[\textbf{Control de tipos}] En lenguajes orientados a objetos como \emph{Java}, la herencia de clases permite que dos tipos sean compatibles a\'un cuando no son iguales. Dados dos tipos, \texttt{A} y \texttt{B}, tal que el segundo hereda del primero. La asignaci\'on \lstinline|A a = new B();| es v\'alida mientras que la inversa no lo es. Una expresi\'on encadenada mutada por \emph{prvo} tiene que ser correcta con respecto a tipos, pero con esto podemos cambiar expresiones como \lstinline|list.node.value| a \lstinline|list.toString().getClass()| si \texttt{value} era de tipo \texttt{Object}. Por esto, \emph{prvo} puede restringirse a utilizar un control estricto de tipos, en donde \'estos solo se consideran compatibles sin son exactamente iguales.
 	
-	\item[\textbf{Uso de literales}] En ciertos casos el uso de literales conforman expresiones v\'alidas para mutar una expresi\'on encadenada, \lstinline|var.toString().length| puede cambiarse a \lstinline|"".length|. Cualquier operador que utilice valores literales, va a requerir un conjunto finito de los mismos. En el caso de \emph{prvo}, utiliza un conjunto de literales base, \emph{1, 0, True, False, "", null} en donde cada uno puede habilitarse o no; a su vez permite la b\'usqueda de literales alcanzables desde el punto en donde se est\'a mutando; tambi\'en es posible habilitar/deshabilitar la generaci\'on de variaciones en literales num\'ericos, es decir que para cada literal que pertenezca a un tipo primitivo num\'erico, se van a crear copias del mismo para los otros tipos. Por ejemplo, para \texttt{2}, un literal de tipo \texttt{int} se van a crear las variantes \texttt{2.0d}, \texttt{2.0f}, y \texttt{2l}, de tipos \emph{double}, \emph{float}, y \emph{long} respectivamente.
+	\item[\textbf{Uso de literales}] En ciertos casos el uso de literales conforman expresiones v\'alidas para mutar una expresi\'on, \lstinline|var.toString().length| puede cambiarse a \lstinline|"".length|. Cualquier operador que utilice valores literales, va a requerir un conjunto finito de los mismos. En el caso de \emph{prvo}, utiliza un conjunto de literales base, \emph{1, 0, True, False, "", null} en donde cada uno puede habilitarse o no; a su vez permite la b\'usqueda de literales alcanzables desde el punto en donde se est\'a mutando; tambi\'en es posible habilitar/deshabilitar la generaci\'on de variaciones en literales num\'ericos, es decir que para cada literal que pertenezca a un tipo primitivo num\'erico, se van a crear copias del mismo para los otros tipos. Por ejemplo, para \texttt{2}, un literal de tipo \texttt{int} se van a crear las variantes \texttt{2.0d}, \texttt{2.0f}, y \texttt{2l}, de tipos \emph{double}, \emph{float}, y \emph{long} respectivamente.
 	
 	\item[\textbf{Uso de campos est\'aticos}] El modificador \emph{static} en \emph{Java} define a un miembro que es compartido por todas las instancias de la clase que lo define. Estos miembros est\'aticos no deber\'ian accederse mediante instancias de una clase, aunque hacerlo es posible y no representa c\'odigo inv\'alido. Sin embargo si \'esto se permite, se pueden obtener muchas mutaciones asociadas al uso de constantes est\'aticas que no fueron restringidas mediante otra configuraci\'on. Por eso, \emph{prvo} permite la restricci\'on del uso de miembros est\'aticos en un contexto no est\'atico.
 \end{enumerate}
