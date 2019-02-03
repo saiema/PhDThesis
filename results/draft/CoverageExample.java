@@ -1,4 +1,4 @@
-public static int countMultsOf(int[] values) {
+public static int countEvenIn(int[] values) {
     int count = 0;
     int idx = 0;
     while (idx < values.length) {
