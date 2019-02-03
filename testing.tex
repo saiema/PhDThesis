@@ -140,6 +140,10 @@ Analizar la capacidad de un conjunto de tests en detectar fallas potenciales no 
 
 Los criterios de cobertura definen m\'etricas de evaluaci\'on generando metas, o requisitos, para la test suite bajo evaluaci\'on, y eval\'uan cu\'antas de estas metas u objetivos son satisfechas por la suite. Un test espec\'ifico pueden alcanzar o ``cubrir'' varias metas simult\'aneamente. Dado que un criterio de evaluaci\'on para una test suite no puede directamente analizar la capacidad del mismo en detectar fallas (salvo para aquellas conocidas), en el dise\~no de criterios de testing se intenta construir metas evaluables, y que indirectamente impliquen, o est\'en relacionadas con, la posibilidad de detectar fallas. El modelo \emph{RIP} ayuda al disen\~o de criterios, como veremos a continuaci\'on.
 
+Como criterios de cobertura, aquellos denominados de \emph{caja blanca}, se basan en la estructura del programa para generar metas a cubrir. Por ejemplo, cobertura de sentencias genera como metas la ejecuci\'on de las sentencias del programa. Este criterio se enfoca principalmente en \emph{alcanzabilidad} (reachability), claramente influenciado por el modelo RIP: para que una suite sea capaz de detectar defectos, debe en principio alcanzarlos. 
+
+Los criterios de \emph{caja negra} se enfocan en la especificaci\'on del programa para generar metas. Por ejemplo, el criterio de \emph{partici\'on de clases de equivalencia} se enfoca en dividir las entradas en conjuntos para los cuales el comportamiento del programa deber\'ia ser ``similar''. En el caso de \emph{max}, se podr\'ian definir diferentes clases, por ejemplo que el primer valor sea menor que el segundo, que sean iguales, o que el primer valor sea mayor que el segundo. 
+
 Un ejemplo de criterios de cobertura de caja blanca se muestra en la Figura \ref{figures.code.coverageExample}, el m\'etodo \emph{countEvenIn(int[])} toma de entrada un arreglo de enteros y retorna la cantidad de n\'umeros en el arreglo que son pares. La l\'ogica del programa es bastante simple, recorriendo uno a uno los elementos del arreglo y verificando si el resto de dividir un elemento por 2 es cero, si lo es entonces el elemento es par y se incrementa una variable donde efectivamente se cuenta cuantos pares se encontraron. Cobertura de sentencias genera como objetivos a cubrir la ejecuci\'on de cada sentencia en el programa bajo evaluaci\'on. Mientras que cobertura de ramas a\~nade como requisitos que las sentencias condicionales (sentencias \emph{IF}, \emph{WHILE}, \emph{FOR}, entre otras) se ejecuten una vez con su condici\'on siendo verdadera y otra con \'esta siendo falsa. Solamente con un test que eval\'ue el m\'etodo con un arreglo de tama\~no 1 conteniendo un n\'umero par, se obtiene una cobertura del 100\% para sentencias \ref{figures.examples.coverage.fullCoverage}. Sin embargo, si evaluamos cobertura de ramas podemos observar que con \'este test no logramos una cobertura del 100\% \ref{figures.examples.coverage.stmtCoverage}, particularmente no existe el caso donde se eval\'ua un elemento impar, al generar tests para este criterio podemos simplemente cambiar la entrada a un arreglo de tama\~no 4 con los elementos 1, 2, 3, y 4, obteniendo una cobertura de ramas del 100\% \ref{figures.examples.coverage.fullCoverage}.
 
 \begin{figure}
@@ -172,6 +176,21 @@ Un ejemplo de criterios de cobertura de caja blanca se muestra en la Figura \ref
 	\label{figures.examples.coverage.stmtCoverage}
 \end{figure}
 
-Como criterios de cobertura, aquellos denominados de \emph{caja blanca}, se basan en la estructura del programa para generar metas a cubrir. Por ejemplo, cobertura de sentencias genera como metas la ejecuci\'on de las sentencias del programa. Este criterio se enfoca principalmente en \emph{alcanzabilidad} (reachability), claramente influenciado por el modelo RIP: para que una suite sea capaz de detectar defectos, debe en principio alcanzarlos. 
+En el caso de criterios de caja negra, dos clases de criterios com\'unmente utilizadas son los basados en las entradas y aquellos que lo hacen en las especificaciones formales. Aquellos que se basan en las entradas, comienzan partiendo el dominio de cada entrada de acuerdo a caracter\'isticas provistas por el encargado de realizar los tests. \'Estas deben dividir el conjunto de valores de cada entrada en subconjuntos disyuntos y la uni\'on de todos los subconjuntos debe resultado en el dominio completo de cada entrada. Por ejemplo, si una entrada es un entero es posible dar como caracter\'istica a \emph{ser par}, lo que divide todo el conjunto de los enteros en dos subconjuntos disyuntos (uno conteniendo todos los enteros pares y otro conteniendo a todos los impares) tal que al unir estos conjuntos se obtiene nuevamente a todos los enteros. Cada criterio basado en las entradas del programa a evaluar, luego define de que forma combinar valores de cada subconjunto en los casos donde el programa tiene varias entradas, por ejemplo, combinar todos con todos, o cada subconjunto debe estar representado por lo menos una vez sin importar con que otro subconjunto es combinado. 
 
-Los criterios de \emph{caja negra} se enfocan en la especificaci\'on del programa para generar metas. Por ejemplo, el criterio de \emph{partici\'on de clases de equivalencia} se enfoca en dividir las entradas en conjuntos para los cuales el comportamiento del programa deber\'ia ser ``similar''. En el caso de \emph{max}, se podr\'ian definir diferentes clases, por ejemplo que el primer valor sea menor que el segundo, que sean iguales, o que el primer valor sea mayor que el segundo. 
+\begin{figure}
+	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/Replace.java}
+	\caption{M\'etodo para reemplazar todos los valores en un arreglo \emph{array} que son iguales a un valor especificado (\emph{what}) por otro valor especificado (\emph{with}) y retornar cuantos cambios se realizaron.}
+	\label{figures.code.replaceExample}
+\end{figure}
+
+\begin{table}[]
+	\begin{tabular}{|c|ccc|}
+		\hline
+		Bloque & array vacío & what pertenece & with distinto a what \\ \hline
+		1 & T & T & T \\ \hline
+		2 & F & F & F \\ \hline
+	\end{tabular}
+	\caption{Caracter\'isticas con las que se puede dividir los conjuntos de las entradas del programa \emph{replace(int[], int, int)} \ref{figures.code.replaceExample}.}
+	\label{tables.example.codeCoverage}
+\end{table}
