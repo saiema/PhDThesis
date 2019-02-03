@@ -135,7 +135,42 @@ La Figura~\ref{figures.examples.testing.rip} contiene una implementaci\'on de un
 
 %Queda en evidencia la necesidad de un criterio para evaluar la calidad de un conjunto de tests. Como condici\'on de terminaci\'on para un proceso (ya sea manual o autom\'atico) de generaci\'on de tests, as\'i como para evaluar el conjunto de tests utilizados para poder medir la relaci\'on entre el hecho de que \'estos pasen y la confianza en que el programa bajo evaluaci\'on sea correcto.
 
-Los criterios de cobertura generan metas, o requisitos, para la test suite bajo evaluaci\'on, y eval\'uan cu\'antas de estas metas u objetivos son satisfechas por la suite. Un test espec\'ifico pueden alcanzar o ``cubrir'' varias metas simult\'aneamente. Dado que un criterio de evaluaci\'on para una test suite no puede directamente analizar la capacidad del mismo en detectar fallas (salvo para aquellas conocidas), en el dise\~no de criterios de testing se intenta construir metas evaluables, y que indirectamente impliquen, o est\'en relacionadas con, la posibilidad de detectar fallas. El modelo \emph{RIP} ayuda al disen\~o de criterios, como veremos a continuaci\'on.
+Como se mencion\'o anteriormente, al utilizar testing como t\'ecnica para evaluar a un programa con respecto a las tareas que \'este realiza, es necesario seleccionar un conjunto finito de escenarios sobre el cual ejecutar y evaluar el programa. La selecci\'on debe hacerse de forma tal que si el comportamiento del programa es el correcto dentro de los escenarios seleccionados, sea posible generalizar el correcto comportamiento a todos los escenarios posibles. Intuitivamente lo que se busca es poder seleccionar el conjunto de escenarios con la mejor capacidad de detectar potenciales fallas.
+Analizar la capacidad de un conjunto de tests en detectar fallas potenciales no es posible, al menos de manera directa, por la raz\'on de que \'estas no son conocidas. En la pr\'actica, la evaluaci\'on de la capacidad de un conjunto de tests en detectar fallas potenciales se realiza de manera indirecta, donde el objetivo es definir una m\'etrica que cuan m\'as alto sea el valor asociado, mayor sea la confianza sobre los tests en detectar fallas potenciales.
+
+Los criterios de cobertura definen m\'etricas de evaluaci\'on generando metas, o requisitos, para la test suite bajo evaluaci\'on, y eval\'uan cu\'antas de estas metas u objetivos son satisfechas por la suite. Un test espec\'ifico pueden alcanzar o ``cubrir'' varias metas simult\'aneamente. Dado que un criterio de evaluaci\'on para una test suite no puede directamente analizar la capacidad del mismo en detectar fallas (salvo para aquellas conocidas), en el dise\~no de criterios de testing se intenta construir metas evaluables, y que indirectamente impliquen, o est\'en relacionadas con, la posibilidad de detectar fallas. El modelo \emph{RIP} ayuda al disen\~o de criterios, como veremos a continuaci\'on.
+
+Un ejemplo de criterios de cobertura de caja blanca se muestra en la Figura \ref{figures.code.coverageExample}, el m\'etodo \emph{countEvenIn(int[])} toma de entrada un arreglo de enteros y retorna la cantidad de n\'umeros en el arreglo que son pares. La l\'ogica del programa es bastante simple, recorriendo uno a uno los elementos del arreglo y verificando si el resto de dividir un elemento por 2 es cero, si lo es entonces el elemento es par y se incrementa una variable donde efectivamente se cuenta cuantos pares se encontraron. Cobertura de sentencias genera como objetivos a cubrir la ejecuci\'on de cada sentencia en el programa bajo evaluaci\'on. Mientras que cobertura de ramas a\~nade como requisitos que las sentencias condicionales (sentencias \emph{IF}, \emph{WHILE}, \emph{FOR}, entre otras) se ejecuten una vez con su condici\'on siendo verdadera y otra con \'esta siendo falsa. Solamente con un test que eval\'ue el m\'etodo con un arreglo de tama\~no 1 conteniendo un n\'umero par, se obtiene una cobertura del 100\% para sentencias \ref{figures.examples.coverage.fullCoverage}. Sin embargo, si evaluamos cobertura de ramas podemos observar que con \'este test no logramos una cobertura del 100\% \ref{figures.examples.coverage.stmtCoverage}, particularmente no existe el caso donde se eval\'ua un elemento impar, al generar tests para este criterio podemos simplemente cambiar la entrada a un arreglo de tama\~no 4 con los elementos 1, 2, 3, y 4, obteniendo una cobertura de ramas del 100\% \ref{figures.examples.coverage.fullCoverage}.
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/CoverageExample.java}
+	\caption{M\'etodo para contar n\'umeros pares en un arreglo de enteros.}
+	\label{figures.code.coverageExample}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{figures/stmtCoverageOrientedTests.JPG}
+	\caption{Tests orientados a satisfacer cobertura de sentencias para el c\'odigo de \emph{countEvenIn(int[])} \ref{figures.code.coverageExample}.}
+	\label{figures.examples.coverage.stmtTests}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{figures/branchCoverageOrientedTests.JPG}
+	\caption{Tests orientados a satisfacer cobertura de ramas para el c\'odigo de \emph{countEvenIn(int[])} \ref{figures.code.coverageExample}.}
+	\label{figures.examples.coverage.branchTests}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{figures/branchCoverageExampleComplete.JPG}
+	\caption{Medici\'on de cobertura de \emph{countEvenIn(int[])} \ref{figures.code.coverageExample} con una cobertura del 100\% tanto de sentencias como de ramas.}
+	\label{figures.examples.coverage.fullCoverage}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{figures/branchCoverageExampleIncomplete.JPG}
+	\caption{Medici\'on de cobertura de \emph{countEvenIn(int[])} \ref{figures.code.coverageExample} con una cobertura del 100\% de sentencias pero no de ramas.}
+	\label{figures.examples.coverage.stmtCoverage}
+\end{figure}
 
 Como criterios de cobertura, aquellos denominados de \emph{caja blanca}, se basan en la estructura del programa para generar metas a cubrir. Por ejemplo, cobertura de sentencias genera como metas la ejecuci\'on de las sentencias del programa. Este criterio se enfoca principalmente en \emph{alcanzabilidad} (reachability), claramente influenciado por el modelo RIP: para que una suite sea capaz de detectar defectos, debe en principio alcanzarlos. 
 
