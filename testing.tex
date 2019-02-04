@@ -176,7 +176,7 @@ Un ejemplo de criterios de cobertura de caja blanca se muestra en la Figura \ref
 	\label{figures.examples.coverage.stmtCoverage}
 \end{figure}
 
-En el caso de criterios de caja negra, dos clases de criterios com\'unmente utilizadas son los basados en las entradas y aquellos que lo hacen en las especificaciones formales. Aquellos que se basan en las entradas, comienzan partiendo el dominio de cada entrada de acuerdo a caracter\'isticas provistas por el encargado de realizar los tests. \'Estas deben dividir el conjunto de valores de cada entrada en subconjuntos disyuntos y la uni\'on de todos los subconjuntos debe resultado en el dominio completo de cada entrada. Por ejemplo, si una entrada es un entero es posible dar como caracter\'istica a \emph{ser par}, lo que divide todo el conjunto de los enteros en dos subconjuntos disyuntos (uno conteniendo todos los enteros pares y otro conteniendo a todos los impares) tal que al unir estos conjuntos se obtiene nuevamente a todos los enteros. Cada criterio basado en las entradas del programa a evaluar, luego define de que forma combinar valores de cada subconjunto en los casos donde el programa tiene varias entradas, por ejemplo, combinar todos con todos, o cada subconjunto debe estar representado por lo menos una vez sin importar con que otro subconjunto es combinado. 
+En el caso de criterios de caja negra, dos clases de criterios com\'unmente utilizadas son los basados en las entradas y aquellos que lo hacen en las especificaciones formales. Aquellos que se basan en las entradas, comienzan partiendo el dominio de cada entrada de acuerdo a ciertas caracter\'isticas provistas. \'Estas deben dividir el conjunto de valores de cada entrada en subconjuntos disyuntos y la uni\'on de todos los subconjuntos debe resultado en el dominio completo de cada entrada. Por ejemplo, si una entrada es un entero es posible dar como caracter\'istica a \emph{ser par}, lo que divide todo el conjunto de los enteros en dos subconjuntos disyuntos (uno conteniendo todos los enteros pares y otro conteniendo a todos los impares) tal que al unir estos conjuntos se obtiene nuevamente a todos los enteros. Cada criterio basado en las entradas del programa a evaluar, luego define de que forma combinar valores de cada subconjunto en los casos donde el programa tiene varias entradas, por ejemplo, combinar todos con todos, o cada subconjunto debe estar representado por lo menos una vez sin importar con que otro subconjunto es combinado. Para el ejemplo de la Figura \ref{figures.code.replaceExample}, que muestra un m\'etodo que dado un arreglo de enteros, un valor entero a buscar en el arreglo, y un valor con el cual reemplazar el valor anterior, realiza los reemplazos y retorna cuantos fueron realizados. En la Tabla \ref{tables.example.codeCoverage} se muestran posibles caracter\'isticas para dividir cada entrada, que el arreglo sea o no vac\'io, que el valor a buscar est\'e o no en el arreglo, y finalmente que el valor con el cual reemplazar al anterior sea igual o distinto. Vale aclarar que si bien todas las caracter\'isticas dividen las entradas en dos subconjuntos, esto no es necesario, una caracter\'istica que divida en m\'as subconjunto es completamente v\'alida siempre que cumpla con las propiedades mencionadas anteriormente. Como ejemplo de combinaci\'on de valores de cada subconjunto definidos por las caracter\'isticas en la Tabla \ref{tables.example.codeCoverage} podemos utilizar el criterio de \emph{Each Choice Value}, el cual determina que cada subconjunto debe estar representado al menos una vez en los tests. Lo cual lleva a los tests en la Figura \ref{figures.examples.coverage.eccTests}, con dos tests, uno donde se utiliza un arreglo no vac\'io, con el valor a reemplazar perteneciendo al arreglo (2) y el valor con el cual reemplazar siendo igual al anterior; el segundo tests utiliza un arreglo vac\'io, obviamente el elemento a buscar no pertenece al mismo y el valor con el cual reemplazar es distinto al anterior. El hecho de que como se puede apreciar en la Figura \ref{figures.examples.coverage.eccCoverage}, los tests anteriores logran una cobertura de ramas del 100\% al tiempo que \'estos son evidentemente un conjunto muy pobre de escenarios, sirve para remarcar como un criterio puede ser satisfecho al mismo tiempo que los tests que lo satisfacen son claramente de muy mala calidad.
 
 \begin{figure}
 	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/Replace.java}
@@ -187,10 +187,22 @@ En el caso de criterios de caja negra, dos clases de criterios com\'unmente util
 \begin{table}[]
 	\begin{tabular}{|c|ccc|}
 		\hline
-		Bloque & array vacío & what pertenece & with distinto a what \\ \hline
+		Bloque & array vacío & what pertenece & with igual a what \\ \hline
 		1 & T & T & T \\ \hline
 		2 & F & F & F \\ \hline
 	\end{tabular}
 	\caption{Caracter\'isticas con las que se puede dividir los conjuntos de las entradas del programa \emph{replace(int[], int, int)} \ref{figures.code.replaceExample}.}
 	\label{tables.example.codeCoverage}
 \end{table}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{figures/replaceTestsEachChoice.JPG}
+	\caption{Tests para satisfacer criterio de cobertura \emph{Each Choice Coverage} para \ref{figures.code.replaceExample} basado en las caracter\'isticas definidas en \ref{tables.example.codeCoverage}.}
+	\label{figures.examples.coverage.eccTests}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{figures/replaceFullCoverage.JPG}
+	\caption{Cobertura de ramas lograda por los tests definidos en \ref{figures.examples.coverage.eccTests}.}
+	\label{figures.examples.coverage.eccCoverage}
+\end{figure}
