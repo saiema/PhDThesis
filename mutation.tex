@@ -125,4 +125,97 @@ La dificultad de un mutante por el otro lado, es una propiedad que si bien ser\'
 
 El uso de \emph{Dynamic Mutant Subsumption} a sido utilizado previamente para minimizar conjuntos de mutantes en \cite{bibliography.mutation.minimizing.dynamicsubsumption} y para medir la efectividad de un conjunto de mutantes en \cite{bibliography.mutation.efectiveness.dynamicsubsumption}, este \'ultimo trabajo sugiere la utilizaci\'on de dynamic mutant subsumption como forma de comparar operadores de mutaci\'on y/o t\'ecnicas de selecci\'on de mutantes. Una ventaja inicial de utilizar esta t\'ecnica es que la definici\'on es clara, un mutante subsume a otro si ambos son detectados y los tests que detectan al primero tambi\'en detectan al segundo. A su vez, la conclusi\'on de que los mutantes subsumidos son redundantes se relaciona a la existencia de otro/s mutantes que ejercitan al conjunto de tests de manera m\'as espec\'ifica (son detectados por menos tests), y los mutantes equivalentes con respecto a subsuma ejercitan varias veces al mismo conjunto de tests, pudiendo elegir un solo representante de \'estos. La dificultad de detecci\'on puede asociarse a subsuma argumentando que si un mutante subsume a otros, es detectado por menos tests, dando la intuici\'on de que requiere tests m\'as espec\'ificos que los mutantes que subsume.
 
-Retormando el estudio sobre el operador \emph{BEE}, cuando realizamos un an\'alisis de subsuma logramos obtener resultados mas significativos con respecto a la utilidad del operador para mutation testing. [AGREGAR RESULTADOS]
+Retomando el estudio sobre el operador \emph{BEE}, cuando realizamos un an\'alisis de subsuma logramos obtener resultados mas significativos con respecto a la utilidad del operador para mutation testing. Las preguntas de investgaci\'on de este trabajo son:
+\begin{quote}
+	{\it Nuestro operador (BEE) genera mayor cantidad de mutantes dif\'iciles de matar (stubborn) que los operados existentes que debilitan o fortalecen expresiones booleanas?}
+\end{quote}
+\begin{quote}
+	{\it Como nuestro operador (BEE) afecta al an\'alisis de mutaci\'on?}
+\end{quote}
+
+Siendo los resultados obtenidos los de las Tablas \ref{tables.examples.bee.paperResults.arraypartition}, \ref{tables.examples.bee.paperResults.binaryheap}, \ref{tables.examples.bee.paperResults.ordset}, \ref{tables.examples.bee.paperResults.treemap}, y \ref{tables.examples.bee.paperResults.trityp}. Estos resultados dieron lugar a la conclusi\'on de que la respuesta a la primer pregunta de investigaci\'on es negativa (\emph{BEE} no parece generar una cantidad importante de mutantes dif\'iciles de matar), mientras que la segunda pregunta se responde de una manera m\'as positiva al indicar que la dificultad de matar los mutantes generados por \emph{BEE} parece mantenerse con respecto al resto de los mutantes (el valor de \emph{toughness} pr\'acticamente no cambia) y que la cantidad de mutantes equivalentes generados se deben a particularidades de algunos casos. Un problema con los resultados utilizados es que parecen estar ocultando informaci\'on. Por esto, al realizar un an\'alisis de los mismos casos utilizados en el trabajo publicado, pero utilizando Dynamic Mutant Subsumption, obtenemos los resultados en la Figura \ref{subsumption-results-bee} que permiten observar que en tres de los cinco casos de estudio (\emph{BinaryHeap}, \emph{OrdSet}, y \emph{TreeMap}) los mutantes generados por \emph{BEE} son dominadores, es decir, corresponden a mutantes no redundantes para evaluar a los tests. En los casos de \emph{BinaryHeap} y \emph{OrdSet} se observa que al menos el 50\% de los mutantes dominadores generador por \emph{BEE} no son equivalentes a otros mutantes dominadores, lo que permite concluir que representan fallas nuevas no generadas por los otros operadores.
+
+Esta comparaci\'on sirve de argumento para utilizar Dynamic Mutant Subsumption como una de las principales t\'ecnicas para evaluar un operador de mutaci\'on.
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 196 & 14 & 0.50 & 92.85\% & 6 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 336 & 36 & 0.53 & 89.28\% & 8 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{ArrayPartition} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.arraypartition}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 454 & 111 & 0.73 & 75.55\% & 65 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 889 & 341 & 0.72 & 61.64\% & 163 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{BinaryHeap} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.binaryheap}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 1278 & 179 & 0.83 & 85.99\% & 160 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 2248 & 620 & 0.83 & 72.41\% & 403 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{OrdSet} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.ordset}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 576 & 160 & 0.93 & 72.22\% & 114 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 2536 & 1376 & 0.94 & 45.74\% & 631 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{TreeMap} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.treemap}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 435 & 109 & 0.98 & 74.94\% & 56 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 55 & 115 & 0.98 & 79.27\% & 62 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{TriTyp} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.trityp}
+\end{table}
+
+\begin{figure}[t]
+	\begin{center}
+		\includegraphics[width=12cm]{figures/BEETables.png}
+	\end{center}
+	\caption{Dynamic subsumption analysis para el operador \emph{BEE}}
+	\label{subsumption-results-bee}
+\end{figure}
