@@ -4,7 +4,7 @@
 
 \section{$\mu$Java++}
 
-La herramienta \emph{$\mu$Java} \cite{bibliography.mutation.tools.muJavaMaOK05} funciona traduciendo c\'odigo fuente \emph{Java} a un \emph{AST}, una estructura de \'arbol que representa el c\'odigo original como nodos, y recorriendo el mismo mediante un patr\'on \emph{visitor}. Cada operador sobreescribe m\'etodos particulares de visita para los nodos objetivo, el operador \emph{ROR}, por ejemplo, solo tiene por objetivo a expresiones binarias (en cuanto al tipo de nodos) y particularmente a aquellas que utilicen un operador relacional. En la Figura-\ref{figures.examples.rorMutation} se ve una parte de un \emph{AST} correspondiente a la sentencia \lstinline|x = y < 0|, \emph{ROR} al visitar el nodo \emph{BinExpr} con el operador \emph{<}, va a generar varias mutaciones, entre otras, el nodo mutado \emph{BinExpr[>]} que corresponde al cambio de el operador \emph{<} por \emph{>}, mientras mantiene los subnodos de \emph{BinExpr} sin modificaciones.
+La herramienta \emph{$\mu$Java} \cite{bibliography.mutation.tools.muJavaMaOK05} funciona traduciendo c\'odigo fuente \emph{Java} a un \emph{AST}, una estructura de \'arbol que representa el c\'odigo original como nodos, y recorriendo el mismo mediante un patr\'on \emph{visitor}. Cada operador sobreescribe m\'etodos particulares de visita para los nodos objetivo, el operador \emph{ROR}, por ejemplo, solo tiene por objetivo a expresiones binarias (en cuanto al tipo de nodos) y particularmente a aquellas que utilicen un operador relacional. En la Figura \ref{figures.examples.rorMutation} se ve una parte de un \emph{AST} correspondiente a la sentencia \lstinline|x = y < 0|, \emph{ROR} al visitar el nodo \emph{BinExpr} con el operador \emph{<}, va a generar varias mutaciones, entre otras, el nodo mutado \emph{BinExpr[>]} que corresponde al cambio de el operador \emph{<} por \emph{>}, mientras mantiene los subnodos de \emph{BinExpr} sin modificaciones.
 
 \begin{figure}
 	\begin{tikzpicture}%
@@ -87,7 +87,7 @@ Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atic
 	\label{figures.definitions.prvo.impl_def}
 \end{figure}
 
-En la Figura-\ref{figures.definitions.prvo.impl_def} se restringe la definici\'on abstracta de \emph{prvo} [\ref{figures.definitions.prvo.simple_def}] en base a cuanto se puede cambiar la longitud de la expresi\'on original. La notaci\'on \emph{expression$^{|R|}$} denota una expresi\'on encadenada de un tama\~no particular o un rango de tama\~nos, por ejemplo, de 0 a 1. El valor \emph{null} es un caso especial, no es posible incrementar el tama\~no de una expresi\'on encadenando nuevos elementos ni tampoco reemplazar \emph{null} por una expresi\'on de tama\~no 1, solo es posible reemplazarlo por otra expresi\'on de tama\~no 0.
+En la Figura \ref{figures.definitions.prvo.impl_def} se restringe la definici\'on abstracta de \emph{prvo} [\ref{figures.definitions.prvo.simple_def}] en base a cuanto se puede cambiar la longitud de la expresi\'on original. La notaci\'on \emph{expression$^{|R|}$} denota una expresi\'on encadenada de un tama\~no particular o un rango de tama\~nos, por ejemplo, de 0 a 1. El valor \emph{null} es un caso especial, no es posible incrementar el tama\~no de una expresi\'on encadenando nuevos elementos ni tampoco reemplazar \emph{null} por una expresi\'on de tama\~no 1, solo es posible reemplazarlo por otra expresi\'on de tama\~no 0.
 
 \subsection{Configuraci\'on de PRVO}
 
@@ -96,7 +96,7 @@ Con el tiempo la cantidad de comportamientos o restricciones configurables en \e
 \subsubsection{Restricciones de tama\~no}
 \label{sec:implementation.prvo.restrictions.size}
 
-A partir de la definici\'on en la Figura-\ref{figures.definitions.prvo.impl_def}, las restricciones sobre cuanto puede decrementar o incrementar una expresi\'on encadenada se limitan a:
+A partir de la definici\'on en la Figura \ref{figures.definitions.prvo.impl_def}, las restricciones sobre cuanto puede decrementar o incrementar una expresi\'on encadenada se limitan a:
 
 \begin{enumerate}[leftmargin=.75cm,align=left]
 	\item[\textbf{Reemplazar un elemento(R)}] Ciertas mutaciones de \emph{prvo} solo modifican elementos unitarios (expresiones de tama\~no 0) en una expresi\'on encadenada, reemplaz\'andolos por otros de tama\~no 0.
@@ -131,11 +131,11 @@ En las Figuras \ref{figures.code.prvoMethods.sameLength}, \ref{figures.code.prvo
 	
 	\item[\textbf{append(Expression...)}]\mbox{}\\ Este m\'etodo toma una secuencia de expresiones y las une mediante el operador de navegaci\'on (\emph{punto}), los argumentos nulos son ignorados.
 	
-	\item[\textbf{isReachable(Expression, Expression)}]\mbox{}\\ Este m\'etodo verifica si la primer expresi\'on es alcanzable desde la segunda, es decir, si el primer elemento de la primer expresi\'on representa un miembro del tipo del \'ultimo elemento de la segunda. Por ejemplo \emph{next.value} es alcanzable desde \emph{this.header} en una lista (ver Figura-\ref{figures.examples.navegationExprGraph}).
+	\item[\textbf{isReachable(Expression, Expression)}]\mbox{}\\ Este m\'etodo verifica si la primer expresi\'on es alcanzable desde la segunda, es decir, si el primer elemento de la primer expresi\'on representa un miembro del tipo del \'ultimo elemento de la segunda. Por ejemplo \emph{next.value} es alcanzable desde \emph{this.header} en una lista (ver Figura \ref{figures.examples.navegationExprGraph}).
 	
 	\item[\textbf{elements(Expression)}]\mbox{}\\ Retorna una lista de todos los elementos que conforman una expresi\'on con respecto al operador de navegaci\'on. Por ejemplo, la expresi\'on \emph{current.next.value} retorna\'ia una lista con \emph{current}, \emph{next}, y \emph{value}.
 	
-	\item[\textbf{getType(Expression)}]\mbox{}\\ Este m\'etodo retorna el tipo asociado al \'ultimo elemento de una expresi\'on. Por ejemplo, para la expresi\'on \emph{current.next} retornar\'ia \emph{Node} (ver Figura-\ref{figures.examples.navegationExprGraph}).
+	\item[\textbf{getType(Expression)}]\mbox{}\\ Este m\'etodo retorna el tipo asociado al \'ultimo elemento de una expresi\'on. Por ejemplo, para la expresi\'on \emph{current.next} retornar\'ia \emph{Node} (ver Figura \ref{figures.examples.navegationExprGraph}).
 	
 	\item[\textbf{compatibleTypes(Type, Type)}]\mbox{}\\ Este m\'etodo verifica si el primer tipo es compatible con el segundo. La compatibilidad ser\'a verificada de acuerdo a la configuraci\'on de \emph{prvo}, si el chequeo de tipos es relajada, entonces se verifica si el primer tipo es asignable al segundo; si por el contrario se est\'a utilizando un chequeo de tipos estricto, entonces solo son compatibles los tipos iguales.
 	
@@ -246,7 +246,7 @@ A partir del an\'alisis anterior, es posible construir un grafo en el cual un no
 \begin{quote}
 	Para cada mutante \emph{m$_i$} en el nodo \emph{n$_1$}, y para cada mutante \emph{m$_j$} en el nodo \emph{n$_2$}, se cumple que \emph{m$_i$} subsume a \emph{m$_j$}.
 \end{quote}
-Un ejemplo de la generaci\'on de estos grafos se puede ver comenzando con la Tabla-\ref{tables.examples.subsumptionInit} la cual es generada al final del an\'alisis de mutation testing, cada mutante analizado se almacena en un nodo \'unico con la informaci\'on de que tests detectaron al mismo. A partir de estos datos se eliminan los nodos que corresponden a mutantes que sobrevivieron (recordemos que la primer condici\'on para la relaci\'on de subsuma es que los mutantes en la relaci\'on hayan sido detectados) y todos los nodos que corresponden a mutantes detectados por los mismos tests, es decir, se subsumen el uno al otro, se fusionan en un mismo nodo, \'esto se puede apreciar en la Tabla-\ref{tables.examples.subsumptionEquivAndKilled} donde por ejemplo el nodo \textbf{4} fue eliminado, el nodo \textbf{7} fue fusionado con el nodo \textbf{2} y lo mismo ocurri\'o con los nodos \textbf{3} y \textbf{5}. A partir de la \'ultima tabla (o a partir de los nodos representados en la misma) se puede construir el grafo de subsuma din\'amica de la Figura-\ref{figures.examples.dynamicSubsumptionGraph}.
+Un ejemplo de la generaci\'on de estos grafos se puede ver comenzando con la Tabla \ref{tables.examples.subsumptionInit} la cual es generada al final del an\'alisis de mutation testing, cada mutante analizado se almacena en un nodo \'unico con la informaci\'on de que tests detectaron al mismo. A partir de estos datos se eliminan los nodos que corresponden a mutantes que sobrevivieron (recordemos que la primer condici\'on para la relaci\'on de subsuma es que los mutantes en la relaci\'on hayan sido detectados) y todos los nodos que corresponden a mutantes detectados por los mismos tests, es decir, se subsumen el uno al otro, se fusionan en un mismo nodo, \'esto se puede apreciar en la Tabla \ref{tables.examples.subsumptionEquivAndKilled} donde por ejemplo el nodo \textbf{4} fue eliminado, el nodo \textbf{7} fue fusionado con el nodo \textbf{2} y lo mismo ocurri\'o con los nodos \textbf{3} y \textbf{5}. A partir de la \'ultima tabla (o a partir de los nodos representados en la misma) se puede construir el grafo de subsuma din\'amica de la Figura \ref{figures.examples.dynamicSubsumptionGraph}.
 A partir de este grafo se observan nodos que son subsumidos pero no subsumen a nadie, a los mutantes en estos nodos se los considera los m\'as redundantes de todos. Nodos que subsumen a otros y son a su vez subsumidos, \'estos siguen siendo redundantes pero en un grado menor a los anteriores. Finalmente los nodos que subsumen a otros pero no son a su vez subsumidos, son denominados ``dominadores''. Dado que en esta tesis presentamos una familia particular de operadores, y que son el objetivos de nuestra evaluaciones, lograr que los mutantes generados por \emph{prvo} ocupen una mayor\'ia de los nodos dominadores, no alcanza, \'esto es causa de que cualquier mutante generado por otro operador e inclu\'ido en el nodo, es equivalente a los de \emph{prvo}. Este problema se extiende a la evaluaci\'on de cualquier operador utilizando grafos de dynamic mutant subsumtion. Por esto, este an\'alisis incluye la propiedad de pureza en los nodos.
 \begin{quote}
 	Un nodo en un grafo de dynamic mutant subsumption es considerado puro, si para cada mutante contenido en el mismo, \'este fue generado por el mismo operador.
@@ -314,6 +314,6 @@ Una clara desventaja de este an\'alisis es que requiere ejecutar todos los tests
 		;
 		\end{tikzpicture}
 	\end{center}
-	\caption{Grafo de \emph{Dynamic Mutant Subsumption} generado mediante la informaci\'on de la Tabla-\ref{tables.examples.subsumptionEquivAndKilled}}
+	\caption{Grafo de \emph{Dynamic Mutant Subsumption} generado mediante la informaci\'on de la Tabla \ref{tables.examples.subsumptionEquivAndKilled}}
 	\label{figures.examples.dynamicSubsumptionGraph}
 \end{figure}

@@ -9,9 +9,9 @@ Un \emph{test} consta b\'asicamente de los siguientes pasos:
 \begin{enumerate}
 	\item Preparaci\'on (\emph{Arrange}), define los datos necesarios para el escenario bajo el cual se va a ejecutar el test. A modo de ejemplo, consideremos el test de la Figura~\ref{figures.examples.test.manual}. La primera l\'inea de este test, en la cual se define el escenario sobre el cual se va a evaluar la implementaci\'on de una calculadora, corresponde al \emph{arrange}.
 	
-	\item Ejecuci\'on (\emph{Act}), es la ejecuci\'on del programa a evaluar. Generalmente incluye la obtenci\'on del resultado de dicha ejecuci\'on, para su posterior contrastaci\'on con el resultado esperado. La l\'inea 2 de la Figura-\ref{figures.examples.test.manual} ejecuta una funcionalidad de la calculadora, a trav\'es del el m\'etodo \texttt{Calculator\#evaluate(String)}, para la expresi\'on definida en el arrange; esta l\'inea corresponde al \emph{act} del test. 
+	\item Ejecuci\'on (\emph{Act}), es la ejecuci\'on del programa a evaluar. Generalmente incluye la obtenci\'on del resultado de dicha ejecuci\'on, para su posterior contrastaci\'on con el resultado esperado. La l\'inea 2 de la Figura \ref{figures.examples.test.manual} ejecuta una funcionalidad de la calculadora, a trav\'es del el m\'etodo \texttt{Calculator\#evaluate(String)}, para la expresi\'on definida en el arrange; esta l\'inea corresponde al \emph{act} del test. 
 	
-	\item Evaluaci\'on (\emph{Assert}), consiste en la verificaci\'on de que el resultado obtenido, ya sea un valor de salida o un estado del programa, se corresponde con el esperado. La \'ultima l\'inea de la Figura-\ref{figures.examples.test.manual} eval\'ua que la ejecuci\'on del m\'etodo \texttt{Calculator\#evaluate(String)}, para la expresi\'on definida en el arrange, da como resultado \texttt{16}; esta l\'inea corresponde al \emph{assert} del test.
+	\item Evaluaci\'on (\emph{Assert}), consiste en la verificaci\'on de que el resultado obtenido, ya sea un valor de salida o un estado del programa, se corresponde con el esperado. La \'ultima l\'inea de la Figura \ref{figures.examples.test.manual} eval\'ua que la ejecuci\'on del m\'etodo \texttt{Calculator\#evaluate(String)}, para la expresi\'on definida en el arrange, da como resultado \texttt{16}; esta l\'inea corresponde al \emph{assert} del test.
 \end{enumerate}
 
 \begin{figure}
@@ -33,7 +33,7 @@ Los criterios de testing t\'ipicamente se clasifican en \emph{caja blanca} (whit
 
 Si bien la definici\'on de test dada anteriormente no menciona ejecutabilidad, sino que simplemente se limita a describir los pasos o etapas que constituyen un test, es directo suponer que estos pasos son, con excepci\'on quiz\'as del \emph{assert}, son evidentemente implementables. Decimos que la implementaci\'on de la etapa de \emph{assert} es menos evidente porque este paso es en muchos casos, cuando se llevan adelante procesos ad hoc de testing, realizado manualmente: es el desarrollador o usuario quien contrasta el resultado real con el resultado esperado. Sin embargo, muchas caracter\'isticas del resultado esperado de un programa son, en muchos casos, verificables de manera directa, y por lo tanto tambi\'en lo es su automatizaci\'on. 
 
-Existen numerosas bibliotecas disponibles para automatizar el proceso de ejecuci\'on de tests. Una de estas, que goza de enorme popularidad, es la biblioteca \emph{JUnit}, para tests de unidad en Java. En la Figura-\ref{figures.examples.test.junit} se muestra el ejemplo anterior implementado en \emph{Java} utilizando la librer\'ia \emph{JUnit}.
+Existen numerosas bibliotecas disponibles para automatizar el proceso de ejecuci\'on de tests. Una de estas, que goza de enorme popularidad, es la biblioteca \emph{JUnit}, para tests de unidad en Java. En la Figura \ref{figures.examples.test.junit} se muestra el ejemplo anterior implementado en \emph{Java} utilizando la librer\'ia \emph{JUnit}.
 
 \begin{figure}[ht!]
 	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em]
