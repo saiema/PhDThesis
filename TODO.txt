@@ -5,3 +5,36 @@ Quizas vale la pena mencionar que muJava define runners propios para soportar te
 Agregar referencias en la intro: al mencionarse criterios de cobertura, testing; y en los accidentes si es posible (Agregadas referencias de accidentes)
 Reemplazar Figura- y Tabla- por Figura y Tabla respectivamente (HECHO)
 Explicar por que la implementacion de dequeue() esta mal
+
+TYPOS:
+
+Testing:
+- es decir, considerando todas sus las entradas, directas e indirectas
+- ejecuta una funcionalidad de la calculadora, a través del el método
+- Los criterios de testing ayudar a seleccionar escenarios
+Testing, Automatizacion de la ejecucion de tests
+- es directo suponer que estos pasos son, con excepción quizás del assert, son evidentemente implementables
+- Sin embargo, la construcción de tests es un proceso cuy automatización es sustancialmente más difícil
+- puede comprobarse automáticamente, dada un estado específico de programa
+Testing, Automatizacion de la ejecucion de tests, modelo RIP
+- precisamente, las condiciones que deben sarse para la detección de una falla:
+Testing, Automatizacion de la ejecucion de tests, criterios de cobertura
+- El modelo RIP ayuda al disenõ de criterios, como veremos a continuación.
+- y la unión de todos los subconjuntos debe resultado en el dominio completo
+- igual al anterior; el segundo tests utiliza
+
+Mutation testing, propiedades de operadores de mutacion
+- específicamente, como el conjunto de mutantes obliga al test suite a ejercitar
+Mutation testing, propiedades de operadores de mutacion, equivalencia
+- cobertura de código y análisis de fujo de datos para determinar potencial equivalencia
+Mutation testing, propiedades de operadores de mutacion, dificultad de deteccion
+-La razón por la cual detectar o prevenir una baja dificultad de detección para un conjunto de mutantes, es que es difícil definir precisamente a esta dificultad. (FALTA ALGO NO?)
+Mutation testing, dynamic mutant subsumption como metrica, cantidad de mutantes
+- es decir, cuantos mutantes agrega al anaálsis.
+Mutation testing, dynamic mutant subsumption como metrica, mutantes dificiles de matar (stubborn)
+- una de éstas corresponde a propuesta por Xiangjuan Yao et al
+Mutation testing, dynamic mutant subsumption como metrica, (luego de las metricas usadas en el paper de BEE)
+- Las preguntas de investgación de este trabajo son:
+
+GENERAL
+- Hasta mutation testing se hace mención a test suite o suite con la, pero en mutation testing se usa el
