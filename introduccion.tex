@@ -130,7 +130,7 @@ public void enqueue(int elem) {
         size++;
 }
 \end{lstlisting}
-Esta implementaci\'on es err\'onea dado que, cuando la cola no est\'a vac\'ia, inserta el nuevo elemento como el siguiente del comienzo, en lugar de insertar al final, como exige la pol\'itica de visita de elementos en una cola. El error y su reparaci\'on son simples: la expresi\'on \texttt{front.next = newNode} deber\'ia en realizar ser \texttt{last.next = newNode}. Sin embargo, herramientas de reparaci\'on autom\'atica como GenProg son incapaces de reparar este c\'odigo, pues sus mutaciones de granularidad gruesa no consiguen reproducir el comportamiento esperado para \emph{enqueue()}. 
+Esta implementaci\'on es err\'onea dado que, cuando la cola no est\'a vac\'ia, inserta el nuevo elemento como el siguiente del comienzo, en lugar de insertar al final, como exige la pol\'itica de visita de elementos en una cola. El error y su reparaci\'on son simples: la expresi\'on \texttt{front.next = newNode} deber\'ia en realidad ser \texttt{last.next = newNode}. Sin embargo, herramientas de reparaci\'on autom\'atica como GenProg son incapaces de reparar este c\'odigo, pues sus mutaciones de granularidad gruesa no consiguen reproducir el comportamiento esperado para \emph{enqueue()}. 
 
 Esto nos lleva a nuestros objetivos:
 
