@@ -6,6 +6,7 @@ Agregar referencias en la intro: al mencionarse criterios de cobertura, testing;
 Reemplazar Figura- y Tabla- por Figura y Tabla respectivamente (HECHO)
 Explicar por que la implementacion de dequeue() esta mal
 En la seccion de la historia de PRVO se menciona que PRV solo modifica variables pero tambien puede cambiar accesos a campos
+En la seccion de implementacion, se utiliza aun "expresion encadenada"
 
 TYPOS:
 
