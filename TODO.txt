@@ -9,6 +9,9 @@ En la seccion de la historia de PRVO se menciona que PRV solo modifica variables
 
 TYPOS:
 
+Figura 26: Ejemplo en donde una inicialización faltante (linea 3), produciría un
+programa que compila pero incorrecto (DEBERIA DECIR linea 4)
+
 Testing:
 - es decir, considerando todas sus las entradas, directas e indirectas (DONE)
 - ejecuta una funcionalidad de la calculadora, a través del el método (DONE)
