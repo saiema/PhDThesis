@@ -53,6 +53,8 @@ PRVO y muJava++, Configuracion de PRVO, nextExpression(Expression)
 - si la expresión no estaba conectada mediante el operador de navegación o otra, y retorna (el o debe ser a, el y debe ser o)
 PRVO y muJava++, Configuracion de PRVO, Métodos y campos permitidos
 - Cabe destacar que estas opciones son exclusivas, no es posible utilizar ambas al mismo tiempo. (debe decir excluyentes en lugar de exclusivas)
+PRVO y muJava++, Configuracion de PRVO, Uso de literales
+- En el caso de prvo, utiliza un conjunto de literales base, 1, 0, True, False, , null (la cadena vacia se ve como un espacio vacio, debe decir " ")
 
 
 GENERAL
