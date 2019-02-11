@@ -87,7 +87,7 @@ Inicialmente \emph{prvo} comienza como una necesidad en reparaci\'on autom\'atic
 	\label{figures.definitions.prvo.impl_def}
 \end{figure}
 
-En la Figura \ref{figures.definitions.prvo.impl_def} se restringe la definici\'on abstracta de \emph{prvo} [\ref{figures.definitions.prvo.simple_def}] en base a cuanto se puede cambiar la longitud de la expresi\'on original. La notaci\'on \emph{expression$^{|R|}$} denota una expresi\'on encadenada de un tama\~no particular o un rango de tama\~nos, por ejemplo, de 0 a 1. El valor \emph{null} es un caso especial, no es posible incrementar el tama\~no de una expresi\'on encadenando nuevos elementos ni tampoco reemplazar \emph{null} por una expresi\'on de tama\~no 1, solo es posible reemplazarlo por otra expresi\'on de tama\~no 0.
+En la Figura \ref{figures.definitions.prvo.impl_def} se restringe la definici\'on abstracta de \emph{prvo} [\ref{figures.definitions.prvo.simple_def}] en base a cuanto se puede cambiar la longitud de la expresi\'on original. La notaci\'on \emph{expression$^{|R|}$} denota una expresi\'on de un tama\~no particular o un rango de tama\~nos, por ejemplo, de 0 a 1. El valor \emph{null} es un caso especial, no es posible incrementar el tama\~no de una expresi\'on encadenando nuevos elementos ni tampoco reemplazar \emph{null} por una expresi\'on de tama\~no 1, solo es posible reemplazarlo por otra expresi\'on de tama\~no 0.
 
 \subsection{Configuraci\'on de PRVO}
 
@@ -96,18 +96,18 @@ Con el tiempo la cantidad de comportamientos o restricciones configurables en \e
 \subsubsection{Restricciones de tama\~no}
 \label{sec:implementation.prvo.restrictions.size}
 
-A partir de la definici\'on en la Figura \ref{figures.definitions.prvo.impl_def}, las restricciones sobre cuanto puede decrementar o incrementar una expresi\'on encadenada se limitan a:
+A partir de la definici\'on en la Figura \ref{figures.definitions.prvo.impl_def}, las restricciones sobre cuanto puede decrementar o incrementar una expresi\'on respecto al uso de navegaci\'on se limitan a:
 
 \begin{enumerate}[leftmargin=.75cm,align=left]
-	\item[\textbf{Reemplazar un elemento (R)}] Ciertas mutaciones de \emph{prvo} solo modifican elementos unitarios (expresiones de tama\~no 0) en una expresi\'on encadenada, reemplaz\'andolos por otros de tama\~no 0.
+	\item[\textbf{Reemplazar un elemento (R)}] Ciertas mutaciones de \emph{prvo} solo modifican elementos unitarios (expresiones de tama\~no 0) en una expresi\'on, reemplaz\'andolos por otros de tama\~no 0.
 	
-	\item[\textbf{A\~nadir un elemento (A)}] Una expresi\'on encadenada puede incrementarse por 1 su tama\~no, al insertar un elemento tanto al principio, al final, o intercalarlo en su interior.
+	\item[\textbf{A\~nadir un elemento (A)}] Una expresi\'on puede incrementarse por 1 su tama\~no, al insertar un elemento tanto al principio, al final, o intercalarlo en su interior.
 	
-	\item[\textbf{Eliminar un elemento (D)}] En una expresi\'on de navegaci\'on, se puede eliminar un elemento, ya sea al principio, final, o en el resto de la expresi\'on. No es posible eliminar un elemento en una expresi\'on encadenada de tama\~no 0, ya que no est\'a definida una expresi\'on de menor tama\~no.
+	\item[\textbf{Eliminar un elemento (D)}] En una expresi\'on de navegaci\'on, se puede eliminar un elemento, ya sea al principio, final, o en el resto de la expresi\'on. No es posible eliminar un elemento en una expresi\'on que no hace uso del operador de navegaci\'on (tiene tama\~no 0), ya que no hay ninguna subexpresi\'on para remover.
 	
-	\item[\textbf{Intercambiar dos elementos por uno (2x1)}] Dada una expresi\'on de navegaci\'on, dos elementos contiguos, es decir, una subexpresi\'on de navegaci\'on de tama\~no 1, puede ser reemplazada por un \'unico elemento, es decir, una expresi\'on encadenada de tama\~no 0.
+	\item[\textbf{Intercambiar dos elementos por uno (2x1)}] Dada una expresi\'on de navegaci\'on, dos elementos contiguos, es decir, una subexpresi\'on de navegaci\'on de tama\~no 1, puede ser reemplazada por un \'unico elemento, es decir, una expresi\'on de tama\~no 0.
 	
-	\item[\textbf{Intercambiar un elemento por dos (1x2)}] En una expresi\'on encadenada, un elemento de la misma puede ser reemplazado por dos elementos contiguos, es decir, una expresi\'on de navegaci\'on de tama\~no 1.
+	\item[\textbf{Intercambiar un elemento por dos (1x2)}] En una expresi\'on, un elemento de la misma puede ser reemplazado por dos elementos contiguos, es decir, una expresi\'on de navegaci\'on de tama\~no 1.
 \end{enumerate}
 
 En el ejemplo siguiente pueden verse algunas de las distintas mutaciones que corresponden a las restricciones anteriores, en algunos casos el mismo mutante puede ser logrado por distintas mutaciones:
@@ -131,9 +131,9 @@ En las Figuras \ref{figures.code.prvoMethods.sameLength}, \ref{figures.code.prvo
 	
 	\item[\textbf{append(Expression...)}]\mbox{}\\ Este m\'etodo toma una secuencia de expresiones y las une mediante el operador de navegaci\'on (\emph{punto}), los argumentos nulos son ignorados.
 	
-	\item[\textbf{isReachable(Expression, Expression)}]\mbox{}\\ Este m\'etodo verifica si la primer expresi\'on es alcanzable desde la segunda, es decir, si el primer elemento de la primer expresi\'on representa un miembro del tipo del \'ultimo elemento de la segunda. Por ejemplo \emph{next.value} es alcanzable desde \emph{this.header} en una lista (ver Figura \ref{figures.examples.navegationExprGraph}).
+	\item[\textbf{isReachable(Expression, Expression)}]\mbox{}\\ Este m\'etodo verifica si la primera expresi\'on es alcanzable desde la segunda, es decir, si el primer elemento de la primera expresi\'on representa un miembro del tipo del \'ultimo elemento de la segunda. Por ejemplo \emph{next.value} es alcanzable desde \emph{this.header} en una lista (ver Figura \ref{figures.examples.navegationExprGraph}).
 	
-	\item[\textbf{elements(Expression)}]\mbox{}\\ Retorna una lista de todos los elementos que conforman una expresi\'on con respecto al operador de navegaci\'on. Por ejemplo, la expresi\'on \emph{current.next.value} retorna\'ia una lista con \emph{current}, \emph{next}, y \emph{value}.
+	\item[\textbf{elements(Expression)}]\mbox{}\\ Retorna una lista de todos los elementos que conforman una expresi\'on con respecto al operador de navegaci\'on. Por ejemplo, la expresi\'on \emph{current.next.value} retornar\'ia una lista con \emph{current}, \emph{next}, y \emph{value}.
 	
 	\item[\textbf{getType(Expression)}]\mbox{}\\ Este m\'etodo retorna el tipo asociado al \'ultimo elemento de una expresi\'on. Por ejemplo, para la expresi\'on \emph{current.next} retornar\'ia \emph{Node} (ver Figura \ref{figures.examples.navegationExprGraph}).
 	
@@ -143,7 +143,7 @@ En las Figuras \ref{figures.code.prvoMethods.sameLength}, \ref{figures.code.prvo
 	
 	\item[\textbf{reachableVarsFieldsAndMethods()}]\mbox{}\\ Retorna todas las variables, campos y m\'etodos que son alcanzables desde el punto actual.
 	
-	\item[\textbf{nextExpression(Expression)}]\mbox{}\\ Dada una expresi\'on retorna \emph{null} si la expresi\'on no estaba conectada mediante el operador de navegaci\'on o otra, y retorna la expresi\'on a la cual est\'a conectada mediante el operador de navegaci\'on en caso contrario. Cabe destacar que si bien el m\'etodo \emph{elements(Expression)} retorna elementos desconectados, \'estos tienen asociados a que expresiones estaban previamente conectados.
+	\item[\textbf{nextExpression(Expression)}]\mbox{}\\ Dada una expresi\'on retorna \emph{null} si la expresi\'on no estaba conectada mediante el operador de navegaci\'on a otra, o retorna la expresi\'on a la cual est\'a conectada mediante el operador de navegaci\'on en caso contrario. Cabe destacar que si bien el m\'etodo \emph{elements(Expression)} retorna elementos desconectados, \'estos tienen asociados a que expresiones estaban previamente conectados.
 	
 	\item[\textbf{previousExpression(Expression)}]\mbox{}\\ Equivalente a \emph{nextExpression(Expression)} pero retornando la expresi\'on a la cual \'esta estaba conectada (o \emph{null} si no lo estaba).
 	
@@ -189,7 +189,7 @@ El tipo de expresiones que muta \emph{prvo} puede encontrarse en una gran cantid
 	
 	\item[\textbf{Parte derecha de asignaciones}] En una asignaci\'on \texttt{a = b}, \emph{prvo} puede o no generar mutaciones para \texttt{b}.
 	
-	\item[\textbf{Sentencias de retorno y expresiones internas}] El operador \emph{prvo} es capaz de mutar expresiones encadenadas asociadas a sentencias de retorno (\texttt{return e}), al mismo tiempo que expresiones unarias y binarias encontradas en asignaciones \texttt{(a = e \&\& f)}, en sentencias condicionales \texttt{(while(c) ...)}, argumentos de m\'etodos \texttt{foo(x)}, e incluso en las distintas partes de sentencias \texttt{for} como la inicializaci\'on, condici\'on e incremento.
+	\item[\textbf{Sentencias de retorno y expresiones internas}] El operador \emph{prvo} es capaz de mutar expresiones asociadas a sentencias de retorno (\texttt{return e}), al mismo tiempo que expresiones unarias y binarias encontradas en asignaciones \texttt{(a = e \&\& f)}, en sentencias condicionales \texttt{(while(c) ...)}, argumentos de m\'etodos \texttt{foo(x)}, e incluso en las distintas partes de sentencias \texttt{for} como la inicializaci\'on, condici\'on e incremento.
 \end{enumerate}
 
 \subsubsection{Restricciones de expresiones a utilizar}
@@ -213,13 +213,13 @@ Por esto, \emph{prvo} cuenta con las siguientes restricciones configurables:
 	\begin{lstlisting}[mathescape=true]
 	java\\.lang\\.String\\$\#$.*
 	\end{lstlisting}
-	restringe cualquier m\'etodo y campo de \emph{java.lang.String}. Durante la generaci\'on de mutaciones, \emph{prvo} verifica que cualquier m\'etodo o campo que vaya a utilizar para mutar una expresi\'on encadenada, no est\'e restringida, la verificaci\'on se hace sobre el nombre completo de un miembro de clase, el cual se define con \emph{<nombre completo de la clase>\#<nombre del miembro>[(<tipos de los argumentos separados por coma>)]} por ejemplo \emph{java.lang.String\#substring(int, int)}.
+	restringe cualquier m\'etodo y campo de \emph{java.lang.String}. Durante la generaci\'on de mutaciones, \emph{prvo} verifica que cualquier m\'etodo o campo que vaya a utilizar para mutar una expresi\'on, no est\'e restringida, la verificaci\'on se hace sobre el nombre completo de un miembro de clase, el cual se define con \emph{<nombre completo de la clase>\#<nombre del miembro>[(<tipos de los argumentos separados por coma>)]} por ejemplo \emph{java.lang.String\#substring(int, int)}.
 	
-	\item[\textbf{M\'etodos y campos permitidos}] En muchos casos, la cantidad de m\'etodos y campos a restringir es muy grande y solo se quieren permitir aquellos que pertenezcan a ciertas clases, por ejemplo, en el caso de una lista puede solo desearse utilizar aquellos que pertenezcan a la clase \emph{Lista} y \emph{Nodo}. Es posible definir, de la misma forma que en el caso anterior, que m\'etodos y campos son permitidos para que \emph{prvo} los utilice durante la generaci\'on de mutaciones. Cabe destacar que estas opciones son exclusivas, no es posible utilizar ambas al mismo tiempo.
+	\item[\textbf{M\'etodos y campos permitidos}] En muchos casos, la cantidad de m\'etodos y campos a restringir es muy grande y solo se quieren permitir aquellos que pertenezcan a ciertas clases, por ejemplo, en el caso de una lista puede solo desearse utilizar aquellos que pertenezcan a la clase \emph{Lista} y \emph{Nodo}. Es posible definir, de la misma forma que en el caso anterior, que m\'etodos y campos son permitidos para que \emph{prvo} los utilice durante la generaci\'on de mutaciones. Cabe destacar que estas opciones son excluyentes, no es posible utilizar ambas al mismo tiempo.
 	
-	\item[\textbf{Control de tipos}] En lenguajes orientados a objetos como \emph{Java}, la herencia de clases permite que dos tipos sean compatibles a\'un cuando no son iguales. Dados dos tipos, \texttt{A} y \texttt{B}, tal que el segundo hereda del primero. La asignaci\'on \lstinline|A a = new B();| es v\'alida mientras que la inversa no lo es. Una expresi\'on encadenada mutada por \emph{prvo} tiene que ser correcta con respecto a tipos, pero con esto podemos cambiar expresiones como \lstinline|list.node.value| a \lstinline|list.toString().getClass()| si \texttt{value} era de tipo \texttt{Object}. Por esto, \emph{prvo} puede restringirse a utilizar un control estricto de tipos, en donde \'estos solo se consideran compatibles sin son exactamente iguales.
+	\item[\textbf{Control de tipos}] En lenguajes orientados a objetos como \emph{Java}, la herencia de clases permite que dos tipos sean compatibles a\'un cuando no son iguales. Dados dos tipos, \texttt{A} y \texttt{B}, tal que el segundo hereda del primero. La asignaci\'on \lstinline|A a = new B();| es v\'alida mientras que la inversa no lo es. Una expresi\'on mutada por \emph{prvo} tiene que ser correcta con respecto a tipos, pero con esto podemos cambiar expresiones como \lstinline|list.node.value| a \lstinline|list.toString().getClass()| si \texttt{value} era de tipo \texttt{Object}. Por esto, \emph{prvo} puede restringirse a utilizar un control estricto de tipos, en donde \'estos solo se consideran compatibles sin son exactamente iguales.
 	
-	\item[\textbf{Uso de literales}] En ciertos casos el uso de literales conforman expresiones v\'alidas para mutar una expresi\'on, \lstinline|var.toString().length| puede cambiarse a \lstinline|"".length|. Cualquier operador que utilice valores literales, va a requerir un conjunto finito de los mismos. En el caso de \emph{prvo}, utiliza un conjunto de literales base, \emph{1, 0, True, False, "", null} en donde cada uno puede habilitarse o no; a su vez permite la b\'usqueda de literales alcanzables desde el punto en donde se est\'a mutando; tambi\'en es posible habilitar/deshabilitar la generaci\'on de variaciones en literales num\'ericos, es decir que para cada literal que pertenezca a un tipo primitivo num\'erico, se van a crear copias del mismo para los otros tipos. Por ejemplo, para \texttt{2}, un literal de tipo \texttt{int} se van a crear las variantes \texttt{2.0d}, \texttt{2.0f}, y \texttt{2l}, de tipos \emph{double}, \emph{float}, y \emph{long} respectivamente.
+	\item[\textbf{Uso de literales}] En ciertos casos el uso de literales conforman expresiones v\'alidas para mutar una expresi\'on, \lstinline|var.toString().length| puede cambiarse a \lstinline|"".length|. Cualquier operador que utilice valores literales, va a requerir un conjunto finito de los mismos. En el caso de \emph{prvo}, utiliza un conjunto de literales base, \emph{1, 0, True, False, ``'', null} en donde cada uno puede habilitarse o no; a su vez permite la b\'usqueda de literales alcanzables desde el punto en donde se est\'a mutando; tambi\'en es posible habilitar/deshabilitar la generaci\'on de variaciones en literales num\'ericos, es decir que para cada literal que pertenezca a un tipo primitivo num\'erico, se van a crear copias del mismo para los otros tipos. Por ejemplo, para \texttt{2}, un literal de tipo \texttt{int} se van a crear las variantes \texttt{2.0d}, \texttt{2.0f}, y \texttt{2l}, de tipos \emph{double}, \emph{float}, y \emph{long} respectivamente.
 	
 	\item[\textbf{Uso de campos est\'aticos}] El modificador \emph{static} en \emph{Java} define a un miembro que es compartido por todas las instancias de la clase que lo define. Estos miembros est\'aticos no deber\'ian accederse mediante instancias de una clase, aunque hacerlo es posible y no representa c\'odigo inv\'alido. Sin embargo si \'esto se permite, se pueden obtener muchas mutaciones asociadas al uso de constantes est\'aticas que no fueron restringidas mediante otra configuraci\'on. Por eso, \emph{prvo} permite la restricci\'on del uso de miembros est\'aticos en un contexto no est\'atico.
 \end{enumerate}
@@ -227,27 +227,27 @@ Por esto, \emph{prvo} cuenta con las siguientes restricciones configurables:
 \section{Dynamic mutant subsumption}
 \label{sec:implementation.dynamicSubsumption}
 
-El uso de \emph{mutation score}, la relaci\'on de mutantes detectados sobre el total, como m\'etrica de evaluaci\'on para test suites, trae varios problemas sobre que conclusiones se pueden derivar del mismo. Entre \'estos, hemos mencionado el detectar mutantes triviales, incrementando el valor de mutation score sin implicar una mejora en la capacidad de detectar fallas de la test suite; la existencia de mutantes que son sem\'anticamente equivalentes al programa original, y por lo tanto imposibles de detectar, bajando el valor del mutation score sin significar una menor capacidad de detectar fallas; finalmente el acoplamiento, es decir, que tan bien los mutantes representan fallas reales, y los mutantes redundantes. Estos problemas hacen que el an\'alisis de \emph{mutation testing} requiera cuidado al interpretar los resultados, y estudios m\'as profundos para dar mayor validez a los mismos. Estos estudios a\~naden complejidad al an\'alisis y, en la mayor\'ia de los casos, requiere resolver problemas indecidibles o altamente complejos. Particularmente, como la meta de este trabajo es evaluar un nuevo operador de mutaci\'on, cuan significativo es el valor de mutation score se torna a\'un m\'as importancia. Al mismo tiempo, si bien analizar cuantos mutantes equivalentes genera \emph{prvo} solo muestra una parte de los resultados, siendo posible tener un operador que no genere mutantes equivalentes pero que \'estos sean altamente redundantes con respecto a los producidos con otros operadores (o incluso redundantes entre mutantes de \emph{prvo}). La utilizaci\'on de \'este an\'alisis (\emph{Dynamic Mutant Subsumption}) es entonces una buena forma de evaluar la utilidad de los mutantes generados por \emph{prvo} con respecto a su capacidad para evaluar tests.
+El uso de \emph{mutation score}, la relaci\'on de mutantes detectados sobre el total, como m\'etrica de evaluaci\'on para test suites, trae varios problemas sobre que conclusiones se pueden derivar del mismo. Entre \'estos, hemos mencionado el detectar mutantes triviales, incrementando el valor de mutation score sin implicar una mejora en la capacidad de detectar fallas de la test suite; la existencia de mutantes que son sem\'anticamente equivalentes al programa original, y por lo tanto imposibles de detectar, bajando el valor del mutation score sin significar una menor capacidad de detectar fallas; finalmente el acoplamiento, es decir, que tan bien los mutantes representan fallas reales, y los mutantes redundantes. Estos problemas hacen que el an\'alisis de \emph{mutation testing} requiera cuidado al interpretar los resultados, y estudios m\'as profundos para dar mayor validez a los mismos. Estos estudios a\~naden complejidad al an\'alisis y, en la mayor\'ia de los casos, requiere resolver problemas indecidibles o altamente complejos. Particularmente, como la meta de este trabajo es evaluar un nuevo operador de mutaci\'on, cuan significativo es el valor de mutation score se torna a\'un m\'as importante. Al mismo tiempo, si bien analizar cuantos mutantes equivalentes genera \emph{prvo} solo muestra una parte de los resultados, siendo posible tener un operador que no genere mutantes equivalentes pero que \'estos sean altamente redundantes con respecto a los producidos con otros operadores (o incluso redundantes entre mutantes de \emph{prvo}). La utilizaci\'on de este an\'alisis (\emph{Dynamic Mutant Subsumption}) es entonces una buena forma de evaluar la utilidad de los mutantes generados por \emph{prvo} con respecto a su capacidad para evaluar tests.
 Recordemos primero la definici\'on de \emph{Mutant Subsumption} antes de discutir sobre la m\'as acotada definici\'on de \emph{Dynamic Mutant Subsumption}.
 \begin{quote}
-	Para dos mutantes \emph{m$_1$} y \emph{m$_2$}, producidos a partir del programa original \emph{p}. Se define la relaci\'on \emph{m$_1$} subsume a \emph{m$_2$}, si existe al menos un test para el cual el comportamiento de \emph{m$_1$} difiera del de \emph{p}, y para todo test \emph{t} para el cual el comportamiento entre \emph{m$_1$} y \emph{p} difiera, el comportamiento entre \emph{m$_2$} y \emph{p} tambi\'en debe hacerlo.
+	Para dos mutantes \emph{m$_1$} y \emph{m$_2$}, producidos a partir del programa original \emph{p}. Se define la relaci\'on \emph{m$_1$} subsume a \emph{m$_2$}, si existe al menos un test para el cual el comportamiento de \emph{m$_1$} difiere del de \emph{p}, y para todo test \emph{t} para el cual el comportamiento entre \emph{m$_1$} y \emph{p} difiere, el comportamiento entre \emph{m$_2$} y \emph{p} tambi\'en debe hacerlo.
 \end{quote}
 Un punto importante es que la definici\'on anterior habla del universo de tests, todo test posible, lo cual hace de \emph{Mutant Subsumption}, un problema indecidible salvo para casos triviales, es decir, problemas con un conjunto finito de posibles escenarios. De todas formas, es posible una resoluci\'on acotada a este problema. Antes de pasar a la implementaci\'on de este an\'alisis, es necesario mostrar cual es la utilidad del mismo.
 La intuici\'on es que si un mutante es detectado por una gran cantidad de tests mientras otros son detectados por subconjuntos que detectan al primero, entonces detectar cualquiera de \'estos lleva a detectar tambi\'en al primero, evaluando varias veces los mismos tests. Por otro lado, un mutante que requiere tests m\'as espec\'ificos para ser detectado genera un mejor ``feedback'' sobre los tests, que uno que es detectado por casi cualquiera. Como mencionamos, en la pr\'actica no es posible hacer un an\'alisis basado en la definici\'on anterior, por lo que la siguiente definici\'on es utilizada.
 \begin{quote}
-	Para dos mutantes \emph{m$_1$} y \emph{m$_2$}, producidos a partir del programa original \emph{p}, y un conjunto de tests \emph{T}. Se define la relaci\'on \emph{m$_1$} subsume din\'amicamente a \emph{m$_2$}, si existe al menos un test en \emph{T} para el cual el comportamiento de \emph{m$_1$} difiera del de \emph{p}, y para todo test \emph{t} en \emph{T} para el cual el comportamiento entre \emph{m$_1$} y \emph{p} difiera, el comportamiento entre \emph{m$_2$} y \emph{p} tambi\'en debe hacerlo.
+	Para dos mutantes \emph{m$_1$} y \emph{m$_2$}, producidos a partir del programa original \emph{p}, y un conjunto de tests \emph{T}. Se define la relaci\'on \emph{m$_1$} subsume din\'amicamente a \emph{m$_2$}, si existe al menos un test en \emph{T} para el cual el comportamiento de \emph{m$_1$} difiere del de \emph{p}, y para todo test \emph{t} en \emph{T} para el cual el comportamiento entre \emph{m$_1$} y \emph{p} difiere, el comportamiento entre \emph{m$_2$} y \emph{p} tambi\'en debe hacerlo.
 \end{quote}
-Esta definici\'on da a lugar a \emph{Dynamic Mutant Subsumption}, y es la que se implement\'o en \emph{$\mu$Java++} y que va a ser utilizada como evaluaci\'on adicional, en este caso para el conjunto de mutantes generados en cada experimento.
+Esta definici\'on da a lugar a \emph{Dynamic Mutant Subsumption}, y es la que se implement\'o en \emph{$\mu$Java++} y que va a ser utilizada como evaluaci\'on principal, en este caso para el conjunto de mutantes generados en cada experimento.
 
 \subsection{Dynamic Mutant Subsumption Graph}
 \label{sec:implementation.dynamicSubsumption.graph}
 
-A partir del an\'alisis anterior, es posible construir un grafo en el cual un nodo contiene todos los mutantes equivalentes respecto a subsuma, es decir, para cada par de nodos \emph{m$_1$} y \emph{m$_2$} en el nodo, \emph{m$_1$} subsume a \emph{m$_2$} y viceversa. Una arista direccional conectando el nodo \emph{n$_1$} con el nodo \emph{n$_2$} representa la relaci\'on de subsuma:
+A partir del an\'alisis anterior, es posible construir un grafo en el cual un nodo contiene todos los mutantes equivalentes respecto a subsuma, es decir, para cada par de mutantes \emph{m$_1$} y \emph{m$_2$} en el nodo, \emph{m$_1$} subsume a \emph{m$_2$} y viceversa. Una arista direccional conectando el nodo \emph{n$_1$} con el nodo \emph{n$_2$} representa la relaci\'on de subsuma:
 \begin{quote}
 	Para cada mutante \emph{m$_i$} en el nodo \emph{n$_1$}, y para cada mutante \emph{m$_j$} en el nodo \emph{n$_2$}, se cumple que \emph{m$_i$} subsume a \emph{m$_j$}.
 \end{quote}
-Un ejemplo de la generaci\'on de estos grafos se puede ver comenzando con la Tabla \ref{tables.examples.subsumptionInit} la cual es generada al final del an\'alisis de mutation testing, cada mutante analizado se almacena en un nodo \'unico con la informaci\'on de que tests detectaron al mismo. A partir de estos datos se eliminan los nodos que corresponden a mutantes que sobrevivieron (recordemos que la primer condici\'on para la relaci\'on de subsuma es que los mutantes en la relaci\'on hayan sido detectados) y todos los nodos que corresponden a mutantes detectados por los mismos tests, es decir, se subsumen el uno al otro, se fusionan en un mismo nodo, \'esto se puede apreciar en la Tabla \ref{tables.examples.subsumptionEquivAndKilled} donde por ejemplo el nodo \textbf{4} fue eliminado, el nodo \textbf{7} fue fusionado con el nodo \textbf{2} y lo mismo ocurri\'o con los nodos \textbf{3} y \textbf{5}. A partir de la \'ultima tabla (o a partir de los nodos representados en la misma) se puede construir el grafo de subsuma din\'amica de la Figura \ref{figures.examples.dynamicSubsumptionGraph}.
-A partir de este grafo se observan nodos que son subsumidos pero no subsumen a nadie, a los mutantes en estos nodos se los considera los m\'as redundantes de todos. Nodos que subsumen a otros y son a su vez subsumidos, \'estos siguen siendo redundantes pero en un grado menor a los anteriores. Finalmente los nodos que subsumen a otros pero no son a su vez subsumidos, son denominados ``dominadores''. Dado que en esta tesis presentamos una familia particular de operadores, y que son el objetivos de nuestra evaluaciones, lograr que los mutantes generados por \emph{prvo} ocupen una mayor\'ia de los nodos dominadores, no alcanza, \'esto es causa de que cualquier mutante generado por otro operador e inclu\'ido en el nodo, es equivalente a los de \emph{prvo}. Este problema se extiende a la evaluaci\'on de cualquier operador utilizando grafos de dynamic mutant subsumtion. Por esto, este an\'alisis incluye la propiedad de pureza en los nodos.
+Un ejemplo de la generaci\'on de estos grafos se puede ver comenzando con la Tabla \ref{tables.examples.subsumptionInit} la cual es generada al final del an\'alisis de mutation testing, cada mutante analizado se almacena en un nodo \'unico con la informaci\'on de que tests detectaron al mismo. A partir de estos datos se eliminan los nodos que corresponden a mutantes que sobrevivieron (recordemos que la primera condici\'on para la relaci\'on de subsuma es que los mutantes en la relaci\'on hayan sido detectados) y todos los nodos que corresponden a mutantes detectados por los mismos tests, es decir, se subsumen el uno al otro, se fusionan en un mismo nodo, esto se puede apreciar en la Tabla \ref{tables.examples.subsumptionEquivAndKilled} donde por ejemplo el nodo \textbf{4} fue eliminado, el nodo \textbf{7} fue fusionado con el nodo \textbf{2} y lo mismo ocurri\'o con los nodos \textbf{3} y \textbf{5}. A partir de la \'ultima tabla (o a partir de los nodos representados en la misma) se puede construir el grafo de subsuma din\'amica de la Figura \ref{figures.examples.dynamicSubsumptionGraph}.
+A partir de este grafo se observan nodos que son subsumidos pero no subsumen a nadie, a los mutantes en estos nodos se los considera los m\'as redundantes de todos. Nodos que subsumen a otros y son a su vez subsumidos, \'estos siguen siendo redundantes pero en un grado menor a los anteriores. Finalmente los nodos que subsumen a otros pero no son a su vez subsumidos, son denominados ``dominadores''. Dado que en esta tesis presentamos un nuevo operador, y que su evaluaci'on con respecto al conjunto de operadores suficientes corresponde al objetivo principal de nuestra evaluaci\'on, lograr que los mutantes generados por \emph{prvo} ocupen una mayor\'ia de los nodos dominadores, no alcanza, esto es causa de que cualquier mutante generado por otro operador e inclu\'ido en el nodo, es equivalente a los de \emph{prvo}. Este problema se extiende a la evaluaci\'on de cualquier operador utilizando grafos de dynamic mutant subsumtion. Por esto, este an\'alisis incluye la propiedad de pureza en los nodos.
 \begin{quote}
 	Un nodo en un grafo de dynamic mutant subsumption es considerado puro, si para cada mutante contenido en el mismo, \'este fue generado por el mismo operador.
 \end{quote}
@@ -316,4 +316,123 @@ Una clara desventaja de este an\'alisis es que requiere ejecutar todos los tests
 	\end{center}
 	\caption{Grafo de \emph{Dynamic Mutant Subsumption} generado mediante la informaci\'on de la Tabla \ref{tables.examples.subsumptionEquivAndKilled}}
 	\label{figures.examples.dynamicSubsumptionGraph}
+\end{figure}
+
+\subsection{Dynamic Mutant Subsumption como m\'etrica}
+\label{sec:preliminares.mutation.whysubsumption}
+
+En la secci\'on anterior presentamos las propiedades deseables en los mutantes generados por un operador de mutaci\'on, y algunas formas de evaluar el grado en que \'estas se cumplen. Sin embargo, al evaluar operadores de mutaci\'on con respecto a otros, o t\'ecnicas de selecci\'on de mutantes, la utilizaci\'on de m\'etricas como diferencia entre mutation score, cantidad de mutantes equivalentes generados (o evitados), ``dureza'' de mutantes (cuantos tests logra sobrevivir el mutante antes de ser detectado) y cantidad de mutantes, son las m\'as utilizadas.
+
+En esta tesis se plantea utilizar \emph{Dynamic Mutant Subsumption} como una de las m\'etricas principales para evaluar a \emph{prvo} con respecto al conjunto de operadores suficientes implementados en \emph{$\mu$Java}. La raz\'on de esto se debe a la cantidad de informaci\'on que permanece oculta al utilizar m\'etricas usuales.
+
+Para utilizar un caso particular sobre el cual discutir las desventajas de las m\'etricas usuales vamos a referirnos a un trabajo publicado sobre un operador de mutaci\'on para fortalecer y debilitar expresiones booleanas \cite{bibliography.mutation.operators.beeBridaS17}. \'Este surge de la intuici\'on de que los operadores que afectan expresiones booleanas al modificar operadores (\emph{ROR}, \emph{COR}, \emph{COI}, entre otros) o reemplazar partes de la expresi\'on, como el caso de \emph{ROR} que reemplaza una expresi\'on boolena por las constantes \emph{True} y \emph{False}, generan cambios ``muy gruesos'' como cambiar una condici\'on de \textbf{a > b} por \textbf{a < b}, mientras que una modificaci\'on del estilo \textbf{a > b \&\& c} nos parece que puede llevar a mutantes m\'as sutiles. En este estudio utilizamos el mismos conjunto de operadores contra los que comparamos \emph{prvo}, y evaluamos como la utilizaci\'on de \emph{BEE} afectaba a las siguientes m\'etricas:
+\begin{description}[leftmargin=8em,style=nextline]
+	\item[Mutation score] El decremento en el valor obtenido de mutation score al utilizar a \emph{BEE} servir\'ia como indicador de que mutantes m\'as dif\'iciles fueron generados. Mientras que un incremento indicar\'ia el aumento de mutantes m\'as triviales de detectar.
+	\item[Cantidad de mutantes] Dado que en el peor caso es necesario ejecutar todos los tests para cada mutante (suponiendo un an\'alisis solo centrado en mutation score) los recursos utilizados por mutation testing, entre ellos tiempo, est\'an directamente relacionados a la cantidad de mutantes generados, todo operador deber\'ia ser evaluado con respecto al costo asociado, es decir, cuantos mutantes agrega al an\'alisis.
+	\item[Dureza (toughness)] La cantidad de tests que un mutante es capaz de ``sobrevivir'', no ser detectado por, puede servir como una m\'etrica para evaluar cuan dif\'icil de detectar resulta. Analizar como cambia la dureza promedio de los mutantes detectados al agregar un operador (en este caso \emph{BEE}) permite evaluar la dificultad de detecci\'on de los mutantes agregados por el mismo.
+	\item[Mutantes equivalentes] Una caracter\'istica negativa de un operador es cuantos mutantes equivalentes produce, \'estos son mutantes que si bien son distintos sint\'acticamente, son sem\'anticamente equivalentes al programa original, y por lo tanto imposibles de detectar.
+	\item[Mutantes dif\'iciles de matar (stubborn)] La generaci\'on de mutantes dif\'iciles de matar (stubborn) es una caracter\'istica altamente deseable para un operador de mutaci\'on. Sin embargo representa una propiedad muy compleja para analizar, principalmente por la dificultad en dar una definici\'on apropiada, una de \'estas corresponde a la propuesta por Xiangjuan Yao et al. \cite{bibliography.mutation.evaluation.stubborn}: un mutante dif\'icil de matar es aquel para el cual existe un tests que es capaz de detectarlo pero no est\'a presente en un test suite ``suficientemente bueno'' el cual luego define como un test suite con 100\% de cobertura de ramas. Aunque finalmente se utilizan definiciones m\'as relajadas como la utilizaci\'on de testing exhaustivo acotado (considerar todas las entradas dentro de ciertas cotas) o generaci\'on de test suites mediante herramientas como \emph{EvoSuite} con una cobertura de ramas por encima del 80\%.
+\end{description}
+
+La evaluaci\'on presentada en \cite{bibliography.mutation.operators.beeBridaS17} utiliza estas m\'etricas para la evaluaci\'on del nuevo operador, y si bien los resultados no fueron negativos, \'estos no parecen mostrar una clara ventaja de utilizar el operador, aunque la motivaci\'on detr\'as del mismo as\'i como su definici\'on, parecer\'ia indiciar que el mismo tiene potencial. Un problema que tienen estos resultados es la cantidad de informaci\'on que permanece oculta. Como mencionamos en la secci\'on \ref{sec:preliminares.mutation.opevaluation}, el valor de mutation score se ve altamente afectado por: mutantes equivalentes, que disminuyen el valor sin significar una baja calidad de parte de los tests; mutantes triviales, que aumentan el valor mediante mutaciones que son triviales de detectar y no resultan en una evaluaci\'on apropiada de los tests; acoplamiento entre mutantes, cuando la detecci\'on de una mutaci\'on implica la detecci\'on de otra o cuando dos mutantes son equivalentes entre s\'i incrementan el mutation score por (en cierto modo) mutantes repetidos y lo mismo puede causar un decremento repetido en este valor.
+
+El an\'alisis de mutantes equivalentes es un problema indecidible, an\'alisis manuales siguen siendo uno de los enfoques m\'as utilizados aunque sigue siendo una propiedad com\'unmente evaluada y con una gran importancia en comparaci\'on de operadores de mutaci\'on o t\'ecnicas de selecci\'on de mutantes.
+
+La dificultad de un mutante por el otro lado, es una propiedad que si bien ser\'ia interesante evaluar, resulta muy dif\'icil de definir, Visser presenta en \cite{bibliography.mutation.evaluation.hardnessVisser} un estudio sobre la dificultad de detectar mutantes el cual utiliza \emph{model counting} para evaluar la cantidad de escenarios (de manera exhaustiva, en un conjunto acotado) que logran diferenciar a un mutante del programa original. Este enfoque no resulta pr\'actico, algo que es mencionado en el trabajo anterior, y solo es posible en programas muy simples.
+
+El uso de \emph{Dynamic Mutant Subsumption} a sido utilizado previamente para minimizar conjuntos de mutantes en \cite{bibliography.mutation.minimizing.dynamicsubsumption} y para medir la efectividad de un conjunto de mutantes en \cite{bibliography.mutation.efectiveness.dynamicsubsumption}, este \'ultimo trabajo sugiere la utilizaci\'on de dynamic mutant subsumption como forma de comparar operadores de mutaci\'on y/o t\'ecnicas de selecci\'on de mutantes. Una ventaja inicial de utilizar esta t\'ecnica es que la definici\'on es clara, un mutante subsume a otro si ambos son detectados y los tests que detectan al primero tambi\'en detectan al segundo. A su vez, la conclusi\'on de que los mutantes subsumidos son redundantes se relaciona a la existencia de otro/s mutantes que ejercitan al conjunto de tests de manera m\'as espec\'ifica (son detectados por menos tests), y los mutantes equivalentes con respecto a subsuma ejercitan varias veces al mismo conjunto de tests, pudiendo elegir un solo representante de \'estos. La dificultad de detecci\'on puede asociarse a subsuma argumentando que si un mutante subsume a otros, es detectado por menos tests, dando la intuici\'on de que requiere tests m\'as espec\'ificos que los mutantes que subsume.
+
+Retomando el estudio sobre el operador \emph{BEE}, cuando realizamos un an\'alisis de subsuma logramos obtener resultados mas significativos con respecto a la utilidad del operador para mutation testing. Las preguntas de investigaci\'on de este trabajo son:
+\begin{quote}
+	{\it Nuestro operador (BEE) genera mayor cantidad de mutantes dif\'iciles de matar (stubborn) que los operados existentes que debilitan o fortalecen expresiones booleanas?}
+\end{quote}
+\begin{quote}
+	{\it Como nuestro operador (BEE) afecta al an\'alisis de mutaci\'on?}
+\end{quote}
+
+Siendo los resultados obtenidos los de las Tablas \ref{tables.examples.bee.paperResults.arraypartition}, \ref{tables.examples.bee.paperResults.binaryheap}, \ref{tables.examples.bee.paperResults.ordset}, \ref{tables.examples.bee.paperResults.treemap}, y \ref{tables.examples.bee.paperResults.trityp}. Estos resultados dieron lugar a la conclusi\'on de que la respuesta a la primer pregunta de investigaci\'on es negativa (\emph{BEE} no parece generar una cantidad importante de mutantes dif\'iciles de matar), mientras que la segunda pregunta se responde de una manera m\'as positiva al indicar que la dificultad de matar los mutantes generados por \emph{BEE} parece mantenerse con respecto al resto de los mutantes (el valor de \emph{toughness} pr\'acticamente no cambia) y que la cantidad de mutantes equivalentes generados se deben a particularidades de algunos casos. Un problema con los resultados utilizados es que parecen estar ocultando informaci\'on. Por esto, al realizar un an\'alisis de los mismos casos utilizados en el trabajo publicado, pero utilizando Dynamic Mutant Subsumption, obtenemos los resultados en la Figura \ref{subsumption-results-bee} que permiten observar que en tres de los cinco casos de estudio (\emph{BinaryHeap}, \emph{OrdSet}, y \emph{TreeMap}) los mutantes generados por \emph{BEE} son dominadores, es decir, corresponden a mutantes no redundantes para evaluar a los tests. En los casos de \emph{BinaryHeap} y \emph{OrdSet} se observa que al menos el 50\% de los mutantes dominadores generador por \emph{BEE} no son equivalentes a otros mutantes dominadores, lo que permite concluir que representan fallas nuevas no generadas por los otros operadores.
+
+Esta comparaci\'on sirve de argumento para utilizar Dynamic Mutant Subsumption como una de las principales t\'ecnicas para evaluar un operador de mutaci\'on.
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 196 & 14 & 0.50 & 92.85\% & 6 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 336 & 36 & 0.53 & 89.28\% & 8 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{ArrayPartition} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.arraypartition}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 454 & 111 & 0.73 & 75.55\% & 65 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 889 & 341 & 0.72 & 61.64\% & 163 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{BinaryHeap} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.binaryheap}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 1278 & 179 & 0.83 & 85.99\% & 160 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 2248 & 620 & 0.83 & 72.41\% & 403 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{OrdSet} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.ordset}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 576 & 160 & 0.93 & 72.22\% & 114 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 2536 & 1376 & 0.94 & 45.74\% & 631 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{TreeMap} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.treemap}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\scriptsize
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{c|ccccc|}
+		\cline{2-6}
+		& Mutantes & Sobrevivientes & Toughness (killed) & Mutation score & Stubborn \\ \hline
+		\multicolumn{1}{|c|}{SIN BEE} & 435 & 109 & 0.98 & 74.94\% & 56 \\ \hline
+		\multicolumn{1}{|c|}{CON BEE} & 55 & 115 & 0.98 & 79.27\% & 62 \\ \hline
+	\end{tabular}
+	\caption{Datos de evaluaci\'on de \emph{BEE} para \emph{TriTyp} de acuerdo al trabajo presentado en \cite{bibliography.mutation.operators.beeBridaS17}}
+	\label{tables.examples.bee.paperResults.trityp}
+\end{table}
+
+\begin{figure}[t]
+	\begin{center}
+		\includegraphics[width=12cm]{figures/BEETables.png}
+	\end{center}
+	\caption{Dynamic subsumption analysis para el operador \emph{BEE}}
+	\label{subsumption-results-bee}
 \end{figure}

@@ -23,9 +23,11 @@ Como se mencion\'o en la introducci\'on \ref{sec:intro.contribuciones}, los caso
 \begin{enumerate}[leftmargin=.75cm,align=left,style=nextline]
 	\item[TreeList] Una implementaci\'on de listas sobre \'arboles AVL, es decir, \'arboles binarios de b\'usqueda balanceados (la diferencia de altura entre el sub-\'arbol izquierdo y el sub-\'arbol derecho es siempre menor o igual a 1). La implementaci\'on proviene de \emph{Apache Collections}.
 	
-	\item[AvlTree] Una implementaci\'on de \'arboles binarios de b\'usqueda balanceados (la diferencia de altura entre el sub-\'arbol izquierdo y el sub-\'arbol derecho es siempre menor o igual a 1). La implementaci\'on proviene de [NO SE, STRIKER?]
+	\item[AvlTree] Una implementaci\'on de \'arboles binarios de b\'usqueda balanceados (la diferencia de altura entre el sub-\'arbol izquierdo y el sub-\'arbol derecho es siempre menor o igual a 1).
+	%La implementaci\'on proviene de [NO SE, STRIKER?]
 	
-	\item[BinomialHeap] Una implementaci\'on de \emph{Binomial Heap}, una secuencia creciente de \'arboles binomiales con respecto al orden de los mismos. Un \'arbol binomial es o bien un nodo, en cuyo caso se trata de un \'arbol de grado 0; o bien un nodo donde los hijos representan \'arboles binomiales de grado \emph{k-1} hasta 0, para un \'arbol de grado \emph{k}. En un \emph{Binomial Heap} los \'arboles binomiales cumplen con la propiedad de que cada nodo en un \'arbol tiene un valor asociado mayor o igual al de su nodo padre. Y en el conjunto de \'arboles binomiales que conforman al \emph{Binomial Heap}, no puede haber m\'as de un \'arbol con un determinado orden. La implementaci\'on proviene de [NO SE, STRIKER?]
+	\item[BinomialHeap] Una implementaci\'on de \emph{Binomial Heap}, una secuencia creciente de \'arboles binomiales con respecto al orden de los mismos. Un \'arbol binomial es o bien un nodo, en cuyo caso se trata de un \'arbol de grado 0; o bien un nodo donde los hijos representan \'arboles binomiales de grado \emph{k-1} hasta 0, para un \'arbol de grado \emph{k}. En un \emph{Binomial Heap} los \'arboles binomiales cumplen con la propiedad de que cada nodo en un \'arbol tiene un valor asociado mayor o igual al de su nodo padre. Y en el conjunto de \'arboles binomiales que conforman al \emph{Binomial Heap}, no puede haber m\'as de un \'arbol con un determinado orden.
+	%La implementaci\'on proviene de [NO SE, STRIKER?]
 	
 	\item[TreeSet] Un conjunto implementado sobre \'arboles rojos y negros. \'Estos permiten mantener un \'arbol balanceado de tal forma que el camino desde la ra\'iz hasta la hoja m\'as lejana tiene a lo sumo dos veces la distancia de la ra\'iz a la hoja m\'as cercana. Las restricciones de este tipo de \'arboles son:
 	\begin{enumerate}
@@ -33,15 +35,15 @@ Como se mencion\'o en la introducci\'on \ref{sec:intro.contribuciones}, los caso
 		\item El nodo ra\'iz es negro.
 		\item El camino desde cualquier nodo a cualquiera de sus hojas, tiene la misma cantidad de nodos negros.
 	\end{enumerate}
-	La implementaci\'on de \emph{TreeSet} fue sacada de \emph{Java Collections}. [REVISAR SI ES ASI]
+	La implementaci\'on de \emph{TreeSet} fue sacada de \emph{Java Collections}. %[REVISAR SI ES ASI]
 	
-	\item[NodeCachingList] Una lista simplemente doblemente encadenada (cada nodo, excepto el primero y el \'ultimo, tienen una referencia al nodo siguiente y al anterior) que mantiene y utiliza una \emph{cache} de nodos. El uso de esta cache permite disminuir significativamente las operaciones de alocaci\'on de nodos y a su vez disminuir el uso de memoria (si bien los nodos eliminados son finalmente eliminados de la memoria, este proceso es realizado por el \emph{Garbage Collector}, al usar una cache disminuye la necesidad de limpiar la memoria). La implementaci\'on est\'a basada en \emph{Apache Collections}, pero fue modificada por el hecho de que la implementaci\'on original est\'a dividida en diversas clases, a la vez que la utilizada re\'une todo el c\'odigo relacionado esta implementaci\'on, en tres clases (una clase lista, una nodo, y otra iterador).
+	\item[NodeCachingList] Una lista doblemente encadenada (cada nodo, excepto el primero y el \'ultimo, tienen una referencia al nodo siguiente y al anterior) que mantiene y utiliza una \emph{cache} de nodos. El uso de esta cache permite disminuir significativamente las operaciones de alocaci\'on de nodos y a su vez disminuir el uso de memoria (si bien los nodos eliminados son finalmente eliminados de la memoria, este proceso es realizado por el \emph{Garbage Collector}, al usar una cache disminuye la necesidad de limpiar la memoria). La implementaci\'on est\'a basada en \emph{Apache Collections}, pero fue modificada por el hecho de que la implementaci\'on original est\'a dividida en diversas clases, a la vez que la utilizada re\'une todo el c\'odigo relacionado a esta implementaci\'on, en tres clases (una clase lista, una nodo, y otra iterador).
 	
 	\item[BinarySearchTree] Una implementaci\'on de un \'arbol binario de b\'usqueda. Se trata de \'arboles binarios en donde se cumple la propiedad de:
 	\begin{quote}
 		Para cada nodo \textbf{n}, todos los nodos alcanzables desde el sub-\'arbol izquierdo (\textbf{n$_i$}) tienen un valor asociado menor al de \textbf{n}; y todos los nodos alcanzables desde el sub-\'arbol derecho (\textbf{n$_d$}) tienen un valor asociado mayor al de \textbf{n}.
 	\end{quote}
-	La implementaci\'on proviene de [NO SE, STRIKER?]
+	%La implementaci\'on proviene de [NO SE, STRIKER?]
 	
 	\item[Queue] Una implementaci\'on de una cola, basada en el ejemplo de motivaci\'on provisto en \ref{sec:intro.objetivos} (\ref{figures.motivation.queue-class}). \'Esta, al contrario de la provista como motivaci\'on, fue implementada de manera correcta.
 	
@@ -54,7 +56,7 @@ Es necesario aclarar la raz\'on para elegir un conjunto de casos de estudio que 
 
 Los test suites necesarios para poder realizar mutation testing fueron generados por herramientas de generaci\'on autom\'atica (\emph{GenProg} y \emph{Randoop}). La raz\'on se basa en que no solo ambas son herramientas de generaci\'on autom\'atica de tests com\'unmente utilizadas en trabajos de investigaci\'on, sino que adem\'as eliminar cualquier parcialidad introducida si nosotros fueramos a generar los tests.
 
-Ambas herramientas son no determin\'isticas, principalmente por utilizar procedimientos aleatorios. El impacto de \'esto en los experimentos puede ser minimizado al proveer a estas herramientas con un ``seed'', un n\'umero que va a ser utilizado como semilla para los generadores aleatorios que utilizan ambas herramientas. A su vez, los experimentos fueron repetidos [REPETICIONES] con distintas semillas para garantizar que una semilla particular no afectaba los resultados. \'Estas, fueron generadas una vez, mediante generaci\'on aleatoria, y se guardaron en un archivo para poder ser reutilizadas. La forma en que se ejecutan los experimentos garantiza que cada vez que se ejecute el i-\'esimo experimento, se va a utilizar la misma semilla.
+Ambas herramientas son no determin\'isticas, principalmente por utilizar procedimientos aleatorios. El impacto de \'esto en los experimentos puede ser minimizado al proveer a estas herramientas con un ``seed'', un n\'umero que va a ser utilizado como semilla para los generadores aleatorios que utilizan ambas herramientas. A su vez, los experimentos fueron repetidos 30 veces con distintas semillas para garantizar que una semilla particular no afectaba los resultados. \'Estas, fueron generadas una vez, mediante generaci\'on aleatoria, y se guardaron en un archivo para poder ser reutilizadas. La forma en que se ejecutan los experimentos garantiza que cada vez que se ejecute el i-\'esimo experimento, se va a utilizar la misma semilla.
 
 Tanto \emph{EvoSuite} como \emph{Randoop} permiten definir un ``presupuesto'' o \emph{budget} de tiempo para la generaci\'on de tests. En experimentos previos, al correr las herramientas con 30, 60, y 120 segundos, pudimos comprobar que la diferencia que puede haber entre los dos primeros tiempos, con respecto a mutation testing y cobertura de ramas, es peque\~na (beneficiando al segundo caso), mientras que entre 60 y 120 segundos, la diferencia es despreciable. Es por esto que decidimos utilizar \textbf{60 segundos} como presupuesto de tiempo para ambas herramientas.
 

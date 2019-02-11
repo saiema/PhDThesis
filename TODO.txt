@@ -6,15 +6,16 @@ Agregar referencias en la intro: al mencionarse criterios de cobertura, testing;
 Reemplazar Figura- y Tabla- por Figura y Tabla respectivamente (HECHO)
 Explicar por que la implementacion de dequeue() esta mal
 En la seccion de la historia de PRVO se menciona que PRV solo modifica variables pero tambien puede cambiar accesos a campos
-En la seccion de implementacion, se utiliza aun "expresion encadenada"
-Dynamic Mutant Subsumption como metrica esta antes que la seccion donde se explica en profundidad que es esta tecnica
+En la seccion de implementacion, se utiliza aun "expresion encadenada" (DONE)
+Dynamic Mutant Subsumption como metrica esta antes que la seccion donde se explica en profundidad que es esta tecnica (DONE)
+En el capitulo de evaluacion hay anotaciones [ANOTACION]
 
 TYPOS:
 
 Figura 26: Ejemplo en donde una inicialización faltante (linea 3), produciría un
-programa que compila pero incorrecto (DEBERIA DECIR linea 4)
+programa que compila pero incorrecto (DEBERIA DECIR linea 4) (DONE)
 
-Testing:
+Testing
 - es decir, considerando todas sus las entradas, directas e indirectas (DONE)
 - ejecuta una funcionalidad de la calculadora, a través del el método (DONE)
 - Los criterios de testing ayudar a seleccionar escenarios (DONE)
@@ -43,32 +44,32 @@ Mutation testing, dynamic mutant subsumption como metrica, (luego de las metrica
 - Las preguntas de investgación de este trabajo son: (DONE)
 
 PRVO y muJava++, Configuracion de PRVO, isReachable(Expression, Expression)
-- Este método verifica si la primer expresión es alcanzable desde la segunda
-- es decir, si el primer elemento de la primer expresión representa un miembro
+- Este método verifica si la primer expresión es alcanzable desde la segunda (DONE)
+- es decir, si el primer elemento de la primer expresión representa un miembro	(DONE)
 PRVO y muJava++, Configuracion de PRVO, elements(Expression)
-- rrent.next.value retornaía una lista con current, next, y value
-PRVO y muJava++, Configuracion de PRVO, compatibleTypes(Type, Type)
-- Este método verifica si el primer tipo es compatible con el segundo.
-- entonces se verifica si el primer tipo es asignable al segundo
+- rrent.next.value retornaía una lista con current, next, y value (DONE)
 PRVO y muJava++, Configuracion de PRVO, nextExpression(Expression)
-- si la expresión no estaba conectada mediante el operador de navegación o otra, y retorna (el o debe ser a, el y debe ser o)
+- si la expresión no estaba conectada mediante el operador de navegación o otra, y retorna (el o debe ser a, el y debe ser o) (DONE)
 PRVO y muJava++, Configuracion de PRVO, Métodos y campos permitidos
-- Cabe destacar que estas opciones son exclusivas, no es posible utilizar ambas al mismo tiempo. (debe decir excluyentes en lugar de exclusivas)
+- Cabe destacar que estas opciones son exclusivas, no es posible utilizar ambas al mismo tiempo. (debe decir excluyentes en lugar de exclusivas) (DONE)
 PRVO y muJava++, Configuracion de PRVO, Uso de literales
-- En el caso de prvo, utiliza un conjunto de literales base, 1, 0, True, False, , null (la cadena vacia se ve como un espacio vacio, debe decir " ")
+- En el caso de prvo, utiliza un conjunto de literales base, 1, 0, True, False, , null (la cadena vacia se ve como un espacio vacio, debe decir "") (DONE)
 PRVO y muJava++, Dynamic Mutant Subsumption
-- cuan significativo es el valor de mutation score se torna aún más importancia
-- La utilización de éste análisis (Dynamic Mutant Subsumption) es entonces (va sin acento: este)
-- y para todo test t para el cual el comportamiento entre m 1 y p difiera (deberia decir difiere)
-- para el cual el comportamiento de m 1 difiera del de p, y para todo test t en T para el cual el comportamiento entre m 1 y p difiera (difiere en lugar de difiera)
-- es la que se implementó en μJava++ y que va a ser utilizada como evaluación adicional (deberia decir evaluacion principal creo, esto tampoco es necesariamente un typo)
+- cuan significativo es el valor de mutation score se torna aún más importancia (DONE)
+- La utilización de éste análisis (Dynamic Mutant Subsumption) es entonces (va sin acento: este) (DONE)
+- y para todo test t para el cual el comportamiento entre m 1 y p difiera (deberia decir difiere) (DONE)
+- para el cual el comportamiento de m 1 difiera del de p, y para todo test t en T para el cual el comportamiento entre m 1 y p difiera (difiere en lugar de difiera) (DONE)
+- es la que se implementó en μJava++ y que va a ser utilizada como evaluación adicional (deberia decir evaluacion principal creo, esto tampoco es necesariamente un typo) (DONE)
 PRVO y muJava++, Dynamic Mutant Subsumption Graph
-- para cada par de nodos m1 y m2 en el nodo, m1 subsume a m2 y viceversa (para cada par de mutantes m1 y m2)
-- recordemos que la primer condición para la relación de subsuma (debe decir primera)
-- ésto se puede apreciar en la Tabla 8 (va sin acento, esto)
-- Dado que en esta tesis presentamos una familia particular de operadores (un operador particular)
-- y que son el objetivos de nuestra evaluaciones (es el objetivo, evaluacion)
-- ésto es causa de que cualquier mutante generado por otro operador (va sin acento, esto)
+- para cada par de nodos m1 y m2 en el nodo, m1 subsume a m2 y viceversa (para cada par de mutantes m1 y m2) (DONE)
+- recordemos que la primer condición para la relación de subsuma (debe decir primera) (DONE)
+- ésto se puede apreciar en la Tabla 8 (va sin acento, esto) (DONE)
+- Dado que en esta tesis presentamos una familia particular de operadores (un operador particular) (DONE)
+- y que son el objetivos de nuestra evaluaciones (es el objetivo, evaluacion) (DONE)
+- ésto es causa de que cualquier mutante generado por otro operador (va sin acento, esto) (DONE)
+Evaluacion, casos de estudio, NodeCachingList
+- Una lista simplemente doblemente encadenada (DONE)
+- a la vez que la utilizada reúne todo el código relacionado esta implementación, en tres clases (relacionado A esta implementacion) (DONE)
 
 GENERAL
 - Hasta mutation testing se hace mención a test suite o suite con la, pero en mutation testing se usa el (HAY QUE CAMBIAR POR LA, WIP)
