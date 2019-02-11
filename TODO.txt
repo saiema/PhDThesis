@@ -58,7 +58,17 @@ PRVO y muJava++, Configuracion de PRVO, Uso de literales
 - En el caso de prvo, utiliza un conjunto de literales base, 1, 0, True, False, , null (la cadena vacia se ve como un espacio vacio, debe decir " ")
 PRVO y muJava++, Dynamic Mutant Subsumption
 - cuan significativo es el valor de mutation score se torna aún más importancia
-
+- La utilización de éste análisis (Dynamic Mutant Subsumption) es entonces (va sin acento: este)
+- y para todo test t para el cual el comportamiento entre m 1 y p difiera (deberia decir difiere)
+- para el cual el comportamiento de m 1 difiera del de p, y para todo test t en T para el cual el comportamiento entre m 1 y p difiera (difiere en lugar de difiera)
+- es la que se implementó en μJava++ y que va a ser utilizada como evaluación adicional (deberia decir evaluacion principal creo, esto tampoco es necesariamente un typo)
+PRVO y muJava++, Dynamic Mutant Subsumption Graph
+- para cada par de nodos m1 y m2 en el nodo, m1 subsume a m2 y viceversa (para cada par de mutantes m1 y m2)
+- recordemos que la primer condición para la relación de subsuma (debe decir primera)
+- ésto se puede apreciar en la Tabla 8 (va sin acento, esto)
+- Dado que en esta tesis presentamos una familia particular de operadores (un operador particular)
+- y que son el objetivos de nuestra evaluaciones (es el objetivo, evaluacion)
+- ésto es causa de que cualquier mutante generado por otro operador (va sin acento, esto)
 
 GENERAL
 - Hasta mutation testing se hace mención a test suite o suite con la, pero en mutation testing se usa el (HAY QUE CAMBIAR POR LA, WIP)
