@@ -99,15 +99,15 @@ Con el tiempo la cantidad de comportamientos o restricciones configurables en \e
 A partir de la definici\'on en la Figura \ref{figures.definitions.prvo.impl_def}, las restricciones sobre cuanto puede decrementar o incrementar una expresi\'on encadenada se limitan a:
 
 \begin{enumerate}[leftmargin=.75cm,align=left]
-	\item[\textbf{Reemplazar un elemento(R)}] Ciertas mutaciones de \emph{prvo} solo modifican elementos unitarios (expresiones de tama\~no 0) en una expresi\'on encadenada, reemplaz\'andolos por otros de tama\~no 0.
+	\item[\textbf{Reemplazar un elemento (R)}] Ciertas mutaciones de \emph{prvo} solo modifican elementos unitarios (expresiones de tama\~no 0) en una expresi\'on encadenada, reemplaz\'andolos por otros de tama\~no 0.
 	
-	\item[\textbf{A\~nadir un elemento(A)}] Una expresi\'on encadenada puede incrementarse por 1 su tama\~no, al insertar un elemento tanto al principio, al final, o intercalarlo en su interior.
+	\item[\textbf{A\~nadir un elemento (A)}] Una expresi\'on encadenada puede incrementarse por 1 su tama\~no, al insertar un elemento tanto al principio, al final, o intercalarlo en su interior.
 	
-	\item[\textbf{Eliminar un elemento(D)}] En una expresi\'on de navegaci\'on, se puede eliminar un elemento, ya sea al principio, final, o en el resto de la expresi\'on. No es posible eliminar un elemento en una expresi\'on encadenada de tama\~no 0, ya que no est\'a definida una expresi\'on de menor tama\~no.
+	\item[\textbf{Eliminar un elemento (D)}] En una expresi\'on de navegaci\'on, se puede eliminar un elemento, ya sea al principio, final, o en el resto de la expresi\'on. No es posible eliminar un elemento en una expresi\'on encadenada de tama\~no 0, ya que no est\'a definida una expresi\'on de menor tama\~no.
 	
-	\item[\textbf{Intercambiar dos elementos por uno(2x1)}] Dada una expresi\'on de navegaci\'on, dos elementos contiguos, es decir, una subexpresi\'on de navegaci\'on de tama\~no 1, puede ser reemplazada por un \'unico elemento, es decir, una expresi\'on encadenada de tama\~no 0.
+	\item[\textbf{Intercambiar dos elementos por uno (2x1)}] Dada una expresi\'on de navegaci\'on, dos elementos contiguos, es decir, una subexpresi\'on de navegaci\'on de tama\~no 1, puede ser reemplazada por un \'unico elemento, es decir, una expresi\'on encadenada de tama\~no 0.
 	
-	\item[\textbf{Intercambiar un elemento por dos(1x2)}] En una expresi\'on encadenada, un elemento de la misma puede ser reemplazado por dos elementos contiguos, es decir, una expresi\'on de navegaci\'on de tama\~no 1.
+	\item[\textbf{Intercambiar un elemento por dos (1x2)}] En una expresi\'on encadenada, un elemento de la misma puede ser reemplazado por dos elementos contiguos, es decir, una expresi\'on de navegaci\'on de tama\~no 1.
 \end{enumerate}
 
 En el ejemplo siguiente pueden verse algunas de las distintas mutaciones que corresponden a las restricciones anteriores, en algunos casos el mismo mutante puede ser logrado por distintas mutaciones:
