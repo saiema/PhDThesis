@@ -41,5 +41,19 @@ Mutation testing, dynamic mutant subsumption como metrica, mutantes dificiles de
 Mutation testing, dynamic mutant subsumption como metrica, (luego de las metricas usadas en el paper de BEE)
 - Las preguntas de investgación de este trabajo son: (DONE)
 
+PRVO y muJava++, Configuracion de PRVO, isReachable(Expression, Expression)
+- Este método verifica si la primer expresión es alcanzable desde la segunda
+- es decir, si el primer elemento de la primer expresión representa un miembro
+PRVO y muJava++, Configuracion de PRVO, elements(Expression)
+- rrent.next.value retornaía una lista con current, next, y value
+PRVO y muJava++, Configuracion de PRVO, compatibleTypes(Type, Type)
+- Este método verifica si el primer tipo es compatible con el segundo.
+- entonces se verifica si el primer tipo es asignable al segundo
+PRVO y muJava++, Configuracion de PRVO, nextExpression(Expression)
+- si la expresión no estaba conectada mediante el operador de navegación o otra, y retorna (el o debe ser a, el y debe ser o)
+PRVO y muJava++, Configuracion de PRVO, Métodos y campos permitidos
+- Cabe destacar que estas opciones son exclusivas, no es posible utilizar ambas al mismo tiempo. (debe decir excluyentes en lugar de exclusivas)
+
+
 GENERAL
 - Hasta mutation testing se hace mención a test suite o suite con la, pero en mutation testing se usa el (HAY QUE CAMBIAR POR LA, WIP)
