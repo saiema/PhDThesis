@@ -377,12 +377,42 @@ Para la mayor\'ia de los casos de estudio, el n\'umero de mutantes que genera \e
 
 Con respecto a mutantes equivalentes, los resultados son muy interesantes. La cantidad de mutantes equivalentes producidos por \emph{prvo} fue muy poca. \'Esto, es muy importante, dado que cuando un operador produce muchos mutantes equivalentes, es decir, mutantes para los cuales no existe ning\'un escenario o entrada para el cual \'este se comporte de manera diferente al programa original, lo que lo hace imposible de detectar, bajando el valor de mutation score correspondiente de manera artificial, resultando en una evaluaci\'on enga\~nosa del test suite. Tener entonces una peque\~na cantidad de dichos mutantes es un buen resultado para \emph{prvo}. Vale la pena aclarar que si bien lo deseable es evitar por completo la generaci\'on de mutantes equivalentes, esto es en general imposible, principalmente por que al ser un problema indecidible (el detectar si un programa es equivalente a otro), no es posible tener una implementaci\'on de una herramienta de mutaci\'on que evite por completo la generaci\'on de los mismos.
 
-\begin{figure}[t]
+Los resultados obtenidos de \emph{Mutation Score} \ref{mutationscore-results}, \emph{Toughness} \ref{toughness-results}, y \emph{Toughness de solo detectados} \ref{toughnessKilled-results}, se condicen con los resultados de dominancia de \emph{prvo} y mutantes equivalentes generados. El mutation score al utilizar \emph{prvo} (en color rojo) se mantiene en general, con respecto al valor obtenido sin utilizar \emph{prvo} (en color verde), esto junto a los resultados de dominancia
+indica que la cantidad de mutantes triviales generados por \emph{prvo} es poca (lo que llevar\'ia a un aumento de esta m\'etrica).
+
+Los resultados de \emph{Toughness}, tanto si se consideran todos los mutantes o solo se consideran aquellos que fueron detectados, apoyan la conclusi\'on anterior de que \emph{prvo} no solo que no genera mutantes triviales, sino que adem\'as, \'estos no son f\'aciles de matar (sin llegar a ser triviales). Este resultado son coherentes con los obtenidos del an\'alisis de Dynamic Mutant Subsumption.
+
+\begin{figure}
 	\begin{center}
 		\includegraphics[width=9cm]{figures/Generated_Mutants.png}
 	\end{center}
-	\caption{Summary of mutants generated.}
+	\caption{Comparaci\'on de mutantes generados.}
 	\label{mutants-results}
+\end{figure}
+
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=9cm]{figures/MutationScore.png}
+	\end{center}
+	\caption{Comparaci\'on de \emph{Mutation score}.}
+	\label{mutationscore-results}
+\end{figure}
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=9cm]{figures/Toughness.png}
+	\end{center}
+	\caption{Comparaci\'on de \emph{Toughness}, cuantos tests ``resiste'' un mutante para ser detectado, un valor de $1.0$ representa un mutante no detectado.}
+	\label{toughness-results}
+\end{figure}
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=9cm]{figures/ToughnessKilled.png}
+	\end{center}
+	\caption{Comparaci\'on de \emph{Toughness}, cuantos tests ``resiste'' un mutante que fue detectado.}
+	\label{toughnessKilled-results}
 \end{figure}
 
 
