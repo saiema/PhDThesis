@@ -240,3 +240,59 @@ Bajo esta herramienta es que se pudo observar como \emph{prvo} era capaz de repa
 	\caption{Algunos defectos en el m\'etodo \emph{getNode} \ref{figures.examples.repair.getNode} que pueden modelarse mediante mutaciones y ser reparados por \emph{prvo}.}
 	\label{figures.examples.repair.faultsGetNode}
 \end{figure}
+
+\subsection{Evaluaci\'on de Stryker}
+\label{sec:repair.striker.evaluation}
+
+Si bien la evaluaci\'on de \emph{Stryker} se encuentra enfocada hacia la t\'ecnica de poda del espacio de b\'usqueda de candidatos a reparaci\'on, lo que a su vez permite la utilizaci\'on de una mayor cantidad de operadores de mutaci\'on orientados hacia la reparaci\'on de fallas intra-sentencia, en el contexto de esta tesis nos interesan los resultados asociados a \emph{prvo} y su utilidad en el campo de reparaci\'on autom\'atica de programas mediante mutaci\'on.
+
+En los experimentos realizados para la evaluaci\'on de \emph{Stryker}, se utilizaron implementaciones en \emph{Java} de estructuras que representan colecciones. Estas clases, para las cuales se definieron especificaciones en forma de contratos \emph{JML}, incluyendo clausulas \texttt{requires/ensures}, funciones de variantes de ciclos e invariantes de clases, son las siguientes:
+\begin{itemize}
+	\item \textbf{SinglyLinkedList :} Una implementaci\'on de listas simplemente encadenadas. Donde consideramos un m\'etodo \emph{contains} para evaluar pertenencia, \emph{getNode} para obtener el i-\'esimo elemento en la lista, y el m\'etodo \emph{insert} para agregar un nuevo elemento a la lista.
+	
+	\item \textbf{NodeCachingLinkedList :} Una lista circular, doblemente encadenada y con una cache de nodos. Considerando los m\'etodos \emph{contains}, \emph{inserte}, y \emph{remove}. Siendo el \'ultimo de particular inter\'es por almacenar nodos removidos en la cache.
+	
+	\item \textbf{BinarySearchTree :} Una implementaci\'on de un \'arbol de b\'usqueda binario con los m\'etodos \emph{contains}, \emph{insert} y \emph{remove}.
+	
+	\item \textbf{BinomialHeap :} Una implementaci\'on de colas de prioridad utilizando \emph{binomial heaps}. Considerando los m\'etodos \emph{findMin} (para obtener el m\'inimo elemento almacenado), \emph{insert}, y \emph{extractMin} para obtener y eliminar el m\'inimo elemento almacenado.
+\end{itemize}
+
+Los casos de estudio para reparaci\'on fueron obtenidos a partir de las versiones originales (correctamente implementadas) al insertar hasta $4$ mutaciones por m\'etodo, y luego se eligieron 5 versiones al azar por cada n\'umero de mutaciones insertadas, es decir, 5 programas incorrectos con un bug, 5 con 2, y as\'i hasta $4$ bugs.
+
+Por cada sentencia (o l\'inea) mutada se agrego un comentario de l\'inea \texttt{//mutGenLimit K} donde \texttt{K} corresponde a la cantidad de bugs artificiales introducidos en la misma. Algunos ejemplos de los casos de estudios utilizados se muestran a continuaci\'on.
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinomialHeap_extractMin_orig.java}
+	\caption{Versi\'on original del m\'etodo \emph{extractMin} de \emph{BinomialHeap} con los contratos asociados al m\'etodo.}
+	\label{figures.code.repair.binheap_extractMin_orig}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinomialHeap_extractMin_4bugs.java}
+	\caption{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{extractMin} de \emph{BinomialHeap}.}
+	\label{figures.code.repair.binheap_extractMin_4bugs}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinTree_insert_orig.java}
+	\caption{Versi\'on original del m\'etodo \emph{insert} de \emph{BinarySearchTree} con los contratos asociados al m\'etodo.}
+	\label{figures.code.repair.bintree_insert_orig}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinTree_insert_3bugs.java}
+	\caption{Versi\'on con $3$ bugs artificiales del m\'etodo \emph{insert} de \emph{BinarySearchTree}.}
+	\label{figures.code.repair.bintree_insert_3bugs}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/NCLL_contains_orig.java}
+	\caption{Versi\'on original del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList} con los contratos asociados al m\'etodo.}
+	\label{figures.code.repair.ncll_contains_orig}
+\end{figure}
+
+\begin{figure}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/NCLL_contains_4bugs.java}
+	\caption{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList}.}
+	\label{figures.code.repair.ncll_contains_4bugs}
+\end{figure}
