@@ -383,11 +383,12 @@ Los resultados de \emph{Toughness}, tanto si se consideran todos los mutantes o 
 
 \begin{table}[]
 	\centering
-	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\small
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
 		\hline
-		Project & Apache & AvlTree & BinHeap & Queue & TreeSet & NCLL \\ \cline{1-1}
-		Tests & 1292 & 2564 & 2851 & 2375 & 2662 & 2300 \\ \cline{1-1}
-		Branch Cov & 95.33\% & 99.9\% & 84.32\% & 87\% & 68.21\% & 81.38\% \\ \hline
+		Project & Apache & AvlTree & BinHeap & Queue & TreeSet & NCLL & BSTree\\ \cline{1-1}
+		Tests & 1292 & 2564 & 2851 & 2375 & 2662 & 2300 & 3023\\ \cline{1-1}
+		Branch Cov & 95.33\% & 99.9\% & 84.32\% & 87\% & 68.21\% & 81.38\% & 88\%\\ \hline
 	\end{tabular}
 	\caption{Cantidad promedio de tests y cobertura de ramas para cada caso de estudio.}
 	\label{testsAndCov-results}
@@ -441,11 +442,12 @@ Finalmente necesitamos remarcar que subsuma de operadores, no es lo mismo que su
 
 \begin{table}[]
 	\centering
-	\begin{tabular}{l|cccccc|}
-		\cline{2-7}
-		& \multicolumn{1}{l}{TreeList} & \multicolumn{1}{l}{AvlTree} & \multicolumn{1}{l}{BinHeap} & \multicolumn{1}{l}{TreeSet} & \multicolumn{1}{l}{NCLL} & \multicolumn{1}{l|}{Queue} \\ \hline
-		\multicolumn{1}{|l|}{Sin PRVO} & 380 & 233 & 352 & 410 & 504 & 68 \\ \cline{1-1}
-		\multicolumn{1}{|l|}{Con PRVO} & 458 & 304 & 788 & 700 & 519 & 78 \\ \hline
+	\small
+	\begin{tabular}{l|ccccccc|}
+		\cline{2-8}
+		& \multicolumn{1}{l}{TreeList} & \multicolumn{1}{l}{AvlTree} & \multicolumn{1}{l}{BinHeap} & \multicolumn{1}{l}{TreeSet} & \multicolumn{1}{l}{NCLL} & \multicolumn{1}{l}{Queue} & \multicolumn{1}{l|}{BSTree} \\ \hline
+		\multicolumn{1}{|l|}{Sin PRVO} & 380 & 233 & 352 & 410 & 504 & 68 & 274\\ \cline{1-1}
+		\multicolumn{1}{|l|}{Con PRVO} & 458 & 304 & 788 & 700 & 519 & 78 & 334\\ \hline
 	\end{tabular}
 	\caption{Mutantes generados por caso de estudio}
 	\label{tables.results.mutants}
@@ -453,11 +455,14 @@ Finalmente necesitamos remarcar que subsuma de operadores, no es lo mismo que su
 
 \begin{table}[]
 	\centering
-	\begin{tabular}{l|cccccc|}
-		\cline{2-7}
-		& \multicolumn{1}{l}{Apache} & \multicolumn{1}{l}{AvlTree} & \multicolumn{1}{l}{BinHeap} & \multicolumn{1}{l}{TreeSet} & \multicolumn{1}{l}{NCLL} & \multicolumn{1}{l|}{Queue} \\ \hline
-		\multicolumn{1}{|l|}{Mutantes totales} & 78 & 71 & 436 & 290 & 15 & 10 \\ \cline{1-1}
-		\multicolumn{1}{|l|}{Equivalentes} & 2 & 14 & 27 & 31 & 2 & 0 \\ \hline
+	\small
+	\def\arraystretch{0.95}
+	\setlength\tabcolsep{0.5mm}
+	\begin{tabular}{l|ccccccc|}
+		\cline{2-8}
+		& \multicolumn{1}{l}{Apache} & \multicolumn{1}{l}{AvlTree} & \multicolumn{1}{l}{BinHeap} & \multicolumn{1}{l}{TreeSet} & \multicolumn{1}{l}{NCLL} & \multicolumn{1}{l}{Queue} & \multicolumn{1}{l|}{BSTree}\\ \hline
+		\multicolumn{1}{|l|}{Mutantes totales} & 78 & 71 & 436 & 290 & 15 & 10 & 60\\ \cline{1-1}
+		\multicolumn{1}{|l|}{Equivalentes} & 2 & 14 & 27 & 31 & 2 & 0 & 0\\ \hline
 	\end{tabular}
 	\caption{Mutantes \emph{prvo} equivalentes por caso de estudio}
 	\label{tables.results.equivalents}
