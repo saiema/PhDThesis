@@ -12,7 +12,7 @@ El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta
   LinkedList ll = new LinkedList();
   ArrayList al = new ArrayList();
   l = ll;
-  $\delta$ l = al;
+  $\Delta$l = al;
 	\end{lstlisting}
 	\caption{Un ejemplo de una mutaci\'on de \emph{PRV} donde se reemplaza \emph{ll} por \emph{al} en la asignaci\'on original a \emph{l}}
 	\label{figures.examples.PRV}
@@ -64,7 +64,7 @@ El operador que definimos en este cap\'itulo, \emph{PRVO}, surge como una extens
 \section{Expresiones de navegaci\'on}
 \label{sec:prvo.navigationalExpressions}
 
-Para poder definir el operador \emph{PRVO}, primero necesitamos definir qu\'e consideramos una \emph{expresi\'on de navegaci\'on}. En lenguajes orientados a objetos, el acceso a miembros de una clase es de uso com\'un, y se realiza mediante un operador de navegaci\'on que puede tomar distintas formas sint\'acticas, con la notaci\'on \emph{punto} siendo la m\'as com\'un. Esta notaci\'on permite encadenar expresiones, donde la expresi\'on encadenada comienza por un miembro de la \'ultima parte de la expresi\'on anterior. Nos referiremos a una expresi\'on de navegaci\'on como una expresi\'on de las descriptas, que cuenta con uno o m\'as de estos operadores. El tama\~no de una expresi\'on de navegaci\'on se puede definir de distintas formas; nosotros la definiremos por el n\'umero de operadores de navegaci\'on involucrados. Una expresi\'on de navegaci\'on de tama\~no 1 entonces tendr\'ia la forma \emph{a.b}. Ejemplos de distintas expresiones de navegaci\'on se pueden ver en la Figura \ref{figures.examples.chainedExpr}, donde vale aclarar que una vez que una expresi\'on de navegaci\'on se reduce a menos de una utilizaci\'on del operador de navegaci\'on, \'esta se considera de tama\~no 0, y podr\'ia considerarse un caso especial de una navegaci\'on.
+Para poder definir el operador \emph{PRVO}, primero necesitamos definir qu\'e consideramos una \emph{expresi\'on de navegaci\'on}. En lenguajes orientados a objetos, el acceso a miembros de una clase es de uso com\'un, y se realiza mediante un operador de navegaci\'on que puede tomar distintas formas sint\'acticas, con la notaci\'on \emph{punto} siendo la m\'as com\'un. Esta notaci\'on permite encadenar expresiones, donde la expresi\'on encadenada comienza por un miembro de la \'ultima parte de la expresi\'on anterior. Nos referiremos a una expresi\'on de navegaci\'on como una expresi\'on de las descriptas, que cuenta con uno o m\'as de estos operadores. El tama\~no de una expresi\'on de navegaci\'on se puede definir de distintas formas; nosotros la definiremos por el n\'umero de operadores de navegaci\'on involucrados. Una expresi\'on de navegaci\'on de tama\~no 1 entonces tendr\'ia la forma \emph{a.b}. Ejemplos de expresiones de distintos tama\~nos con respecto al operador de navegaci\'on se pueden ver en la Figura \ref{figures.examples.chainedExpr}, donde vale aclarar que si una expresi\'on no contiene al menos un uso del operador de accesibildad a miembros, \'esta no se considera expresi\'on de navegaci\'on. Esta distinci\'on es importante cuando m\'as adelante se describa el tipo de expresiones que puede mutar \emph{PRVO}.
 
 \begin{figure}
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
@@ -77,7 +77,7 @@ current.next.value //expresi$\'o$n de navegaci$\'o$n de tama$\~n$o 2
 	\label{figures.examples.chainedExpr}
 \end{figure}
 
-En una expresi\'on de navegaci\'on, el tipo de la misma est\'a dado por el de la \'ultima expresi\'on en la cadena. Por ejemplo, \lstinline|a.b.c| es una expresi\'on encadenada de tama\~no dos, cuyo tipo est\'a dado por el de \emph{c}. Una expresi\'on de navegaci\'on bien tipada se puede definir de dos formas. Por pertenencia: para toda cadena \texttt{a.b}, \texttt{b} debe ser un miembro de la clase de \texttt{a}. O mediante caminos en un grafo: si cada tipo se representa mediante un nodo, y los miembros de una clase se representan como aristas que unen los tipos correspondientes, entonces todas las posibles expresiones de navegaci\'on se corresponden con caminos en este grafo. Por ejemplo, la expresi\'on \lstinline|header.next.value.toString()|, es una expresi\'on de navegaci\'on de tama\~no 3, que se considera v\'alida respecto al grafo de la Figura \ref{figures.examples.navegationExprGraph}.
+En una expresi\'on de navegaci\'on, el tipo de la misma est\'a dado por el de la \'ultima expresi\'on en la cadena. Por ejemplo, \lstinline|a.b.c| es una expresi\'on de navegaci\'on de tama\~no dos, cuyo tipo est\'a dado por el de \emph{c}. Una expresi\'on de navegaci\'on bien tipada se puede definir de dos formas. Por pertenencia: para toda cadena \texttt{a.b}, \texttt{b} debe ser un miembro de la clase de \texttt{a}. O mediante caminos en un grafo: si cada tipo se representa mediante un nodo, y los miembros de una clase se representan como aristas que unen los tipos correspondientes, entonces todas las posibles expresiones de navegaci\'on se corresponden con caminos en este grafo. Por ejemplo, la expresi\'on \lstinline|header.next.value.toString()|, es una expresi\'on de navegaci\'on de tama\~no 3, que se considera v\'alida respecto al grafo de la Figura \ref{figures.examples.navegationExprGraph}.
 
 \begin{figure}
 	\begin{center}
@@ -150,9 +150,46 @@ Inicialmente parece innecesario tener una definici\'on de un operador cuya aplic
 
 %La definci\'on general de \emph{prvo} es muy similar a la de un generador de sentencias que pertenecen a una gram\'atica. Donde los t\'ipos definen a la misma. Si hubiera un programa definido mediante expresiones encadenadas y tipos, en donde encontrar\'iamos expresiones como \lstinline|if(a.gt().b).then(result.assign(a)).else(result.assign(b)).return(result)|, \emph{prvo} podr\'ia generar cualquier programa correcto desde un punto de vista de tipos. Principalmente por que las expresiones que puede utilizar no est\'an restringidas en absoluto. Esta caracter\'istica hace que \emph{prvo} sea completamente inservible para mutation testing. Lo que obliga a establecer restricciones, esto sin embargo, es una caracter\'istica positiva de \emph{prvo}, ya que cualquier operador en la familia de operadores \emph{prvo}, es en realidad una configuraci\'on particular de la misma. Lo que nos permite definir operadores a medida y aumentar la eficiencia de los mismos para cada caso.
 
-Teniendo en cuenta los criterios para el dise\~no de operadores de mutaci\'on, discutidos en la Secci\'on~\ref{sec:preliminares.mutation.opevaluation}, en particular con respecto al n\'umero de mutaciones que un operador produce, es necesario proveer algunas cotas razonables para la aplicaci\'on de \emph{prvo}. El n\'umero de mutantes generados por \emph{prvo} se puede acotar al limitar tres caracter\'isticas: las expresiones \emph{objetivo} (d\'onde se va a aplicar \emph{prvo}); el \emph{tama\~no de las expresiones}, cu\'al es el tama\~no m\'aximo por al cual se permite cambiar, incrementar o reducir, el tama\~no de las expresiones resultantes (las mutaciones); y los \emph{reemplazos}, es decir, las expresiones que se van a usar para el intercalado/sustituci\'on en \emph{prvo}. En cuanto a los objetivos, \emph{prvo} s\'olo va a ser aplicado a expresiones de navegaci\'on, es decir, expresiones que involucran al menos una navegaci\'on. Respecto al tama\~no, vamos a limitar \emph{prvo} a producir expresiones del \emph{mismo} tama\~no que la expresi\'on original (el n\'umero de navegaciones se mantiene). En cuanto a los reemplazos, s\'olo vamos a reemplazar expresiones con otras de exactamente el mismo tipo (al contrario de considerar definiciones menos estrictas, que permitir\'ian utilizar tipos compatibles m\'as generales), que pertenezcan a la misma clase en donde se encuentra la expresi\'on original, o en clases directamente alcanzables desde esta clase.
+Teniendo en cuenta los criterios para el dise\~no de operadores de mutaci\'on, discutidos en la Secci\'on~\ref{sec:preliminares.mutation.opevaluation}, en particular con respecto al n\'umero de mutaciones que un operador produce, es necesario proveer algunas cotas razonables para la aplicaci\'on de \emph{prvo}. El n\'umero de mutantes generados por \emph{prvo} se puede acotar al limitar tres caracter\'isticas: las expresiones \emph{objetivo} (d\'onde se va a aplicar \emph{prvo}); el \emph{tama\~no de las expresiones}, cu\'al es el tama\~no m\'aximo por al cual se permite cambiar, incrementar o reducir, el tama\~no de las expresiones resultantes (las mutaciones); y los \emph{reemplazos}, es decir, las expresiones que se van a usar para el intercalado/sustituci\'on en \emph{prvo}. En cuanto a los objetivos, \emph{prvo} s\'olo va a ser aplicado a expresiones de navegaci\'on, es decir, expresiones que involucran al menos una navegaci\'on. Respecto al tama\~no, vamos a limitar \emph{prvo} a producir expresiones del \emph{mismo} tama\~no que la expresi\'on original (el n\'umero de navegaciones se mantiene). Adem\'as consideraremos las siguientes restricciones: las expresiones obtenidas por \emph{PRVO} a partir de la original van a mantener el mismo tipo (en lugar de considerar tipos compatibles), si bien el uso de tipos compatibles permiten mutaciones m\'as variadas, \'utiles para representar fallas asociadas a polimorfismo, esto no solo aumenta la cantidad de mutantes sino adem\'as la generaci\'on de mutaciones poco significativas, en la Figura~\ref{figures.examples.strictVsRelaxedTypeCheck} se muestra la diferencia entre usar control estricto y relajado de tipos y como esto lleva a mutaciones poco significativas; los miembros utilizados para reemplazar subexpresiones van a ser acotados a la misma clase en donde se encuentra la expresi\'on original o en clases directamente alcanzables desde esta clase, nuevamente \'esta restricci\'on lleva a una perdida de representaci\'on de ciertas fallas pero evitando generar mutaciones poco significativas junto a la reducci\'on de la cantidad de mutantes generados, en la Figura~\ref{figures.examples.memberRestriction} se muestra un ejemplo de esto.
 
 Hemos definido un operador de \emph{prvo} como una serie de restricciones a la definici\'on general. Esto nos permite centrarnos en cierto tipo de fallas particulares sin perder la habilidad de eventualmente generar otra configuraci\'on que se centre en otras.
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+  //Control estricto
+  Object elem = current.next.elem;
+  $\Delta$Object elem = current.next.next.elem;
+  $\Delta$Object elem = current.elem;
+  $\Delta$Object elem = header.elem;
+  
+  //Control relajado de tipos
+  Object elem = current.next.elem;
+  $\Delta$Object elem = current.next;
+  $\Delta$Object elem = current.elem.toString().length;
+  $\Delta$Object elem = this;
+	
+	\end{lstlisting}
+	\caption{Ejemplo de control de tipos estricto vs relajado al generar mutaciones con \emph{PRVO}}
+	\label{figures.examples.strictVsRelaxedTypeCheck}
+\end{figure}
+
+\begin{figure}
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+	//Restricci$\'o$n de miembros
+	String rep = current.next.elem.toString();
+	$\Delta$String rep = current.next.next.elem.toString();
+	$\Delta$String rep = current.toString();
+	$\Delta$String rep = toString();
+	
+	//Sin restricci$\'o$n
+	String rep = current.next.elem.toString();
+	$\Delta$String rep = current.next.elem.trim().toString();
+	$\Delta$String rep = getClass().toString();
+	$\Delta$String rep = (new Integer(0)).toString();
+	\end{lstlisting}
+	\caption{Ejemplo de restricci\'on de miembros al generar mutantes con \emph{PRVO}}
+	\label{figures.examples.memberRestriction}
+\end{figure}
 
 \section{Fallas asociadas a PRVO}
 \label{sec:prvo.prvoTargetedFaults}
@@ -285,7 +322,7 @@ Un caso particular del tipo de fallas por omitir la llamada a un m\'etodo, es el
 
 \subsubsection{Conversi\'on de tipos}
 
-Muchas veces existen conversiones no visibles de tipos num\'ericos. Una divisi\'on \texttt{2/3} no da lo mismo que \texttt{2/3.0}, aunque es dif\'icil darse cuenta durante el desarrollo de un programa. Estas situaciones involucran en general \emph{casteos} expl\'icitos de tipos, \texttt{2/(float)3}, o uso de valores que especif\'ican claramente el tipo particular, \texttt{3.0f}. Fallas de este tipo no est\'an representadas por operadores actuales, ya que en muchos casos el error, finalmente se produce por el acarreo de numerosas p\'erdidas de precisi\'on. Aunque no relacionado con expresiones de navegaci\'on, este tipo de fallas artificiales se puede definir en base a restricciones sobre \emph{prvo}, dada una expresi\'on num\'erica, las posibles mutaciones son nuevas expresiones con el mismo valor pero distinto tipo.
+Muchas veces existen conversiones no visibles de tipos num\'ericos. Una divisi\'on \texttt{2/3} no da lo mismo que \texttt{2/3.0}, aunque es dif\'icil darse cuenta durante el desarrollo de un programa. Estas situaciones involucran en general \emph{casteos} expl\'icitos de tipos, \texttt{2/(float)3}, o uso de valores que especif\'ican claramente el tipo particular, \texttt{3.0f}. Fallas de este tipo no est\'an representadas por operadores actuales, ya que en muchos casos el error, finalmente se produce por el acarreo de numerosas p\'erdidas de precisi\'on. Aunque no relacionado con expresiones de navegaci\'on, este tipo de fallas artificiales se puede definir en base a restricciones sobre \emph{prvo}, dada una expresi\'on num\'erica, las posibles mutaciones son nuevas expresiones con el mismo valor pero distinto tipo. Un ejemplo trivial es una divisi\'on \texttt{5/2} que intuitivamente se espera que retorne \texttt{2.5}, sin embargo retorna \texttt{2}.
 
 \subsection{Fallas no asociadas a mutantes}
 
@@ -303,7 +340,7 @@ Existen fallas causadas por c\'odigo que no deber\'ia estar, es decir, cuando la
 	if (c) breakProgram();
 	...
 \end{lstlisting}
-En donde la reparaci\'on no es una condici\'on mal escrita sino directamente la eliminaci\'on de ciertas l\'ineas de c\'odigo. Si se quisiera representar este tipo de fallas ser\'ia necesario generar c\'odigo e insertarlo, la complejidad de generar c\'odigo v\'alido y la cantidad que se puede generar, sumado a la cantidad de lugares en donde se puede insertar, hacen que este tipo de fallas no puedan ser representadas mediante mutaci\'on. Sin embargo, \'este caso, es muy similar al anterior cuando se toman en cuenta como programas, a expresiones que utilizan \emph{interfaces fluentes}.
+En donde la reparaci\'on no es una condici\'on mal escrita sino directamente la eliminaci\'on de ciertas l\'ineas de c\'odigo. Si se quisiera representar este tipo de fallas ser\'ia necesario generar c\'odigo e insertarlo, la complejidad de generar c\'odigo v\'alido y la cantidad que se puede generar, sumado a la cantidad de lugares en donde se puede insertar, hacen que este tipo de fallas no puedan ser representadas mediante mutaci\'on. Sin embargo, este caso, es muy similar al anterior cuando se toman en cuenta como programas, a expresiones que utilizan \emph{interfaces fluentes}.
 
 \subsubsection{Llamada a m\'etodos similares}
 
