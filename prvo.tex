@@ -64,7 +64,20 @@ El operador que definimos en este cap\'itulo, \emph{PRVO}, surge como una extens
 \section{Expresiones de navegaci\'on}
 \label{sec:prvo.navigationalExpressions}
 
-Para poder definir el operador \emph{PRVO}, primero necesitamos definir qu\'e consideramos una \emph{expresi\'on de navegaci\'on}. En lenguajes orientados a objetos, el acceso a miembros de una clase es de uso com\'un, y se realiza mediante un operador de navegaci\'on que puede tomar distintas formas sint\'acticas, con la notaci\'on \emph{punto} siendo la m\'as com\'un. Esta notaci\'on permite encadenar expresiones, donde la expresi\'on encadenada comienza por un miembro de la \'ultima parte de la expresi\'on anterior. Nos referiremos a una expresi\'on de navegaci\'on como una expresi\'on de las descriptas, que cuenta con uno o m\'as de estos operadores. El tama\~no de una expresi\'on de navegaci\'on se puede definir de distintas formas; nosotros la definiremos por el n\'umero de operadores de navegaci\'on involucrados. Una expresi\'on de navegaci\'on de tama\~no 1 entonces tendr\'ia la forma \emph{a.b}. Ejemplos de expresiones de distintos tama\~nos con respecto al operador de navegaci\'on se pueden ver en la Figura \ref{figures.examples.chainedExpr}, donde vale aclarar que si una expresi\'on no contiene al menos un uso del operador de accesibildad a miembros, \'esta no se considera expresi\'on de navegaci\'on. Esta distinci\'on es importante cuando m\'as adelante se describa el tipo de expresiones que puede mutar \emph{PRVO}.
+Para poder definir el operador \emph{PRVO}, primero necesitamos definir qu\'e consideramos una \emph{expresi\'on de navegaci\'on}. En t\'erminos generales, considerando a un elemento (variable, m\'etodo, campo, o literal) como una funci\'on $O \rightarrow D$, y dado un contexto $\rho$ que representa el conjunto de todos los elementos disponibles, una expresi\'on de navegaci\'on se puede definir como una secuencia de elementos $[e_1, e_2,..., e_n]$ mediante las siguientes reglas de inferencia:
+
+
+\begin{definition}
+	\infer{\rho, [e] : O \rightarrow T}{
+		\rho, \vdash e : O \rightarrow T
+	}
+	\infer{\rho, [A] ++ [B] : O \rightarrow T_2}{
+		{\rho, \vdash [A] : O \rightarrow T_1}
+		& {\rho, \vdash [B] : T_1 \rightarrow T_2}
+	}
+\end{definition}
+
+Esta definici\'on garantiza el correcto tipado de una expresi\'on de navegaci\'on. En lenguajes orientados a objetos, el acceso a miembros de una clase es de uso com\'un, y se realiza mediante un operador de navegaci\'on que puede tomar distintas formas sint\'acticas, con la notaci\'on \emph{punto} siendo la m\'as com\'un. Esta notaci\'on permite encadenar expresiones, el tama\~no de una expresi\'on de navegaci\'on se puede definir de distintas formas; nosotros la definiremos por el n\'umero de operadores de navegaci\'on involucrados. Una expresi\'on de navegaci\'on de tama\~no 1 entonces tendr\'ia la forma \emph{a.b}. Ejemplos de expresiones de distintos tama\~nos con respecto al operador de navegaci\'on se pueden ver en la Figura \ref{figures.examples.chainedExpr}, donde vale aclarar que si una expresi\'on no contiene al menos un uso del operador de accesibildad a miembros, \'esta no se considera expresi\'on de navegaci\'on. Esta distinci\'on es importante cuando m\'as adelante se describa el tipo de expresiones que puede mutar \emph{PRVO}.
 
 \begin{figure}
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
@@ -126,25 +139,35 @@ Inicialmente parece innecesario tener una definici\'on de un operador cuya aplic
 \begin{figure}
 	\begin{displaymath}
 	\begin{array}{lll}
-	PRVO(x)		& :=	& expression \\
-	& := & PRVO(x).expression \\
-	& := & expression.PRVO(x) \\
-	\\
-	PRVO(x.y)	& :=	& expression^{*} \\
-	& :=	& PRVO(x).expression \\
-	& :=	& expression.PRVO(y) \\
-	& :=	& PRVO(x).expression.PRVO(y) \\
-	& :=	& expression.PRVO(x).PRVO(y) \\
-	& :=	& PRVO(x).PRVO(y).expression \\
-	\\
-	
-	\multicolumn{3}{l}{\tiny{^{*} \: : \: puede \: incluir \: o \: or \: y}} \\
-	\multicolumn{3}{l}{\tiny{expression \: : \: llamada \: a \: m\'etodo \: , \: acceso \: a \: atributo \: , variable \: o \: literal}}
+	PRVO([e] : O \rightarrow T, \rho) & = & \{[f] : O \rightarrow T| [f] \in (\rho)^\ast\} 
 	\end{array}
 	\end{displaymath}
 	\caption{Definici\'on abstracta de \emph{prvo}}
 	\label{figures.definitions.prvo.simple_def}
 \end{figure}
+
+%\begin{figure}
+%	\begin{displaymath}
+%	\begin{array}{lll}
+%	PRVO(x)		& :=	& expression \\
+%	& := & PRVO(x).expression \\
+%	& := & expression.PRVO(x) \\
+%	\\
+%	PRVO(x.y)	& :=	& expression^{*} \\
+%	& :=	& PRVO(x).expression \\
+%	& :=	& expression.PRVO(y) \\
+%	& :=	& PRVO(x).expression.PRVO(y) \\
+%	& :=	& expression.PRVO(x).PRVO(y) \\
+%	& :=	& PRVO(x).PRVO(y).expression \\
+%	\\
+%	
+%	\multicolumn{3}{l}{\tiny{^{*} \: : \: puede \: incluir \: o \: or \: y}} \\
+%	\multicolumn{3}{l}{\tiny{expression \: : \: llamada \: a \: m\'etodo \: , \: acceso \: a \: atributo \: , variable \: o \: literal}}
+%	\end{array}
+%	\end{displaymath}
+%	\caption{Definici\'on abstracta de \emph{prvo}}
+%	\label{figures.definitions.prvo.simple_def}
+%\end{figure}
 
 \subsubsection{PRVO como un meta-operador}
 
