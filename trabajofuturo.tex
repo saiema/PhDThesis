@@ -12,4 +12,19 @@ En esta tesis se utiliz\'o \emph{Dynamic Mutant Subsumption} como uno de los an\
 
 Como mencionamos en el cap\'itulo \ref{cap:repair}, la reparaci\'on autom\'atica de programas utilizando mutaci\'on, es un \'area de investigaci\'on activa y en donde se debe balancear la capacidad de reparaci\'on, es decir, el conjunto de defectos que pueden ser reparados y la cantidad de sentencias que pueden estar involucradas en la reparaci\'on, con los recursos necesarios para encontrar a la misma. As\'i como nuestra motivaci\'on para proponer a \emph{prvo} como un operador a ser utilizado en \emph{mutation testing}, se basa principalmente en cuan extenso es el uso de expresiones de navegaci\'on en programas orientados a objetos, la misma puede aplicarse para motivar a \emph{prvo} como un operador a ser utilizado en la reparaci\'on de programas orientados a objetos. En la secci\'on \ref{sec:repair.striker.evaluation} se presentan algunos resultados que es capaz de conseguir \emph{Stryker} en cuanto a reparaci\'on de m\'ultiples defectos junto con el uso de una gran cantidad de operadores de mutaci\'on. La gran flexibilidad provista por \emph{prvo}, principalmente en cuanto a acotar las expresiones a utilizar, podr\'ia ser explotada para diminuir considerablemente el espacio de candidatos a reparaci\'on con respecto a los generados por este operador. La relaci\'on entre restricciones a la configuraci\'on de \emph{prvo} con respecto a las expresiones a utilizar, los potenciales beneficios (menor espacio de b\'usqueda), y desventajas (la perdida de la capacidad de reparar ciertos defectos), representa una investigaci\'on muy interesante en el \'area de reparaci\'on autom\'atica de programas.
 
+\section{Mutaciones guiadas}
+
+Tanto en reparaci\'on como en mutation testing, la flexibilidad de \emph{PRVO} gracias a la amplia gama de configuraciones, permite maximizar la utilidad de los mutantes generados con respecto a la cantidad. Sin embargo, la configuraci\'on es est\'atica y definida por el usuario previo a ejecutar el proceso de mutation testing o reparaci\'on. Cierta informaci\'on disponible mediante an\'alisis est\'atico (como obtenci\'on de condiciones de camino mediante ejecuci\'on simb\'olica) o informaci\'on disponible en tiempo de ejecuci\'on (como el estado del heap) podr\'ian ser explotados para realizar un ajuste mucho m\'as fino sobre los mutantes generados por \emph{PRVO}. Consideremos el siguiente c\'odigo:
+\begin{lstlisting}[language=Java, mathescape=true, numbers=left, ,xleftmargin=5em]
+  ...
+  if (current.next == null) {
+    current.next = new Node(value);
+  } else {
+    ...
+  }
+  ...
+\end{lstlisting}
+En la l\'inea $3$, mutar \texttt{current.next} a \texttt{current.next.next} resulta en un mutante trivial de detectar (solo es necesario un test que ejecute la sentencia), con la informaci\'on provista por un an\'alisis de condiciones de caminos, el conocimiento de que en la l\'inea $3$ \texttt{current.next} es \texttt{null} podr\'ia ser utilizado para temporalmente restringir el uso del campo \texttt{next} para extender a la expresi\'on \texttt{current.next}.
+En el contexto de reparaci\'on, el uso de contratos podr\'ia ser explotado de la misma forma para guiar que mutantes generar mediante \emph{PRVO}.
+
 %Junto a Frias, Luciano, Naza, etc, hemos trabajado en la herramienta llamada \emph{Striker}, presentada en \ref{sec:repair.striker}, la cual utiliza \emph{prvo} como uno de los operadores de mutaci\'on para la generaci\'on de candidatos a reparar un programa. Hemos observado numerosos casos en donde el uso de \emph{prvo} permite la reparaci\'on de fallas, que de otra forma, no podr\'ian ser encontradas. [AGREGAR CASOS EN QUE PRVO REPARA]
