@@ -24,7 +24,7 @@ Tanto en reparaci\'on como en mutation testing, la flexibilidad de \emph{PRVO} g
   }
   ...
 \end{lstlisting}
-En la l\'inea $3$, mutar \texttt{current.next} a \texttt{current.next.next} resulta en un mutante trivial de detectar (solo es necesario un test que ejecute la sentencia), con la informaci\'on provista por un an\'alisis de condiciones de caminos, el conocimiento de que en la l\'inea $3$ \texttt{current.next} es \texttt{null} podr\'ia ser utilizado para temporalmente restringir el uso del campo \texttt{next} para extender a la expresi\'on \texttt{current.next}.
-En el contexto de reparaci\'on, el uso de contratos podr\'ia ser explotado de la misma forma para guiar que mutantes generar mediante \emph{PRVO}.
+En la l\'inea $3$, mutar \texttt{current.next} a \texttt{current.next.next} resulta en un mutante trivial de detectar (solo es necesario un test que ejecute la sentencia), con la informaci\'on provista por un an\'alisis de condiciones de caminos, el conocimiento de que en la l\'inea $3$ \texttt{current.next} es \texttt{null} podr\'ia ser utilizado para localmente restringir el uso del campo \texttt{next} para extender a la expresi\'on \texttt{current.next}.
+En el contexto de reparaci\'on, el uso de contratos podr\'ia ser explotado de la misma forma para guiar qu\'e mutantes generar mediante \emph{PRVO}.
 
 %Junto a Frias, Luciano, Naza, etc, hemos trabajado en la herramienta llamada \emph{Striker}, presentada en \ref{sec:repair.striker}, la cual utiliza \emph{prvo} como uno de los operadores de mutaci\'on para la generaci\'on de candidatos a reparar un programa. Hemos observado numerosos casos en donde el uso de \emph{prvo} permite la reparaci\'on de fallas, que de otra forma, no podr\'ian ser encontradas. [AGREGAR CASOS EN QUE PRVO REPARA]
