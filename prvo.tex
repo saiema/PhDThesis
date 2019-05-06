@@ -4,7 +4,7 @@
 
 \section{Historia de PRVO}
 \label{sec:prvo.history}
-El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta tesis surge a partir de un operador sustancialmente m\'as simple (que de hecho, no muta navegaciones), proveniente de una herramienta espec\'ifica de testing de mutaci\'on, \emph{$\mu$Java}. En \emph{$\mu$Java} existe un operador de mutaci\'on denominado \emph{PRV}, y cuyas mutaciones se basan en \textbf{P}olimorfismo, y sustituyen asignaciones de \textbf{R}eferencias a \textbf{V}ariables, por otras de un tipo compatible \cite{muJavaCOPS, bibliography.mutation.operators.MaKO02}. Este operador modifica una variable que est\'a siendo asignada a una referencia (un objeto), por otra que sea compatible con la referencia. En la Figura~\ref{figures.examples.PRV} vemos un ejemplo de una mutaci\'on producida por este operador. Una clara limitaci\'on de este operador es que s\'olo se aplica a asignaciones, y muta la parte derecha de la asignaci\'on. Su aplicaci\'on a otro tipo de expresiones o sentencias ser\'ia deseable. La segunda limitaci\'on est\'a precisamente en s\'olo considerar variables, y est\'a relacionada al objetivo que tiene el operador: en lenguajes orientados a objetos, el polimorfismo permite definir m\'etodos o expresiones utilizando variables que pueden ser instanciadas por un conjunto de tipos distintos. La Figura~\ref{figures.examples.polimorfism} muestra ejemplos de polimorfismo por sobrecarga y herencia. En el primer caso, para cubrir los tres m\'etodos definidos es necesario que la expresi\'on con la que se llama al m\'etodo \emph{foo} sea de tres tipos diferentes; esto s\'olo es posible con \emph{PRV} cuando se utiliza la verificaci\'on del tipo de una instancia para cambiar el comportamiento del c\'odigo. En la Figura~\ref{figures.examples.polimorfismPRV} se muestra un ejemplo del tipo de c\'odigo para el que est\'a dise\~nado este operador. Para los casos de sobrecarga mostrados en la Figura~\ref{figures.examples.polimorfism}, si antes de la llamada al m\'etodo se tiene una asignaci\'on \textbf{Object o = v;}, cambiar la variable por otra, como lo har\'ia este operador, no causar\'ia que se llame a otro m\'etodo m\'as que a \emph{foo}, que toma un \emph{Object}. Sin embargo modificando la variable con la que se est\'a llamando al m\'etodo si causar\'ia, dependiendo del tipo de la variable, la llamada a otra definici\'on del m\'etodo. 
+El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta tesis surge a partir de un operador sustancialmente m\'as simple (que de hecho, no muta navegaciones), proveniente de una herramienta espec\'ifica de testing de mutaci\'on, \emph{$\mu$Java}. En \emph{$\mu$Java} existe un operador de mutaci\'on denominado \emph{PRV}, y cuyas mutaciones se basan en \textbf{P}olimorfismo, y sustituyen asignaciones de \textbf{R}eferencias a \textbf{V}ariables, por otras de un tipo compatible \cite{muJavaCOPS, bibliography.mutation.operators.MaKO02}. Este operador modifica una variable, campo, o llamada a método que est\'a siendo asignada a una referencia (un objeto), por otra (variable, campo, o llamada a método) que sea compatible con la referencia. En la Figura~\ref{figures.examples.PRV} vemos un ejemplo de una mutaci\'on producida por este operador. Una clara limitaci\'on de este operador es que s\'olo se aplica a asignaciones, y muta la parte derecha de la asignaci\'on. Su aplicaci\'on a otro tipo de expresiones o sentencias ser\'ia deseable. La segunda limitaci\'on est\'a precisamente en s\'olo considerar variables, campos y llamadas a métodos, sin considerar expresiones de navegaci\'on las que son muy comunes en programaci\'on orientada a objetos, esta restricci\'on est\'a relacionada al objetivo que tiene el operador: en lenguajes orientados a objetos, el polimorfismo permite definir m\'etodos o expresiones utilizando variables que pueden ser instanciadas por un conjunto de tipos distintos. La Figura~\ref{figures.examples.polimorfism} muestra ejemplos de polimorfismo por sobrecarga y herencia. En el primer caso, para cubrir los tres m\'etodos definidos es necesario que la expresi\'on con la que se llama al m\'etodo \emph{foo} sea de tres tipos diferentes; esto s\'olo es posible con \emph{PRV} cuando se utiliza la verificaci\'on del tipo de una instancia para cambiar el comportamiento del c\'odigo. En la Figura~\ref{figures.examples.polimorfismPRV} se muestra un ejemplo del tipo de c\'odigo para el que est\'a dise\~nado este operador. Para los casos de sobrecarga mostrados en la Figura~\ref{figures.examples.polimorfism}, si antes de la llamada al m\'etodo se tiene una asignaci\'on \textbf{Object o = v;}, cambiar la variable por otra, como lo har\'ia este operador, no causar\'ia que se llame a otro m\'etodo m\'as que a \emph{foo}, que toma un \emph{Object}. Sin embargo modificando la variable con la que se est\'a llamando al m\'etodo si causar\'ia, dependiendo del tipo de la variable, la llamada a otra definici\'on del m\'etodo. 
 
 \begin{figure}
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
@@ -113,7 +113,7 @@ En una expresi\'on de navegaci\'on, el tipo de la misma est\'a dado por el de la
 		%   FROM  BEND/LOOP  POSITION OF LABEL   LABEL   TO
 		(List) edge[bend left=20]     node[above] {header} (Node)
 		(Node) edge[loop above]     node[above] {next} (Node)
-		(Node) edge     node[above] {value} (Object)
+		(Node) edge     node[above, sloped] {value} (Object)
 		(Object) edge[bend right=20]     node[below] {toString()} (String)
 		;
 		\end{tikzpicture}
@@ -201,17 +201,17 @@ Hemos definido un operador de \emph{prvo} como una serie de restricciones a la d
 
 \begin{figure}
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
-	//Restricci$\'o$n de miembros
-	String rep = current.next.elem.toString();
-	$\Delta$String rep = current.next.next.elem.toString();
-	$\Delta$String rep = current.toString();
-	$\Delta$String rep = toString();
+//Restricci$\'o$n de miembros
+String rep = current.next.elem.toString();
+$\Delta$String rep = current.next.next.elem.toString();
+$\Delta$String rep = current.toString();
+$\Delta$String rep = toString();
 	
-	//Sin restricci$\'o$n
-	String rep = current.next.elem.toString();
-	$\Delta$String rep = current.next.elem.trim().toString();
-	$\Delta$String rep = getClass().toString();
-	$\Delta$String rep = (new Integer(0)).toString();
+//Sin restricci$\'o$n
+String rep = current.next.elem.toString();
+$\Delta$String rep = current.next.elem.trim().toString();
+$\Delta$String rep = getClass().toString();
+$\Delta$String rep = (new Integer(0)).toString();
 	\end{lstlisting}
 	\caption{Ejemplo de restricci\'on de miembros al generar mutantes con \emph{PRVO}}
 	\label{figures.examples.memberRestriction}
@@ -226,7 +226,7 @@ En \cite{bibliography.mutation.evaluation.valid-substitute} se concluye que cier
 
 \subsubsection{Eliminaci\'on de sentencias}
 
-Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un ciclo infinito con una sentencia de retorno bajo cierta condici\'on (Figura~\ref{figures.examples.infCicle}); una sentencia \emph{switch} en donde para alg\'un caso no se escribi\'o una sentencia de retorno o frenado (\emph{break}); inicializaciones faltantes como en la Figura~\ref{figures.examples.localVariableHidingField} donde una variable local utiliza el mismo nombre que un campo de clase, la falta de la sentencia que define esta variable resulta en un programa que compila pero que resulta incorrecto. \'Estos, entre otros casos, son todos ejemplos de fallas reales que requieren un operador que elimine sentencias para poder generar el mismo tipo de falla.
+Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un ciclo infinito con una sentencia de retorno bajo cierta condici\'on (Figura~\ref{figures.examples.infCicle}) y el programador olvid\'o agregarla; una sentencia \emph{switch} en donde para alg\'un caso no se escribi\'o una sentencia de retorno o frenado (\emph{break}); inicializaciones faltantes como en la Figura~\ref{figures.examples.localVariableHidingField} donde una variable local utiliza el mismo nombre que un campo de clase, la falta de la sentencia que define esta variable resulta en un programa que compila pero que resulta incorrecto. \'Estos, entre otros casos, son todos ejemplos de fallas reales que requieren un operador que elimine sentencias para poder generar el mismo tipo de falla.
 
 \begin{figure}
 	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
@@ -288,7 +288,7 @@ Sin embargo, \emph{Fluent interfaces}, un dise\~no muy usado en conjunto con el 
 	\label{figures.examples.fluent.example1.imperative}
 \end{figure}
 
-Esto muestra que por un lado es interesante poder mutar expresiones de navegaci\'on de este tipo. Adem\'as, uno de los principales problemas con operadores que eliminan o insertan sentencias, es que suelen generar numerosos mutantes triviales que son detectados por no compilar o por que se elimin\'o directamente una gran parte de c\'odigo por una sentencia de control faltante. En \emph{interfaces fluidas}, el uso de jerarqu\'ia de tipos para garantizar la correctitud de una expresi\'on garantiza que nunca va a ser posible eliminar una sentencia cuando \'esta es necesaria.
+Esto muestra que por un lado es interesante poder mutar expresiones de navegaci\'on de este tipo. Adem\'as, uno de los principales problemas con operadores que eliminan o insertan sentencias, es que suelen generar numerosos mutantes triviales que son detectados por no compilar o por que se elimin\'o directamente una gran parte de c\'odigo por una sentencia de control faltante. En \emph{interfaces fluidas}, el uso de jerarqu\'ia de tipos para garantizar la correctitud de una expresi\'on garantiza que nunca va a ser posible eliminar una sentencia cuando \'esta es necesaria para la correcta compilaci\'on del programa.
 
 \subsubsection{Intercambio de argumentos}
 
@@ -324,7 +324,7 @@ userQuery = getFromUser();
 results = database.execute(cleanQuery(query));
 ...
 \end{lstlisting}
-Un error cl\'asico ser\'ia que el desarrollador olvide de usar \texttt{cleanQuery(query)} y directamente use \texttt{query}. Ambos casos responden a configuraciones particulares de \emph{prvo}. El primer caso, restringir las expresiones objetivo a llamadas a m\'etodos, involucradas en una expresi\'on de navegaci\'on con tama\~no mayor o igual a 1. El segundo caso responde a restringir las expresiones objetivo a llamadas a m\'etodos en casos donde \'esta ocurra en una condici\'on, argumento u asignaci\'on, siempre que el tipo de retorno del m\'etodo sea igual o compatible con el del argumento usado en la llamada. Para los ejemplos anterior se obtendr\'ian los mutantes \lstinline|list.foreach().if(c2).then(p1).else(p2)| y:
+Un error cl\'asico ser\'ia que el desarrollador olvide de usar \texttt{cleanQuery(query)} y directamente use \texttt{query}. Ambos casos corresponden a configuraciones particulares de \emph{prvo}. El primer caso, restringir las expresiones objetivo a llamadas a m\'etodos, involucradas en una expresi\'on de navegaci\'on con tama\~no mayor o igual a 1. El segundo caso corresponde a restringir las expresiones objetivo a llamadas a m\'etodos en casos donde \'esta ocurra en una condici\'on, argumento u asignaci\'on, siempre que el tipo de retorno del m\'etodo sea igual o compatible con el del argumento usado en la llamada. Para los ejemplos anterior se obtendr\'ian los mutantes \lstinline{list.foreach().if(c2).then(p1).else(p2)} y:
 \begin{lstlisting}
 ...
 userQuery = getFromUser();
@@ -366,13 +366,14 @@ Existen fallas causadas por c\'odigo que no deber\'ia estar, es decir, cuando la
 	if (c) breakProgram();
 	...
 \end{lstlisting}
-En donde la reparaci\'on no es una condici\'on mal escrita sino directamente la eliminaci\'on de ciertas l\'ineas de c\'odigo. Si se quisiera representar este tipo de fallas ser\'ia necesario generar c\'odigo e insertarlo, la complejidad de generar c\'odigo v\'alido y la cantidad que se puede generar, sumado a la cantidad de lugares en donde se puede insertar, hacen que este tipo de fallas no puedan ser representadas mediante mutaci\'on. Sin embargo, este caso, es muy similar al anterior cuando se toman en cuenta como programas, a expresiones que utilizan \emph{interfaces fluidas}.
+En donde la reparaci\'on no es una condici\'on mal escrita sino directamente la eliminaci\'on de ciertas l\'ineas de c\'odigo. Si se quisiera representar este tipo de fallas ser\'ia necesario generar c\'odigo e insertarlo, la complejidad de generar c\'odigo v\'alido y la cantidad que se puede generar, sumado a la cantidad de lugares en donde se puede insertar, hacen que este tipo de fallas no puedan ser representadas mediante mutaci\'on. Sin embargo, este caso es muy similar al anterior cuando se toman en cuenta como programas a expresiones que utilizan \emph{interfaces fluidas}.
 
 \subsubsection{Llamada a m\'etodos similares}
 
-Si bien el tipo de fallas en donde se utiliza un m\'etodo similar de una librer\'ia fue mencionado como acoplable a mutantes. Eliminar la restricci\'on de que los m\'etodos pertenezcan a la misma librer\'ia, causa que el espacio posible de mutantes se convierta en completamente inmanejable. Lo \'unico que vale la pena destacar de este tipo de fallas en relaci\'on a \emph{prvo}, es que es posible, mediante configuraciones, considerar un conjunto acotado de m\'etodos que no necesariamente pertenezcan a la misma librer\'ia.
+Si bien el tipo de fallas en donde se utiliza un m\'etodo similar de una librer\'ia fue mencionado como acoplable a mutantes. Eliminar la restricci\'on de que los m\'etodos pertenezcan a la misma librer\'ia, causa que el espacio posible de mutantes se vuelva inmanejable. Lo \'unico que vale la pena destacar de este tipo de fallas en relaci\'on a \emph{prvo}, es que es posible, mediante configuraciones, considerar un conjunto acotado de m\'etodos que no necesariamente pertenezcan a la misma librer\'ia.
 
 \subsubsection{Violaci\'on de especificaciones}
+\label{sec:prvo.prvoTargetedFaults.specViolations}
 
 En mutaci\'on, el conocimiento que se tiene del c\'odigo a mutar es, a lo sumo, contexto: que elementos son alcanzables en un determinado punto del c\'odigo; tipos: cual es el tipo de una variable, el retorno de un m\'etodo, los par\'ametros del mismo, etc. Pero no existe un conocimiento de que hace un determinado c\'odigo, que precondiciones requiere y que postcondiciones asegura. Representar fallas causadas por el mal uso con respecto a invariantes, precondiciones y postcondiciones, es entonces imposible de conseguir. Sin embargo, un caso particular que creemos que \emph{prvo} puede ser de gran utilidad, es en dise\~nos basados en encadenar m\'etodos (interfaces fluidas, builder pattern, entre otros). En estas situaciones el programador debe utilizar jerarqu\'ia de clases para definir una gram\'atica, donde todo m\'etodo involucrado tiene una precondici\'on y postcondici\'on basada en tipos. Con \emph{prvo} es posible generar mutantes que permitan analizar si \'estas son incumplidas.
 
