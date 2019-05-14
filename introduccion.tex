@@ -39,7 +39,7 @@ Adem\'as de la aplicaci\'on tradicional de operadores de mutaci\'on para mutatio
 
 
 \begin{figure}[H]
-	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java]
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
 public class Queue {
     
   private Node front;
@@ -66,7 +66,7 @@ En la actualidad, los lenguajes orientados a objetos, o que contienen caracter\'
 Consideremos una implementaci\'on de una cola sobre una lista simplemente encadenada ac\'iclica, con una referencia al primer nodo, \emph{front}, y otra al \'ultimo, \emph{last}, y un m\'etodo \emph{dequeue()}, tal como se muestra en la Figura~\ref{figures.motivation.queue-class}. Desde el punto de vista de los criterios cl\'asicos de caja blanca, y dado que la implementaci\'on de este m\'etodo solo contiene una bifurcaci\'on en su flujo de control, con solo dos tests se logra una cobertura estructural (ramas, por ejemplo) del 100\%, espec\'ificamente los tests de la Figura~\ref{figures.motivation.queue-class-tests}. En lo que respecta a mutation testing, cabe resaltar que las herramientas modernas de mutation testing, por ejemplo, \emph{PITest}, \emph{Major}, o \emph{$\mu$Java}, generan mutaciones para el c\'odigo en \emph{dequeue()}, pero sin embargo la sentencia \texttt{this.front = this.front.next} la cual representa la principal responsabilidad del m\'etodo, es decir, efectivamente desencolar un elemento, no es mutada por ning\'un operador tradicional, en especial por aquellos en el conjunto de operadores \emph{suficientes}. Luego, resulta que cualquier test suite que logre una ``cobertura'' de mutaci\'on, no est\'a obligado a evaluar la principal responsabilidad del m\'etodo.
 
 \begin{figure}[H]
-	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java]
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
     @Test
     public void dequeueTest() {
       Queue q = new Queue();
@@ -86,11 +86,42 @@ Consideremos una implementaci\'on de una cola sobre una lista simplemente encade
 	\label{figures.motivation.queue-class-tests}
 \end{figure}
 
-Evidentemente, el problema en este caso se debe a que, en el contexto de mutation testing, ning\'un operador de mutaci\'on es capaz de mutar las expresiones de navegaci\'on en el cuerpo de \emph{dequeue()}. Por lo tanto, este criterio falla en imponer requisitos (metas de cobertura) a la test suite, relacionados a este tipo de expresiones. Si las expresiones de este tipo fueran raramente encontradas en programas actuales, podr\'iamos simplemente considerar a este problema poco importante, e ignorarlo. Pero las expresiones de navegaci\'on, del estilo de las que constituyen el cuerpo de \emph{dequeue()}, son muy comunes en programas que utilizan lenguajes orientados a objetos. Es m\'as, algunos patrones de dise\~no, populares en lenguajes orientados a objetos, como \emph{Builder}, o \emph{Fluent Interfaces}, hacen uso sustancial de expresiones de navegaci\'on.
+\begin{figure}[H]
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
+  ...
+  public void dequeue() {
+   if (front == null) throw new IllegalStateException();
+   this.front = this.last.next;
+   size--;
+  }
+  ...
+	\end{lstlisting}
+	\caption{Un mutante en donde se cambi\'o \lstinline{this.front.next} a \lstinline{this.last.next} en la sentencia que avanza el puntero \emph{front} al desencolar un elemento.}
+	\label{figures.motivation.dequeue-prvo-mutant}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
+  @Test
+  public void dequeueTest() {
+    Queue q = new Queue();
+    q.push(1);
+    q.push(2);
+    int size = q.size();
+    q.dequeue();
+    q.dequeue();
+    assertEquals(size - 2, q.size());
+  }
+	\end{lstlisting}
+	\caption{Test que detecta el mutante que afecta la sentencia de avance del puntero \emph{front} en el m\'etodo \emph{dequeue()} \ref{figures.motivation.dequeue-prvo-mutant}}
+	\label{figures.motivation.queue-class-tests-prvo}
+\end{figure}
+
+Evidentemente, el problema en este caso se debe a que, en el contexto de mutation testing, ning\'un operador de mutaci\'on es capaz de mutar las expresiones de navegaci\'on en el cuerpo de \emph{dequeue()}. Por lo tanto, este criterio falla en imponer requisitos (metas de cobertura) a la test suite, relacionados a este tipo de expresiones. A modo de ejemplo consideremos el mutante en la Figura~\ref{figures.motivation.dequeue-prvo-mutant} que representa el tipo de mutaciones que podr\'ian aplicarse a expresiones de navegaci\'on, en este caso particular se reemplaza \lstinline{front} por \lstinline{last} en la parte derecha de la asignaci\'on que avanza el puntero \lstinline{front} al desencolar un elemento. Este mutante no es detectado por los tests en la Figura~\ref{figures.motivation.queue-class-tests}, pero si es detectado al agregar el test en la Figura~\ref{figures.motivation.queue-class-tests-prvo} que falla mediante una \lstinline{NullPointerException}. Si las expresiones de este tipo fueran raramente encontradas en programas actuales, podr\'iamos simplemente considerar a este problema poco importante, e ignorarlo. Pero las expresiones de navegaci\'on, del estilo de las que constituyen el cuerpo de \emph{dequeue()}, son muy comunes en programas que utilizan lenguajes orientados a objetos. Es m\'as, algunos patrones de dise\~no, populares en lenguajes orientados a objetos, como \emph{Builder}, o \emph{Fluent Interfaces}, hacen uso sustancial de expresiones de navegaci\'on.
 
 Consideremos por ejemplo el patr\'on \emph{Builder}. Este patr\'on es utilizado para construir instancias de objetos que suelen contener una gran cantidad de atributos opcionales, sin la necesidad de definir en la clase correspondiente un alto n\'umero de constructores distintos. M\'as a\'un, este patr\'on permite tambi\'en que la construcci\'on de un objeto complejo sea legible, en el c\'odigo fuente. Un ejemplo de una biblioteca que utiliza este patr\'on es \emph{Apache Commons CLI}, una biblioteca para manejar los argumentos de entrada de una aplicaci\'on con interfaz de l\'inea de comandos. Un ejemplo del uso de \'esta se muestra a continuaci\'on:
 \begin{center}
-	\begin{lstlisting}[mathescape=true, language=Java,showstringspaces=false]
+	\begin{lstlisting}[mathescape=true, language=Java,showstringspaces=false,basicstyle={}]
     Option inputOption = Option.builder("V")
       .longOpt("Value")
       .desc("The input value")
@@ -108,7 +139,7 @@ Este ejemplo muestra la creaci\'on de un argumento para un programa que utiliza 
 
 Otro patr\'on que realiza una utilizaci\'on extensiva de expresiones de navegaci\'on es \emph{Fluent Interfaces}, o interfaces fluidas. El mismo permite organizar programas alrededor de la utilizaci\'on de una jerarqu\'ia de clases (asociada a los lenguajes orientados a objetos), para definir una \emph{gram\'atica}, que permita caracterizar un lenguaje de dominio espec\'ifico. Veamos aqu\'i un ejemplo, con una biblioteca de SQL en Java:
 \begin{center}
-	\begin{lstlisting}[mathescape=true, language=Java]
+	\begin{lstlisting}[mathescape=true, language=Java,basicstyle={}]
 	dbconnector.from("Songs").select().where()
 	.attribute("year").ge().value(1980)
 	.and()
@@ -123,7 +154,7 @@ Un punto importante a destacar en relaci\'on al ejemplo anterior es que si bien 
 El conjunto de \emph{operadores suficientes} de mutaci\'on ha permanecido pr\'acticamente inalterado desde hace a\~nos, a\'un cuando el primer trabajo que ofrece un conjunto de operadores formalmente definido lo hace para el lenguaje Fortran \cite{bibliography.mutation.definitions.fortranOffut87, bibliography.mutation.definitions.fortranKing91}. Mutation testing ha sido aplicado y evaluado en varios lenguajes, incluyendo aquellos considerados orientados a objetos como Ada y Java, por dar un par de ejemplos. Sin embargo los operadores de mutaci\'on espec\'ificos para lenguajes orientados a objetos s\'olo afectan, en general, jerarqu\'ias de clases, visibilidad, y sobre-escritura. 
 
 Un problema similar, en relaci\'on a las expresiones de navegaci\'on, se observa en el contexto de reparaci\'on de programas. Consideremos nuevamente la implementaci\'on de colas sobre listas enlazadas ac\'iclicas, y el c\'odigo del m\'etodo \emph{enqueue()} que se muestra a continuaci\'on:
-\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java]
+\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
 public void enqueue(int elem) {
         QueueNode newNode = new QueueNode(elem);
         if (front == null) {

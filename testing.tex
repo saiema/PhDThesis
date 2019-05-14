@@ -15,7 +15,7 @@ Un \emph{test} consta b\'asicamente de los siguientes pasos:
 \end{enumerate}
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em,basicstyle={}]
  la entrada a evaluar es "(1 + 3)^2"
  evaluar Calculator#evaluate con la entrada anterior
  el resultado obtenido debe ser 16
@@ -36,7 +36,7 @@ Si bien la definici\'on de test dada anteriormente no menciona ejecutabilidad, s
 Existen numerosas bibliotecas disponibles para automatizar el proceso de ejecuci\'on de tests. Una de estas, que goza de enorme popularidad, es la biblioteca \emph{JUnit}, para tests de unidad en Java. En la Figura~\ref{figures.examples.test.junit} se muestra el ejemplo anterior implementado en \emph{Java} utilizando la biblioteca \emph{JUnit}.
 
 \begin{figure}[ht!]
-	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, mathescape=true,numbers=left,framexleftmargin=1.5em,language=Java,basicstyle={}]
   String expression = "(1 + 3)^2";
   Integer result = calculator.evaluate(expression);
   assertEquals(new Integer(16),result);
@@ -57,7 +57,7 @@ Actualmente existen numerosas aplicaciones cuyo objetivo principal es la generac
 \end{itemize}
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
     Set intInputs = new Set();
     for (int i = 0; i<10; i++) {
       int rndValue = 10 + random.nextInt(11);
@@ -69,7 +69,7 @@ Actualmente existen numerosas aplicaciones cuyo objetivo principal es la generac
 \end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
   Set structuredInputs = new Set();
   for (int i = 0; i<10; i++) {
     int rndSize = random.nextInt(10);
@@ -113,7 +113,7 @@ La existencia de fallas en el c\'odigo no es, en muchos casos, f\'acil de detect
 \end{itemize}
 
 \begin{figure}
-	\begin{lstlisting}[frame=single,numbers=left, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single,numbers=left, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
     public int max(int a, int b) {
       int result = a;
       if (a > b) {

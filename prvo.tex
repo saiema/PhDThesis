@@ -7,7 +7,7 @@
 El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta tesis surge a partir de un operador sustancialmente m\'as simple (que de hecho, no muta navegaciones), proveniente de una herramienta espec\'ifica de testing de mutaci\'on, \emph{$\mu$Java}. En \emph{$\mu$Java} existe un operador de mutaci\'on denominado \emph{PRV}, y cuyas mutaciones se basan en \textbf{P}olimorfismo, y sustituyen asignaciones de \textbf{R}eferencias a \textbf{V}ariables, por otras de un tipo compatible \cite{muJavaCOPS, bibliography.mutation.operators.MaKO02}. Este operador modifica una variable, campo, o llamada a método que est\'a siendo asignada a una referencia (un objeto), por otra (variable, campo, o llamada a método) que sea compatible con la referencia. En la Figura~\ref{figures.examples.PRV} vemos un ejemplo de una mutaci\'on producida por este operador. Una clara limitaci\'on de este operador es que s\'olo se aplica a asignaciones, y muta la parte derecha de la asignaci\'on. Su aplicaci\'on a otro tipo de expresiones o sentencias ser\'ia deseable. La segunda limitaci\'on est\'a precisamente en s\'olo considerar variables, campos y llamadas a métodos, sin considerar expresiones de navegaci\'on las que son muy comunes en programaci\'on orientada a objetos, esta restricci\'on est\'a relacionada al objetivo que tiene el operador: en lenguajes orientados a objetos, el polimorfismo permite definir m\'etodos o expresiones utilizando variables que pueden ser instanciadas por un conjunto de tipos distintos. La Figura~\ref{figures.examples.polimorfism} muestra ejemplos de polimorfismo por sobrecarga y herencia. En el primer caso, para cubrir los tres m\'etodos definidos es necesario que la expresi\'on con la que se llama al m\'etodo \emph{foo} sea de tres tipos diferentes; esto s\'olo es posible con \emph{PRV} cuando se utiliza la verificaci\'on del tipo de una instancia para cambiar el comportamiento del c\'odigo. En la Figura~\ref{figures.examples.polimorfismPRV} se muestra un ejemplo del tipo de c\'odigo para el que est\'a dise\~nado este operador. Para los casos de sobrecarga mostrados en la Figura~\ref{figures.examples.polimorfism}, si antes de la llamada al m\'etodo se tiene una asignaci\'on \textbf{Object o = v;}, cambiar la variable por otra, como lo har\'ia este operador, no causar\'ia que se llame a otro m\'etodo m\'as que a \emph{foo}, que toma un \emph{Object}. Sin embargo modificando la variable con la que se est\'a llamando al m\'etodo si causar\'ia, dependiendo del tipo de la variable, la llamada a otra definici\'on del m\'etodo. 
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,basicstyle={}]
   List l = null;
   LinkedList ll = new LinkedList();
   ArrayList al = new ArrayList();
@@ -19,7 +19,7 @@ El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta
 \end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,basicstyle={}]
   //(i) : polimorfismo por sobrecarga
   public void foo(Integer i) {...}
   public void foo(String s) {...}
@@ -42,7 +42,7 @@ El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta
 \end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,tabsize=3]
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,tabsize=3,basicstyle={}]
 	public Number abs(Number a) {
 		if (a instanceof Integer) {
 			Integer res = (Integer) a;
@@ -80,7 +80,7 @@ Para poder definir el operador \emph{PRVO}, primero necesitamos definir qu\'e co
 Esta definici\'on garantiza el correcto tipado de una expresi\'on, es decir, que el encadenamiento de expresiones sea v\'alido. En lenguajes orientados a objetos, el acceso a miembros de una clase es de uso com\'un, y se realiza mediante un operador de navegaci\'on que puede tomar distintas formas sint\'acticas, con la notaci\'on \emph{punto} siendo la m\'as com\'un. Esta notaci\'on permite encadenar expresiones, el tama\~no de una expresi\'on de navegaci\'on se puede definir de distintas formas; nosotros la definiremos por el n\'umero de operadores de navegaci\'on involucrados. Una expresi\'on de navegaci\'on de tama\~no 1 entonces tendr\'ia la forma \emph{a.b}. Ejemplos de expresiones de distintos tama\~nos con respecto al operador de navegaci\'on se pueden ver en la Figura~\ref{figures.examples.chainedExpr}, vale aclarar que a fines pr\'acticos, el operador \emph{PRVO} considera como expresiones de navegaci\'on a aquellas con al menos un operador de navegaci\'on, considerando a literales, m\'etodos, campos y variables como una expresi\'on potencialmente extensible, es decir, que permite ser encadenada o reemplazada por una expresi\'on de navegaci\'on. Sin embargo vamos a hacer referencia a expresiones de navegaci\'on como a toda expresi\'on que pueda definirse mediante las reglas de inferencia anteriores, aclarando excepciones cuando sea necesario.
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,basicstyle={}]
 current //expresi$\'o$n de tama$\~n$o 0
 null 	//expresi$\'o$n de tama$\~n$o 0
 current.next //expresi$\'o$n de navegaci$\'o$n de tama$\~n$o 1
@@ -149,29 +149,6 @@ Inicialmente parece innecesario tener una definici\'on de un operador cuya aplic
 	\label{figures.definitions.prvo.simple_def}
 \end{figure}
 
-%\begin{figure}
-%	\begin{displaymath}
-%	\begin{array}{lll}
-%	PRVO(x)		& :=	& expression \\
-%	& := & PRVO(x).expression \\
-%	& := & expression.PRVO(x) \\
-%	\\
-%	PRVO(x.y)	& :=	& expression^{*} \\
-%	& :=	& PRVO(x).expression \\
-%	& :=	& expression.PRVO(y) \\
-%	& :=	& PRVO(x).expression.PRVO(y) \\
-%	& :=	& expression.PRVO(x).PRVO(y) \\
-%	& :=	& PRVO(x).PRVO(y).expression \\
-%	\\
-%	
-%	\multicolumn{3}{l}{\tiny{^{*} \: : \: puede \: incluir \: o \: or \: y}} \\
-%	\multicolumn{3}{l}{\tiny{expression \: : \: llamada \: a \: m\'etodo \: , \: acceso \: a \: atributo \: , variable \: o \: literal}}
-%	\end{array}
-%	\end{displaymath}
-%	\caption{Definici\'on abstracta de \emph{prvo}}
-%	\label{figures.definitions.prvo.simple_def}
-%\end{figure}
-
 \subsubsection{PRVO como un meta-operador}
 
 %La definci\'on general de \emph{prvo} es muy similar a la de un generador de sentencias que pertenecen a una gram\'atica. Donde los t\'ipos definen a la misma. Si hubiera un programa definido mediante expresiones encadenadas y tipos, en donde encontrar\'iamos expresiones como \lstinline|if(a.gt().b).then(result.assign(a)).else(result.assign(b)).return(result)|, \emph{prvo} podr\'ia generar cualquier programa correcto desde un punto de vista de tipos. Principalmente por que las expresiones que puede utilizar no est\'an restringidas en absoluto. Esta caracter\'istica hace que \emph{prvo} sea completamente inservible para mutation testing. Lo que obliga a establecer restricciones, esto sin embargo, es una caracter\'istica positiva de \emph{prvo}, ya que cualquier operador en la familia de operadores \emph{prvo}, es en realidad una configuraci\'on particular de la misma. Lo que nos permite definir operadores a medida y aumentar la eficiencia de los mismos para cada caso.
@@ -181,7 +158,7 @@ Teniendo en cuenta los criterios para el dise\~no de operadores de mutaci\'on, d
 Hemos definido un operador de \emph{prvo} como una serie de restricciones a la definici\'on general. Esto nos permite centrarnos en cierto tipo de fallas particulares sin perder la habilidad de eventualmente generar otra configuraci\'on que se centre en otras.
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,basicstyle={}]
   //Control estricto
   Object elem = current.next.elem;
   $\Delta$Object elem = current.next.next.elem;
@@ -200,7 +177,7 @@ Hemos definido un operador de \emph{prvo} como una serie de restricciones a la d
 \end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true]
+	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,basicstyle={}]
 //Restricci$\'o$n de miembros
 String rep = current.next.elem.toString();
 $\Delta$String rep = current.next.next.elem.toString();
@@ -229,7 +206,7 @@ En \cite{bibliography.mutation.evaluation.valid-substitute} se concluye que cier
 Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un ciclo infinito con una sentencia de retorno bajo cierta condici\'on (Figura~\ref{figures.examples.infCicle}) y el programador olvid\'o agregarla; una sentencia \emph{switch} en donde para alg\'un caso no se escribi\'o una sentencia de retorno o frenado (\emph{break}); inicializaciones faltantes como en la Figura~\ref{figures.examples.localVariableHidingField} donde una variable local utiliza el mismo nombre que un campo de clase, la falta de la sentencia que define esta variable resulta en un programa que compila pero que resulta incorrecto. \'Estos, entre otros casos, son todos ejemplos de fallas reales que requieren un operador que elimine sentencias para poder generar el mismo tipo de falla.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
   while(true) {
     String input = getUserInput();
     if (isExitCommand(input)) {
@@ -243,7 +220,7 @@ Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un cic
 \end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
   private Node cursor ...
 	
   public boolean find(int elem) {
@@ -262,7 +239,7 @@ Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un cic
 En principio, ya existen operadores que realizan este tipo de mutaciones. No solo eso, sino que adem\'as no parece ser un tipo de fallas asociadas a mutaciones de expresiones de navegaci\'on.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,basicstyle={}]
   list.foreach().filter(c1).if(c2).then(p1).else(p2)
 	\end{lstlisting}
 	\caption{Versi\'on utilizando \emph{interfaces fluidas} del recorrido de una lista filtrando y ejecutando condicionalmente un procedimiento.}
@@ -272,7 +249,7 @@ En principio, ya existen operadores que realizan este tipo de mutaciones. No sol
 Sin embargo, \emph{Fluent interfaces}, un dise\~no muy usado en conjunto con el \emph{patr\'on Builder}, permite escribir algoritmos sem\'anticamente equivalentes a un programa imperativo, ciclos y sentencias condicionales inclu\'idas. Un c\'odigo como el mostrado en la Figura~\ref{figures.examples.fluent.example1.fluent} no es extra\~no en programaci\'on orientada a objetos, en la Figura~\ref{figures.examples.fluent.example1.imperative} se muestra la implementaci\'on m\'as com\'un de esta expresi\'on en lenguaje imperativo.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
   List<Elem> list = ...;
   for (Elem e : list) {
     if (c1(e)) {
@@ -295,7 +272,7 @@ Esto muestra que por un lado es interesante poder mutar expresiones de navegaci\
 Este tipo de fallas involucra utilizar argumentos con tipos correctos, pero en el orden incorrecto en la llamada a un m\'etodo. En la Figura~\ref{figures.examples.argumentSwap.example1} se ve un m\'etodo que toma como entrada dos listas y agrega la primera al final de la segunda. Los nombres de los argumentos son quiz\'as amb\'ig\"{u}os, y ser\'ia incluso esperable que sin una documentaci\'on apropiada, haya programadores que asuman que se hace un \emph{append} de \texttt{thiz} \emph{en} \texttt{that}, aunque otros podr\'ian entender de que el \emph{append} se hace con el orden de los argumentos resultando en \texttt{that} \emph{en} \texttt{thiz}. 
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
   public void append(List<E> thiz, List<E> that) {
     ...
     for (E e : thiz) {
@@ -318,14 +295,14 @@ Existen ejemplos de m\'etodos que si bien distintos, tienen una sem\'antica rela
 \subsubsection{Omitir la llamada a un m\'etodo}
 
 Retomemos el ejemplo de \emph{interfaces fluidas} de la Figura~\ref{figures.examples.fluent.example1.fluent}. Si en este c\'odigo nos olvid\'aramos de llamar \texttt{filter(c1)}, la expresi\'on seguir\'ia siendo correcta, solamente que aplicar\'iamos el tratamiento condicional a todos los elementos de la lista en lugar de solo a aquellos que filtrar\'ia \texttt{c1}. Un ejemplo m\'as sencillo, una aplicaci\'on que toma un valor dado por el usuario y realiza una consulta en una base de datos. Es un caso t\'ipico de uso de datos no confiables, lo normal es limpiar o validar los datos ingresados antes de hacer la consulta. Una posible implementaci\'on ser\'ia:
-\begin{lstlisting}
+\begin{lstlisting}[language=Java,basicstyle={}]
 ...
 userQuery = getFromUser();
 results = database.execute(cleanQuery(query));
 ...
 \end{lstlisting}
 Un error cl\'asico ser\'ia que el desarrollador olvide de usar \texttt{cleanQuery(query)} y directamente use \texttt{query}. Ambos casos corresponden a configuraciones particulares de \emph{prvo}. El primer caso, restringir las expresiones objetivo a llamadas a m\'etodos, involucradas en una expresi\'on de navegaci\'on con tama\~no mayor o igual a 1. El segundo caso corresponde a restringir las expresiones objetivo a llamadas a m\'etodos en casos donde \'esta ocurra en una condici\'on, argumento u asignaci\'on, siempre que el tipo de retorno del m\'etodo sea igual o compatible con el del argumento usado en la llamada. Para los ejemplos anterior se obtendr\'ian los mutantes \lstinline{list.foreach().if(c2).then(p1).else(p2)} y:
-\begin{lstlisting}
+\begin{lstlisting}[language=Java,basicstyle={}]
 ...
 userQuery = getFromUser();
 results = database.execute(query);
@@ -337,7 +314,7 @@ results = database.execute(query);
 Un caso particular de fallas por omisi\'on de la llamada a un m\'etodo, es el acceso a campos de clase de manera directa, en lugar de mediante el m\'etodo \emph{getter} asociado. Usualmente para cualquier atributo \emph{x} de una clase al cual se desea dar acceso, se genera un m\'etodo \emph{getX()} del mismo tipo y conteniendo solo una sentencia de retorno \emph{return x}. Sin embargo, existen casos donde el m\'etodo \emph{getter} realiza mas tareas que solo retornar. Un ejemplo muy simple es un m\'etodo que retorna una colecci\'on: cuando el campo asociado es nulo, el m\'etodo se asegurar\'ia de retornar una lista vac\'ia, en este caso utilizar el m\'etodo \emph{getter} asegura que siempre vamos a obtener una colecci\'on, mientras que acceder directamente al campo, nos puede retornar un valor nulo y causar errores como \emph{NullPointerException} en Java. Un ejemplo de este tipo de fallas se muestra en la Figura~\ref{figures.examples.getterVsDirectAccess}, cuando \emph{MyStructure\#intValues} es \emph{null}, el acceso directo generar\'ia una \emph{NullPointerException}.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=1.5em]
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
   MyStructure s = ...;
   for (int elem : s.getIntValues()) ...
   $\Delta$for (int elem : s.intValues) ...

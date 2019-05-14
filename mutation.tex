@@ -6,7 +6,7 @@
 Las fallas artificiales involucradas en mutation testing se producen en base a \emph{operadores de mutaci\'on}. Un operador de mutaci\'on define los cambios sint\'acticos que se van a realizar sobre un programa, t\'ipicamente eligiendo tipos particulares de expresiones en el mismo, y dando lugar a familias de mutantes. Dos ejemplos tradicionales de operadores de mutaci\'on son \emph{reemplazo de operadores relacionales}, el cual reemplaza un operador relacional por todos los otros soportados por el lenguaje de programaci\'on utilizado, y \emph{reemplazo de operadores aritm\'eticos}, que realiza cambios similares pero sobre operadores aritm\'eticos. La Figura~\ref{figures.examples.mutations} muestra un programa con varias mutaciones, en un mismo bloque de c\'odigo. Cada mutaci\'on est\'a indicada con $\Delta$, y sustituye la l\'inea (no mutada, es decir, sin $\Delta$) inmediata superior. Las mutaciones $1\Delta$, $2\Delta$ and $3\Delta$ en esta Figura corresponden a reemplazos de operadores relacionales, mientras que $4\Delta$ corresponde a reemplazo de operadores aritm\'eticos.
 
 \begin{figure}[t]
-	\begin{lstlisting}[frame=tlrb, mathescape=true]
+	\begin{lstlisting}[frame=tlrb, mathescape=true,language=Java,basicstyle={}]
   int countEven( int[] input ) {
     int count = 0;
     for (int i = 0; i < input.length; i++) {
