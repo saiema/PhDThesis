@@ -261,38 +261,40 @@ Los casos de estudio para reparaci\'on fueron obtenidos a partir de las versione
 
 Por cada sentencia (o l\'inea) mutada se agrego un comentario de l\'inea \texttt{//mutGenLimit K} donde \texttt{K} corresponde a la cantidad de bugs artificiales introducidos en la misma. Algunos ejemplos de los casos de estudios utilizados se muestran a continuaci\'on.
 
-\begin{figure}
+\begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinomialHeap_extractMin_orig.java}
 	\caption{Versi\'on original del m\'etodo \emph{extractMin} de \emph{BinomialHeap} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.binheap_extractMin_orig}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinomialHeap_extractMin_4bugs.java}
 	\caption{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{extractMin} de \emph{BinomialHeap}.}
 	\label{figures.code.repair.binheap_extractMin_4bugs}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinTree_insert_orig.java}
 	\caption{Versi\'on original del m\'etodo \emph{insert} de \emph{BinarySearchTree} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.bintree_insert_orig}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinTree_insert_3bugs.java}
 	\caption{Versi\'on con $3$ bugs artificiales del m\'etodo \emph{insert} de \emph{BinarySearchTree}.}
 	\label{figures.code.repair.bintree_insert_3bugs}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/NCLL_contains_orig.java}
 	\caption{Versi\'on original del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.ncll_contains_orig}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/NCLL_contains_4bugs.java}
 	\caption{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList}.}
 	\label{figures.code.repair.ncll_contains_4bugs}
 \end{figure}
+
+Cuando las sentencias marcadas para reparar (anotaci\'on \texttt{//mutGenLimit K}) resultaron ser un superconjunto de las sentencias con defectos, \emph{Stryker} fue capaz de reparar hasta $4$ bugs. En caso contrario \emph{Stryker} fue capaz de limitar considerablemente el espacio de b\'usqueda explorado.
