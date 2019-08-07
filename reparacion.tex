@@ -37,7 +37,7 @@ Por ejemplo, \emph{GenProg} \cite{bibliography.repair.GouesNFW12} usa computaci\
 Las herramientas actuales, en general, utilizan tests como especificaciones parciales del programa a reparar. Esto tiene como consecuencia la generaci\'on de reparaciones espurias, es decir, reparaciones que si bien logran hacer ``pasar'' a los tests, no resuelven el problema. En muchos casos, enmascarar un defecto puede causar que los tests que antes detectaban una falla, ahora dejen de hacerlo. A modo de ejemplo, en la Figura~\ref{figures.examples.repair.nullaccessexample} se muestra un m\'etodo \emph{find(int)} que tiene un defecto, la condici\'on del \textbf{while} deber\'ia incluir que \textbf{current} no sea \emph{null} y que el elemento a\'un no fue encontrado. Sin embargo, la reparaci\'on en la Figura~\ref{figures.examples.repair.nullaccessexample.mask} enmascara al defecto. Si nuestros tests solo utilizan listas en donde el elemento no est\'a, y por lo tanto se espera que el m\'etodo retorne \emph{false}; o el elemento a buscar est\'a en la \'ultima posici\'on, y se espera que retorne \emph{true}. La reparaci\'on anterior es espuria, es decir, si bien logra que los tests terminen correctamente, no repara realmente el programa.
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java,basicstyle={}]
+	\begin{lstlisting}[frame=single, mathescape=true,language=Java,basicstyle={},framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=0.012\textwidth]
   public boolean find(int e) {
     if (isEmpty()) return false;
     Node current = header;
@@ -54,7 +54,7 @@ Las herramientas actuales, en general, utilizan tests como especificaciones parc
 \end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true, language=Java,basicstyle={}]
+	\begin{lstlisting}[frame=single, mathescape=true,language=Java,basicstyle={},framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=0.012\textwidth]
   public boolean find(int e) {
     if (isEmpty()) return false;
     Node current = header;
@@ -86,7 +86,8 @@ Como mencionamos anteriormente, el conjunto de candidatos a reparaci\'on a tener
 Modificaciones a partes de sentencias, es decir, aquellas que alteran expresiones dentro de una sentencia, son en general no consideradas por t\'ecnicas de reparaci\'on de programas. Una limitaci\'on principal al considerar a \'estas, es la explosi\'on en el espacio de candidatos de reparaci\'on. T\'ecnicas que utilizan operadores de mutaci\'on para producir las modificaciones sint\'acticas, y que incluyen modificaciones a partes de sentencias, requieren limitar el conjunto de mutaciones (por ejemplo, \cite{bibliography.repair.GopinathMK11}), reduciendo la clase de fallas que \'estas pueden intentar reparar.
 
 \begin{figure}
-\begin{lstlisting}[mathescape=true, language=Java,basicstyle=\footnotesize]
+\footnotesize
+\begin{lstlisting}[frame=single, mathescape=true,language=Java,basicstyle={},xleftmargin=.010\textwidth,xrightmargin=.007\textwidth]
 boolean add(Object arg) {
   SListNode freshNode = new SListNode();
   freshNode.value = arg;
@@ -146,6 +147,7 @@ La reparaci\'on de programas puede describirse como una b\'usqueda exhaustiva qu
 \end{enumerate}
 
 \begin{figure}
+	\centering
 	\begin{tikzpicture}%
 	[state/.style ={ellipse, draw, minimum width = 0.7 cm},
 	point/.style = {circle, draw, inner sep=0.04cm,fill,node contents={}},
@@ -173,7 +175,7 @@ La reparaci\'on de programas puede describirse como una b\'usqueda exhaustiva qu
 La definici\'on previa de reparaci\'on autom\'atica de programas deja en claro que el espacio de candidatos a reparaci\'on depende del n\'umero de mutaciones (\textbf{b}) a considerar, lo que influye en cuan ``ancho'' es el \'arbol de b\'usqueda, y el n\'umero m\'aximo de mutaciones sucesivas permitidas (\textbf{d}) para generar a los candidatos, lo que afecta la profundidad de la b\'usqueda. El espacio de b\'usqueda queda entonces definido por una suma geom\'etrica $\frac{b^{d+1}-1}{b-1}$ ($O(b^d)$). Si consideramos el m\'etodo en la Figura~\ref{figures.examples.repair.getNode}, y solo cuatro l\'ineas del mismo, al utilizar 18 operadores de mutaci\'on (mediante la herramienta \emph{$\mu$Java++}), podemos ver en la Tabla \ref{tables.repair.mutation.explosion}, como a medida que aumentamos la cantidad de mutaciones consecutivas (la profundidad en reparaci\'on mediante mutaci\'on), la cantidad de candidatos a evaluar se vuelve r\'apidamente inmanejable.
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true,language=Java,numbers=left,xleftmargin=20pt,basicstyle={}]
+	\begin{lstlisting}[frame=single, mathescape=true,language=Java,basicstyle={},framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=0.012\textwidth]
   Node getNode(int i) {
     Node current = this.head;
     Node result = null;
@@ -209,7 +211,7 @@ La definici\'on previa de reparaci\'on autom\'atica de programas deja en claro q
 	\label{tables.repair.mutation.explosion}
 \end{table}
 
-
+\pagebreak
 \subsection{Striker}
 \label{sec:repair.striker}
 
@@ -262,37 +264,37 @@ Los casos de estudio para reparaci\'on fueron obtenidos a partir de las versione
 Por cada sentencia (o l\'inea) mutada se agrego un comentario de l\'inea \texttt{//mutGenLimit K} donde \texttt{K} corresponde a la cantidad de bugs artificiales introducidos en la misma. Algunos ejemplos de los casos de estudios utilizados se muestran a continuaci\'on.
 
 \begin{figure}[H]
-	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinomialHeap_extractMin_orig.java}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/BinomialHeap_extractMin_orig.java}
 	\caption{Versi\'on original del m\'etodo \emph{extractMin} de \emph{BinomialHeap} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.binheap_extractMin_orig}
 \end{figure}
 
 \begin{figure}[H]
-	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinomialHeap_extractMin_4bugs.java}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/BinomialHeap_extractMin_4bugs.java}
 	\caption{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{extractMin} de \emph{BinomialHeap}.}
 	\label{figures.code.repair.binheap_extractMin_4bugs}
 \end{figure}
 
 \begin{figure}[H]
-	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinTree_insert_orig.java}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/BinTree_insert_orig.java}
 	\caption{Versi\'on original del m\'etodo \emph{insert} de \emph{BinarySearchTree} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.bintree_insert_orig}
 \end{figure}
 
 \begin{figure}[H]
-	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/BinTree_insert_3bugs.java}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/BinTree_insert_3bugs.java}
 	\caption{Versi\'on con $3$ bugs artificiales del m\'etodo \emph{insert} de \emph{BinarySearchTree}.}
 	\label{figures.code.repair.bintree_insert_3bugs}
 \end{figure}
 
 \begin{figure}[H]
-	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/NCLL_contains_orig.java}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/NCLL_contains_orig.java}
 	\caption{Versi\'on original del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.ncll_contains_orig}
 \end{figure}
 
 \begin{figure}[H]
-	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=3]{results/repair/NCLL_contains_4bugs.java}
+	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/NCLL_contains_4bugs.java}
 	\caption{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList}.}
 	\label{figures.code.repair.ncll_contains_4bugs}
 \end{figure}

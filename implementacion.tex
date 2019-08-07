@@ -7,6 +7,7 @@
 La herramienta \emph{$\mu$Java} \cite{bibliography.mutation.tools.muJavaMaOK05} funciona traduciendo c\'odigo fuente \emph{Java} a un \emph{AST}, una estructura de \'arbol que representa el c\'odigo original como nodos, y recorriendo el mismo mediante un patr\'on \emph{visitor}. Cada operador sobreescribe m\'etodos particulares de visita para los nodos objetivo, el operador \emph{ROR}, por ejemplo, solo tiene por objetivo a expresiones binarias (en cuanto al tipo de nodos) y particularmente a aquellas que utilicen un operador relacional. En la Figura~\ref{figures.examples.rorMutation} se ve una parte de un \emph{AST} correspondiente a la sentencia \lstinline|x = y < 0|, \emph{ROR} al visitar el nodo \emph{BinExpr} con el operador \emph{<}, va a generar varias mutaciones, entre otras, el nodo mutado \emph{BinExpr[>]} que corresponde al cambio de el operador \emph{<} por \emph{>}, mientras mantiene los subnodos de \emph{BinExpr} sin modificaciones.
 
 \begin{figure}
+	\centering
 	\begin{tikzpicture}%
 	[state/.style ={ellipse, draw, minimum width = 0.7 cm},
 	point/.style = {circle, draw, inner sep=0.04cm,fill,node contents={}},
@@ -242,6 +243,7 @@ En la pr\'actica \'estos grafos son impr\'acticos de utilizar por ser demasiado 
 Una clara desventaja de este an\'alisis es que requiere ejecutar todos los tests por cada mutante, contrariamente al an\'alisis b\'asico de mutation testing (cuando solo interesa obtener el valor de mutation score) que solo se ejecutan todos los tests para un mutante para aquellos que sobreviven, pero solo siendo necesario ejecutar los tests hasta encontrar el primero que detecta al mutante en los casos donde \'este no sobrevive.
 
 \begin{table}[]
+	\centering
 	\begin{tabular}{|cccccccc|}
 		\hline
 		Node & Mutants & Test1 & Test2 & Test3 & Test4 & Test5 & Test6 \\ \hline
@@ -259,6 +261,7 @@ Una clara desventaja de este an\'alisis es que requiere ejecutar todos los tests
 \end{table}
 
 \begin{table}[]
+	\centering
 	\begin{tabular}{|cccccccc|}
 		\hline
 		Node & Mutants & Test1 & Test2 & Test3 & Test4 & Test5 & Test6 \\ \hline

@@ -39,21 +39,22 @@ Adem\'as de la aplicaci\'on tradicional de operadores de mutaci\'on para mutatio
 
 
 \begin{figure}[H]
-	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
-public class Queue {
+	\small
+	\begin{lstlisting}[frame=single, mathescape=true, language=Java,basicstyle={},xleftmargin=.01\textwidth,xrightmargin=.01\textwidth]
+  public class Queue {
     
-  private Node front;
-  private Node last;
+    private Node front;
+    private Node last;
     
-  ...
-  public void dequeue() {
-    if (front == null) throw new IllegalStateException();
-    this.front = this.front.next;
-    size--;
+    ...
+    public void dequeue() {
+      if (front == null) throw new IllegalStateException();
+      this.front = this.front.next;
+      size--;
+    }
+    ...
+    
   }
-  ...
-    
-}
 	\end{lstlisting}
 	\caption{Una implementaci\'on de colas basada en referencias.}
 	\label{figures.motivation.queue-class}
@@ -66,28 +67,28 @@ En la actualidad, los lenguajes orientados a objetos, o que contienen caracter\'
 Consideremos una implementaci\'on de una cola sobre una lista simplemente encadenada ac\'iclica, con una referencia al primer nodo, \emph{front}, y otra al \'ultimo, \emph{last}, y un m\'etodo \emph{dequeue()}, tal como se muestra en la Figura~\ref{figures.motivation.queue-class}. Desde el punto de vista de los criterios cl\'asicos de caja blanca, y dado que la implementaci\'on de este m\'etodo solo contiene una bifurcaci\'on en su flujo de control, con solo dos tests se logra una cobertura estructural (ramas, por ejemplo) del 100\%, espec\'ificamente los tests de la Figura~\ref{figures.motivation.queue-class-tests}. En lo que respecta a mutation testing, cabe resaltar que las herramientas modernas de mutation testing, por ejemplo, \emph{PITest}, \emph{Major}, o \emph{$\mu$Java}, generan mutaciones para el c\'odigo en \emph{dequeue()}, pero sin embargo la sentencia \texttt{this.front = this.front.next} la cual representa la principal responsabilidad del m\'etodo, es decir, efectivamente desencolar un elemento, no es mutada por ning\'un operador tradicional, en especial por aquellos en el conjunto de operadores \emph{suficientes}. Luego, resulta que cualquier test suite que logre una ``cobertura'' de mutaci\'on, no est\'a obligado a evaluar la principal responsabilidad del m\'etodo.
 
 \begin{figure}[H]
-	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
-    @Test
-    public void dequeueTest() {
-      Queue q = new Queue();
-      q.push(1);
-      int size = q.size();
-      q.dequeue();
-      assertEquals(size - 1, q.size());
-    }
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={},xleftmargin=.01\textwidth,xrightmargin=.01\textwidth]
+  @Test
+  public void dequeueTest() {
+    Queue q = new Queue();
+    q.push(1);
+    int size = q.size();
+    q.dequeue();
+    assertEquals(size - 1, q.size());
+  }
     
-    @Test(expected = IllegalStateException.class)
-    public void testDequeueExc() {
-      Queue q = new Queue();
-      q.dequeue();
-    }
+  @Test(expected = IllegalStateException.class)
+  public void testDequeueExc() {
+    Queue q = new Queue();
+    q.dequeue();
+  }
 	\end{lstlisting}
 	\caption{Tests para el m\'etodo dequeue \ref{figures.motivation.queue-class}}
 	\label{figures.motivation.queue-class-tests}
 \end{figure}
 
 \begin{figure}[H]
-	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={},xleftmargin=.01\textwidth,xrightmargin=.01\textwidth]
   ...
   public void dequeue() {
    if (front == null) throw new IllegalStateException();
@@ -101,7 +102,7 @@ Consideremos una implementaci\'on de una cola sobre una lista simplemente encade
 \end{figure}
 
 \begin{figure}[H]
-	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
+	\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={},xleftmargin=.01\textwidth,xrightmargin=.01\textwidth]
   @Test
   public void dequeueTest() {
     Queue q = new Queue();
@@ -154,37 +155,53 @@ Un punto importante a destacar en relaci\'on al ejemplo anterior es que si bien 
 El conjunto de \emph{operadores suficientes} de mutaci\'on ha permanecido pr\'acticamente inalterado desde hace a\~nos, a\'un cuando el primer trabajo que ofrece un conjunto de operadores formalmente definido lo hace para el lenguaje Fortran \cite{bibliography.mutation.definitions.fortranOffut87, bibliography.mutation.definitions.fortranKing91}. Mutation testing ha sido aplicado y evaluado en varios lenguajes, incluyendo aquellos considerados orientados a objetos como Ada y Java, por dar un par de ejemplos. Sin embargo los operadores de mutaci\'on espec\'ificos para lenguajes orientados a objetos s\'olo afectan, en general, jerarqu\'ias de clases, visibilidad, y sobre-escritura. 
 
 Un problema similar, en relaci\'on a las expresiones de navegaci\'on, se observa en el contexto de reparaci\'on de programas. Consideremos nuevamente la implementaci\'on de colas sobre listas enlazadas ac\'iclicas, y el c\'odigo del m\'etodo \emph{enqueue()} que se muestra a continuaci\'on:
-\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={}]
-public void enqueue(int elem) {
-        QueueNode newNode = new QueueNode(elem);
-        if (front == null) {
-            front = newNode;
-            last = newNode;
-        } else {
-            front.next = newNode;
-            last = newNode;
-        }
-        size++;
-}
+\begin{lstlisting}[frame=tlrb, mathescape=true, language=Java,basicstyle={},xleftmargin=.01\textwidth,xrightmargin=.01\textwidth]
+  public void enqueue(int elem) {
+    QueueNode newNode = new QueueNode(elem);
+    if (front == null) {
+      front = newNode;
+      last = newNode;
+    } else {
+      front.next = newNode;
+      last = newNode;
+    }
+    size++;
+  }
 \end{lstlisting}
 Esta implementaci\'on es err\'onea dado que, cuando la cola no est\'a vac\'ia, inserta el nuevo elemento como el siguiente del comienzo, en lugar de insertar al final, como exige la pol\'itica de visita de elementos en una cola. El error y su reparaci\'on son simples: la expresi\'on \texttt{front.next = newNode} deber\'ia en realidad ser \texttt{last.next = newNode}. Sin embargo, herramientas de reparaci\'on autom\'atica como GenProg son incapaces de reparar este c\'odigo, pues sus mutaciones de granularidad gruesa no consiguen reproducir el comportamiento esperado para \emph{enqueue()}. 
 
-Esto nos lleva a nuestros objetivos:
+\subsubsection*{Los objetivos planteados son los siguientes}
+%Esto nos lleva a nuestros objetivos:
 
-\begin{enumerate}[leftmargin=.75cm,align=left,style=nextline]
-	\item[\textbf{Analizar las caracter\'isticas que un operador de mutaci\'on debe poseer}] Dise\~nar un operador de mutaci\'on no es una tarea trivial. Tal como mencionamos anteriormente, mutantes equivalentes al programa original son indeseados, as\'i como aquellos que son trivialmente detectados; los mutantes generados deben representar (o estar acoplados a) fallas reales. La aplicaci\'on de operadores de mutaci\'on para reparaci\'on introduce caracter\'isticas adicionales sobre los operadores de mutaci\'on, algunas contrapuestas a las de mutaci\'on para testing. De esta manera, nuestro primer objetivo es caracterizar las propiedades que un operador de mutaci\'on debe poseer, y definir \'estas de manera precisa, acompa\~nadas de mecanismos para su evaluaci\'on objetiva. 
-	
-	\item[\textbf{Definir un operador de mutaci\'on para expresiones de navegaci\'on}]\mbox{}\\
-	Teniendo en cuenta las caracter\'isticas surgidas en el punto anterior, y bas\'andose en la motivaci\'on para dise\~nar nuevo[s] operadores de mutaci\'on para expresiones de navegaci\'on, nuestro segundo objetivo es dar una definici\'on de un nuevo operador que satisfaga esta necesidad, y que cumpla con las caracter\'isticas identificadas. M\'as a\'un, en la medida de lo posible, esta definici\'on debe ser agn\'ostica al lenguaje de programaci\'on utilizado para implementarlo.
-	
-	\item[\textbf{Implementar el operador de mutaci\'on para expresiones de navegaci\'on}] Los operadores existentes actualmente est\'an definidos por reglas de transformaci\'on muy simples, incluso pudiendo ser implementados usando expresiones regulares. Modificar una expresi\'on de navegaci\'on requiere informaci\'on de tipos y an\'alisis de alcanzabilidad para determinar las expresiones disponibles al modificar una existente. Nuestro tercer objetivo es entonces encontrar una herramienta de mutaci\'on que permita realizar el an\'alisis necesario para generar estas mutaciones; elegir un lenguaje sobre el cual y para el cual implementar este operador; e implementar tanto el operador como herramientas u extensiones que permitan realizar los an\'alisis apropiados para las evaluaciones necesarias a nuestro operador.
-	
-	\item[\textbf{Aplicaciones e impacto del operador de mutaci\'on en testing}]\mbox{}\\
-	Incluso si es cierto que existe una necesidad por la generaci\'on de mutantes para expresiones de navegaci\'on, si el o los operadores que los generan no cumplen con las propiedades anteriormente descriptas, entonces su utilidad se ve muy reducida. Por eso, otro de nuestros objetivos es evaluar el desempe\~no de nuestro operador para analizar su utilidad e impacto de su incorporaci\'on como operador de mutaci\'on, en mutation testing. 
-	
-    \item[\textbf{Aplicaciones del operador de mutaci\'on en reparaci\'on}]\mbox{}\\
-	Si bien el \'enfasis principal en esta tesis estar\'a alrededor de la introducci\'on de operadores de mutaci\'on para testing, analizaremos tambi\'en la aplicaci\'on de operadores de mutaci\'on de granularidad fina en el contexto de reparaci\'on autom\'atica de programas (en contraposici\'on con operadores de mutaci\'on tradicionales en reparaci\'on, que optan por una granularidad gruesa). En particular, analizaremos errores comunes en programas orientados a objetos, que tienen que ver con el uso de expresiones de navegaci\'on, y c\'omo el operador de mutaci\'on a introducir contribuye a su reparabilidad. En este proceso, analizaremos y discutiremos el rol de las especificaciones en la reparaci\'on autom\'atica de programas, y las limitaciones del uso de tests para suplantarlas. 
-\end{enumerate}
+\paragraph{Analizar las caracter\'isticas que un operador de mutaci\'on debe poseer}
+Dise\~nar un operador de mutaci\'on no es una tarea trivial. Tal como mencionamos anteriormente, mutantes equivalentes al programa original son indeseados, as\'i como aquellos que son trivialmente detectados; los mutantes generados deben representar (o estar acoplados a) fallas reales. La aplicaci\'on de operadores de mutaci\'on para reparaci\'on introduce caracter\'isticas adicionales sobre los operadores de mutaci\'on, algunas contrapuestas a las de mutaci\'on para testing. De esta manera, nuestro primer objetivo es caracterizar las propiedades que un operador de mutaci\'on debe poseer, y definir \'estas de manera precisa, acompa\~nadas de mecanismos para su evaluaci\'on objetiva. 
+
+\paragraph{Definir un operador de mutaci\'on para expresiones de navegaci\'on}
+Teniendo en cuenta las caracter\'isticas surgidas en el punto anterior, y bas\'andose en la motivaci\'on para dise\~nar nuevo[s] operadores de mutaci\'on para expresiones de navegaci\'on, nuestro segundo objetivo es dar una definici\'on de un nuevo operador que satisfaga esta necesidad, y que cumpla con las caracter\'isticas identificadas. M\'as a\'un, en la medida de lo posible, esta definici\'on debe ser agn\'ostica al lenguaje de programaci\'on utilizado para implementarlo.
+
+\paragraph{Implementar el operador de mutaci\'on para expresiones de navegaci\'on}
+Los operadores existentes actualmente est\'an definidos por reglas de transformaci\'on muy simples, incluso pudiendo ser implementados usando expresiones regulares. Modificar una expresi\'on de navegaci\'on requiere informaci\'on de tipos y an\'alisis de alcanzabilidad para determinar las expresiones disponibles al modificar una existente. Nuestro tercer objetivo es entonces encontrar una herramienta de mutaci\'on que permita realizar el an\'alisis necesario para generar estas mutaciones; elegir un lenguaje sobre el cual y para el cual implementar este operador; e implementar tanto el operador como herramientas u extensiones que permitan realizar los an\'alisis apropiados para las evaluaciones necesarias a nuestro operador.
+
+\paragraph{Aplicaciones e impacto del operador de mutaci\'on en testing}
+Incluso si es cierto que existe una necesidad por la generaci\'on de mutantes para expresiones de navegaci\'on, si el o los operadores que los generan no cumplen con las propiedades anteriormente descriptas, entonces su utilidad se ve muy reducida. Por eso, otro de nuestros objetivos es evaluar el desempe\~no de nuestro operador para analizar su utilidad e impacto de su incorporaci\'on como operador de mutaci\'on, en mutation testing.
+
+\paragraph{Aplicaciones del operador de mutaci\'on en reparaci\'on}
+Si bien el \'enfasis principal en esta tesis estar\'a alrededor de la introducci\'on de operadores de mutaci\'on para testing, analizaremos tambi\'en la aplicaci\'on de operadores de mutaci\'on de granularidad fina en el contexto de reparaci\'on autom\'atica de programas (en contraposici\'on con operadores de mutaci\'on tradicionales en reparaci\'on, que optan por una granularidad gruesa). En particular, analizaremos errores comunes en programas orientados a objetos, que tienen que ver con el uso de expresiones de navegaci\'on, y c\'omo el operador de mutaci\'on a introducir contribuye a su reparabilidad. En este proceso, analizaremos y discutiremos el rol de las especificaciones en la reparaci\'on autom\'atica de programas, y las limitaciones del uso de tests para suplantarlas.
+
+%\begin{enumerate}[leftmargin=.75cm,align=left,style=nextline]
+%	\item[\textbf{Analizar las caracter\'isticas que un operador de mutaci\'on debe poseer}] Dise\~nar un operador de mutaci\'on no es una tarea trivial. Tal como mencionamos anteriormente, mutantes equivalentes al programa original son indeseados, as\'i como aquellos que son trivialmente detectados; los mutantes generados deben representar (o estar acoplados a) fallas reales. La aplicaci\'on de operadores de mutaci\'on para reparaci\'on introduce caracter\'isticas adicionales sobre los operadores de mutaci\'on, algunas contrapuestas a las de mutaci\'on para testing. De esta manera, nuestro primer objetivo es caracterizar las propiedades que un operador de mutaci\'on debe poseer, y definir \'estas de manera precisa, acompa\~nadas de mecanismos para su evaluaci\'on objetiva. 
+%	
+%	\item[\textbf{Definir un operador de mutaci\'on para expresiones de navegaci\'on}]\mbox{}\\
+%	Teniendo en cuenta las caracter\'isticas surgidas en el punto anterior, y bas\'andose en la motivaci\'on para dise\~nar nuevo[s] operadores de mutaci\'on para expresiones de navegaci\'on, nuestro segundo objetivo es dar una definici\'on de un nuevo operador que satisfaga esta necesidad, y que cumpla con las caracter\'isticas identificadas. M\'as a\'un, en la medida de lo posible, esta definici\'on debe ser agn\'ostica al lenguaje de programaci\'on utilizado para implementarlo.
+%	
+%	\item[\textbf{Implementar el operador de mutaci\'on para expresiones de navegaci\'on}] Los operadores existentes actualmente est\'an definidos por reglas de transformaci\'on muy simples, incluso pudiendo ser implementados usando expresiones regulares. Modificar una expresi\'on de navegaci\'on requiere informaci\'on de tipos y an\'alisis de alcanzabilidad para determinar las expresiones disponibles al modificar una existente. Nuestro tercer objetivo es entonces encontrar una herramienta de mutaci\'on que permita realizar el an\'alisis necesario para generar estas mutaciones; elegir un lenguaje sobre el cual y para el cual implementar este operador; e implementar tanto el operador como herramientas u extensiones que permitan realizar los an\'alisis apropiados para las evaluaciones necesarias a nuestro operador.
+%	
+%	\item[\textbf{Aplicaciones e impacto del operador de mutaci\'on en testing}]\mbox{}\\
+%	Incluso si es cierto que existe una necesidad por la generaci\'on de mutantes para expresiones de navegaci\'on, si el o los operadores que los generan no cumplen con las propiedades anteriormente descriptas, entonces su utilidad se ve muy reducida. Por eso, otro de nuestros objetivos es evaluar el desempe\~no de nuestro operador para analizar su utilidad e impacto de su incorporaci\'on como operador de mutaci\'on, en mutation testing. 
+%	
+%	\item[\textbf{Aplicaciones del operador de mutaci\'on en reparaci\'on}]\mbox{}\\
+%	Si bien el \'enfasis principal en esta tesis estar\'a alrededor de la introducci\'on de operadores de mutaci\'on para testing, analizaremos tambi\'en la aplicaci\'on de operadores de mutaci\'on de granularidad fina en el contexto de reparaci\'on autom\'atica de programas (en contraposici\'on con operadores de mutaci\'on tradicionales en reparaci\'on, que optan por una granularidad gruesa). En particular, analizaremos errores comunes en programas orientados a objetos, que tienen que ver con el uso de expresiones de navegaci\'on, y c\'omo el operador de mutaci\'on a introducir contribuye a su reparabilidad. En este proceso, analizaremos y discutiremos el rol de las especificaciones en la reparaci\'on autom\'atica de programas, y las limitaciones del uso de tests para suplantarlas.  
+%\end{enumerate}
 
 %Objetivos
 

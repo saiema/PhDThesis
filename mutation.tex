@@ -6,21 +6,21 @@
 Las fallas artificiales involucradas en mutation testing se producen en base a \emph{operadores de mutaci\'on}. Un operador de mutaci\'on define los cambios sint\'acticos que se van a realizar sobre un programa, t\'ipicamente eligiendo tipos particulares de expresiones en el mismo, y dando lugar a familias de mutantes. Dos ejemplos tradicionales de operadores de mutaci\'on son \emph{reemplazo de operadores relacionales}, el cual reemplaza un operador relacional por todos los otros soportados por el lenguaje de programaci\'on utilizado, y \emph{reemplazo de operadores aritm\'eticos}, que realiza cambios similares pero sobre operadores aritm\'eticos. La Figura~\ref{figures.examples.mutations} muestra un programa con varias mutaciones, en un mismo bloque de c\'odigo. Cada mutaci\'on est\'a indicada con $\Delta$, y sustituye la l\'inea (no mutada, es decir, sin $\Delta$) inmediata superior. Las mutaciones $1\Delta$, $2\Delta$ and $3\Delta$ en esta Figura corresponden a reemplazos de operadores relacionales, mientras que $4\Delta$ corresponde a reemplazo de operadores aritm\'eticos.
 
 \begin{figure}[t]
-	\begin{lstlisting}[frame=tlrb, mathescape=true,language=Java,basicstyle={}]
-  int countEven( int[] input ) {
-    int count = 0;
-    for (int i = 0; i < input.length; i++) {
-    $1\Delta$for (int i = 0; i <= input.length; i++) {
-    $2\Delta$for (int i = 0; i != input.length; i++) {
-      int value = input[i];
-      if (value % 2 == 0) {
-      $3\Delta$ if (value % 2 != 0) {
-        count = count + 1;
-        $4\Delta$ count = count / 1;
-      }
-    }
-    return count;
-  }
+	\begin{lstlisting}[frame=tlrb, mathescape=true,language=Java,basicstyle={},xleftmargin=.011\textwidth,xrightmargin=.011\textwidth]
+   int countEven( int[] input ) {
+     int count = 0;
+     for (int i = 0; i < input.length; i++) {
+     $1\Delta$for (int i = 0; i <= input.length; i++) {
+     $2\Delta$for (int i = 0; i != input.length; i++) {
+       int value = input[i];
+       if (value % 2 == 0) {
+       $3\Delta$ if (value % 2 != 0) {
+         count = count + 1;
+         $4\Delta$ count = count / 1;
+       }
+     }
+     return count;
+   }
 	\end{lstlisting}
 	\caption{Ejemplos de un programa y posibles mutaciones}
 	\label{figures.examples.mutations}
@@ -43,6 +43,7 @@ es equivalente a
 \noindent
 Estos mutantes son llamados equivalentes y por lo tanto indistinguibles del programa original, lo que genera metas que no pueden ser cubiertas, que a su vez disminuyen el valor de mutation score, aunque la test suite no tiene una peor calidad por no ser capaz de detectar estos mutantes. Finalmente, un valor alto de mutation score no significa nada si no existe una relaci\'on entre detectar fallas artificiales y reales. Discutiremos en mayor detalle esta \'ultima situaci\'on a continuaci\'on.
 
+\pagebreak
 \section{Operadores de mutaci\'on suficientes}
 \label{sec:preliminares.mutation.sufficient}
 

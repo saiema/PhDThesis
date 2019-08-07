@@ -7,6 +7,7 @@
 El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta tesis surge a partir de un operador sustancialmente m\'as simple (que de hecho, no muta navegaciones), proveniente de una herramienta espec\'ifica de testing de mutaci\'on, \emph{$\mu$Java}. En \emph{$\mu$Java} existe un operador de mutaci\'on denominado \emph{PRV}, y cuyas mutaciones se basan en \textbf{P}olimorfismo, y sustituyen asignaciones de \textbf{R}eferencias a \textbf{V}ariables, por otras de un tipo compatible \cite{muJavaCOPS, bibliography.mutation.operators.MaKO02}. Este operador modifica una variable, campo, o llamada a método que est\'a siendo asignada a una referencia (un objeto), por otra (variable, campo, o llamada a método) que sea compatible con la referencia. En la Figura~\ref{figures.examples.PRV} vemos un ejemplo de una mutaci\'on producida por este operador. Una clara limitaci\'on de este operador es que s\'olo se aplica a asignaciones, y muta la parte derecha de la asignaci\'on. Su aplicaci\'on a otro tipo de expresiones o sentencias ser\'ia deseable. La segunda limitaci\'on est\'a precisamente en s\'olo considerar variables, campos y llamadas a métodos, sin considerar expresiones de navegaci\'on las que son muy comunes en programaci\'on orientada a objetos, esta restricci\'on est\'a relacionada al objetivo que tiene el operador: en lenguajes orientados a objetos, el polimorfismo permite definir m\'etodos o expresiones utilizando variables que pueden ser instanciadas por un conjunto de tipos distintos. La Figura~\ref{figures.examples.polimorfism} muestra ejemplos de polimorfismo por sobrecarga y herencia. En el primer caso, para cubrir los tres m\'etodos definidos es necesario que la expresi\'on con la que se llama al m\'etodo \emph{foo} sea de tres tipos diferentes; esto s\'olo es posible con \emph{PRV} cuando se utiliza la verificaci\'on del tipo de una instancia para cambiar el comportamiento del c\'odigo. En la Figura~\ref{figures.examples.polimorfismPRV} se muestra un ejemplo del tipo de c\'odigo para el que est\'a dise\~nado este operador. Para los casos de sobrecarga mostrados en la Figura~\ref{figures.examples.polimorfism}, si antes de la llamada al m\'etodo se tiene una asignaci\'on \textbf{Object o = v;}, cambiar la variable por otra, como lo har\'ia este operador, no causar\'ia que se llame a otro m\'etodo m\'as que a \emph{foo}, que toma un \emph{Object}. Sin embargo modificando la variable con la que se est\'a llamando al m\'etodo si causar\'ia, dependiendo del tipo de la variable, la llamada a otra definici\'on del m\'etodo. 
 
 \begin{figure}
+	\centering
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,basicstyle={}]
   List l = null;
   LinkedList ll = new LinkedList();
@@ -19,6 +20,7 @@ El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta
 \end{figure}
 
 \begin{figure}
+	\centering
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,basicstyle={}]
   //(i) : polimorfismo por sobrecarga
   public void foo(Integer i) {...}
@@ -42,6 +44,7 @@ El operador de mutaci\'on de expresiones de navegaci\'on que definiremos en esta
 \end{figure}
 
 \begin{figure}
+	\centering
 	\begin{lstlisting}[mathescape=true, language=Java, extendedchars=true,tabsize=3,basicstyle={}]
 	public Number abs(Number a) {
 		if (a instanceof Integer) {
@@ -206,7 +209,8 @@ En \cite{bibliography.mutation.evaluation.valid-substitute} se concluye que cier
 Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un ciclo infinito con una sentencia de retorno bajo cierta condici\'on (Figura~\ref{figures.examples.infCicle}) y el programador olvid\'o agregarla; una sentencia \emph{switch} en donde para alg\'un caso no se escribi\'o una sentencia de retorno o frenado (\emph{break}); inicializaciones faltantes como en la Figura~\ref{figures.examples.localVariableHidingField} donde una variable local utiliza el mismo nombre que un campo de clase, la falta de la sentencia que define esta variable resulta en un programa que compila pero que resulta incorrecto. \'Estos, entre otros casos, son todos ejemplos de fallas reales que requieren un operador que elimine sentencias para poder generar el mismo tipo de falla.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
+	\centering
+	\begin{lstlisting}[frame=single, mathescape=true,xleftmargin=0.012\textwidth,xrightmargin=0.012\textwidth,language=Java,basicstyle={}]
   while(true) {
     String input = getUserInput();
     if (isExitCommand(input)) {
@@ -220,17 +224,17 @@ Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un cic
 \end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
-  private Node cursor ...
+	\begin{lstlisting}[frame=single, numbers=left,framexleftmargin=0.073\textwidth, mathescape=true,xleftmargin=0.085\textwidth,xrightmargin=0.012\textwidth,language=Java,basicstyle={}]
+ private Node cursor ...
 	
-  public boolean find(int elem) {
-    Node cursor = header;
-    while(cursor != null) {
-      if (cursor.elem == elem) return true;
-      cursor = cursor.next;
-    }
-    return false;
-  }
+ public boolean find(int elem) {
+   Node cursor = header;
+   while(cursor != null) {
+     if (cursor.elem == elem) return true;
+     cursor = cursor.next;
+   }
+   return false;
+ }
 	\end{lstlisting}
 	\caption{Ejemplo en donde una inicializaci\'on faltante (linea 4), producir\'ia un programa que compila pero incorrecto}
 	\label{figures.examples.localVariableHidingField}
@@ -239,7 +243,7 @@ Una sentencia olvidada, donde un ejemplo simple es la implementaci\'on de un cic
 En principio, ya existen operadores que realizan este tipo de mutaciones. No solo eso, sino que adem\'as no parece ser un tipo de fallas asociadas a mutaciones de expresiones de navegaci\'on.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,basicstyle={}]
+	\begin{lstlisting}[frame=single, mathescape=true,xleftmargin=0.012\textwidth,xrightmargin=0.012\textwidth,basicstyle={}]
   list.foreach().filter(c1).if(c2).then(p1).else(p2)
 	\end{lstlisting}
 	\caption{Versi\'on utilizando \emph{interfaces fluidas} del recorrido de una lista filtrando y ejecutando condicionalmente un procedimiento.}
@@ -249,7 +253,7 @@ En principio, ya existen operadores que realizan este tipo de mutaciones. No sol
 Sin embargo, \emph{Fluent interfaces}, un dise\~no muy usado en conjunto con el \emph{patr\'on Builder}, permite escribir algoritmos sem\'anticamente equivalentes a un programa imperativo, ciclos y sentencias condicionales inclu\'idas. Un c\'odigo como el mostrado en la Figura~\ref{figures.examples.fluent.example1.fluent} no es extra\~no en programaci\'on orientada a objetos, en la Figura~\ref{figures.examples.fluent.example1.imperative} se muestra la implementaci\'on m\'as com\'un de esta expresi\'on en lenguaje imperativo.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
+	\begin{lstlisting}[frame=single, mathescape=true,xleftmargin=0.012\textwidth,xrightmargin=0.012\textwidth,language=Java,basicstyle={}]
   List<Elem> list = ...;
   for (Elem e : list) {
     if (c1(e)) {
@@ -272,7 +276,7 @@ Esto muestra que por un lado es interesante poder mutar expresiones de navegaci\
 Este tipo de fallas involucra utilizar argumentos con tipos correctos, pero en el orden incorrecto en la llamada a un m\'etodo. En la Figura~\ref{figures.examples.argumentSwap.example1} se ve un m\'etodo que toma como entrada dos listas y agrega la primera al final de la segunda. Los nombres de los argumentos son quiz\'as amb\'ig\"{u}os, y ser\'ia incluso esperable que sin una documentaci\'on apropiada, haya programadores que asuman que se hace un \emph{append} de \texttt{thiz} \emph{en} \texttt{that}, aunque otros podr\'ian entender de que el \emph{append} se hace con el orden de los argumentos resultando en \texttt{that} \emph{en} \texttt{thiz}. 
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
+	\begin{lstlisting}[frame=single, mathescape=true,xleftmargin=0.012\textwidth,xrightmargin=0.012\textwidth,language=Java,basicstyle={}]
   public void append(List<E> thiz, List<E> that) {
     ...
     for (E e : thiz) {
@@ -314,7 +318,7 @@ results = database.execute(query);
 Un caso particular de fallas por omisi\'on de la llamada a un m\'etodo, es el acceso a campos de clase de manera directa, en lugar de mediante el m\'etodo \emph{getter} asociado. Usualmente para cualquier atributo \emph{x} de una clase al cual se desea dar acceso, se genera un m\'etodo \emph{getX()} del mismo tipo y conteniendo solo una sentencia de retorno \emph{return x}. Sin embargo, existen casos donde el m\'etodo \emph{getter} realiza mas tareas que solo retornar. Un ejemplo muy simple es un m\'etodo que retorna una colecci\'on: cuando el campo asociado es nulo, el m\'etodo se asegurar\'ia de retornar una lista vac\'ia, en este caso utilizar el m\'etodo \emph{getter} asegura que siempre vamos a obtener una colecci\'on, mientras que acceder directamente al campo, nos puede retornar un valor nulo y causar errores como \emph{NullPointerException} en Java. Un ejemplo de este tipo de fallas se muestra en la Figura~\ref{figures.examples.getterVsDirectAccess}, cuando \emph{MyStructure\#intValues} es \emph{null}, el acceso directo generar\'ia una \emph{NullPointerException}.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=1.5em,language=Java,basicstyle={}]
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=0.012\textwidth,language=Java,basicstyle={}]
   MyStructure s = ...;
   for (int elem : s.getIntValues()) ...
   $\Delta$for (int elem : s.intValues) ...

@@ -10,9 +10,10 @@ En la secci\'on \ref{sec:intro.objetivos} definimos las motivaciones y objetivos
 Como se mencion\'o en la introducci\'on \ref{sec:intro.contribuciones}, los casos de estudio sobre los cuales se va a evaluar a \emph{prvo} en el contexto de mutation testing, son estructuras que representan colecciones implementadas en \emph{Java} y con un uso significativo de caracter\'isticas de programas orientados a objetos, entre ellas, y la m\'as importante para nuestro estudio, el uso de expresiones de navegaci\'on. 
 
 \begin{table}[]
-	\def\arraystretch{0.95}
+	\centering
+	\footnotesize
+	\def\arraystretch{1.15}
 	\setlength\tabcolsep{1.7mm}
-	\small
 	\begin{tabular}{l|cccccccc|}
 		\cline{2-9}
 		& TreeList & AvlTree & BinHeap & TreeSet & NCL & BSTree & OrdSet & \multicolumn{1}{l|}{Queue} \\ \hline
@@ -94,7 +95,7 @@ El control de tipos va a ser estricto, lo que significa que una subexpresi\'on s
 Si bien parece una configuraci\'on muy acotada en cuanto a las mutaciones que produce, y a cuantos tipos de fallas reales intenta representar. Incluso con las restricciones impuestas en la implementaci\'on de \emph{prvo}, una configuraci\'on poco restrictiva puede dar lugar a una explosi\'on en la cantidad de mutantes generados. Una elevada cantidad de mutantes no solo tiene como desventaja las implicaciones sobre los recursos necesarios, la cantidad de mutantes irrelevantes que se generan aumenta. Para ver un ejemplo de esto, al mutar con \emph{prvo} el c\'odigo del m\'etodo \emph{find(int)} de \emph{BSTree}, el que se muestra en la Figura~\ref{figures.examples.prvoExpl.findMethod}, usando la configuraci\'on m\'as permisiva podemos apreciar en la Figura~\ref{figures.examples.prvoExpl.mutations} algunas de las mutaciones generadas, muchas de \'estas resultando completamente irrelevantes. En la Tabla-\ref{tables.prvoExpl.mutations} se expone como cada configuraci\'on afecta a la cantidad de mutantes producidos. Cabe destacar que la cantidad posible de configuraciones para \emph{prvo} es mucho m\'as grande que las expuestas en la tabla, por ejemplo la capacidad de ajustar las restricciones de tama\~no descriptas en \ref{sec:implementation.prvo.restrictions.size} no est\'a mencionada.
 
 \begin{figure}
-	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,language=Java,basicstyle={}]
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,language=Java,basicstyle={},framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=0.012\textwidth]
 public boolean find( int x ) {
   Node current = root;
   while (current != null) {
@@ -148,9 +149,9 @@ public boolean find( int x ) {
 \end{figure}
 
 \begin{table}[]
-	%\centering
-	\small
-	\def\arraystretch{0.95}
+	\centering
+	\footnotesize
+	\def\arraystretch{1.1}
 	\setlength\tabcolsep{0.5mm}
 	\begin{tabular}{@{}l|cccccc|@{}}
 		\cmidrule(l){2-7}
@@ -224,7 +225,7 @@ Con respecto a las propiedades que afectan a los operadores, definidas en la sec
 Para el operador \emph{AOIS}, el cual inserta operadores aritm\'eticos de incremento y decremento (tanto en sus versiones pre y post) en expresiones aritm\'eticas, la propiedad \emph{mutation.advanced.aois.skipFinal} permite configurar el operador para que ignore las expresiones constantes. Por ejemplo, en la Figura-\ref{figures.examples.operators.aois}, cualquier mutante generado por este operador en las l\'ineas 7 y 9 (un 50\% de todos los mutantes) no compilar\'ia por que no es posible incrementar una variable declarada con \emph{final} (b\'asicamente una constante).
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true,language=Java,numbers=left,basicstyle={}]
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,language=Java,basicstyle={},framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=0.012\textwidth]
   public class Foo {
     private int field1 = 0;
     private final int field2 = 0;
@@ -244,7 +245,7 @@ Para el operador \emph{AOIS}, el cual inserta operadores aritm\'eticos de increm
 Para el operador \emph{AODS}, el cual elimina operadores aritm\'eticos de incremento y decremento (tanto en sus versiones pre y post) de expresiones aritm\'eticas, la propiedad \emph{mutation.advanced.aods.skipExpressionStatements} permite configurar el operador para que ignore sentencias que se conforman \'unicamente de una expresi\'on aritm\'etica con un operador aritm\'etico de incremento o decremento. Por ejemplo en la Figura-\ref{figures.examples.operators.aods}, la mutaci\'on generada en la l\'inea 5, si bien no es dif\'icil de detectar (causa un ciclo infinito), genera un mutante que compila, mientras que mutar la l\'inea 6 eliminando el operador de incremento causa que el mutante no compile (una variable sola no representa una sentencia v\'alida).
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true,language=Java,numbers=left,basicstyle={}]
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,language=Java,basicstyle={},framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=0.012\textwidth]
   public int foo(int[] a) {
     int result = 0;
     int idx = 0;
@@ -276,7 +277,7 @@ Las propedades \emph{enableAutoboxing}, \emph{disablePrimitiveToObjectAssignment
 El control de tipos que utiliza \emph{prvo}, es decir, el mecanismo por el cual verifica que intercambiar una expresi\'on \emph{e} por otra \emph{f} es un intercambio v\'alido con respecto a tipos, est\'a controlada por la propiedad \emph{enableRelaxedTypes}. Dado dos clases \emph{A} y \emph{B}, usar un control estricto lleva a que \'estas son compatibles si son exactamente el mismo tipo. En la Figura~\ref{figures.examples.operators.prvo.relaxedVsStrict}, la asignaci\'on en la l\'inea 3 resulta incompatible sin importar si el control es estricto o relajado, mientras que las asignaciones en las l\'ineas 5 y 6 solo son v\'alidas si se utiliza un control de tipos relajado. Esta propiedad permite restringir la cantidad de mutantes generados, incluso puede considerarse una de las propiedades que m\'as afecta a la cantidad de mutaciones generadas.
 
 \begin{figure}
-	\begin{lstlisting}[mathescape=true,language=Java,numbers=left,basicstyle={}]
+	\begin{lstlisting}[frame=single, numbers=left, mathescape=true,language=Java,basicstyle={},framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=0.012\textwidth]
   public void foo(Integer a, Double b) {
     Integer l1 = a;
     Integer l2 = b;
@@ -290,7 +291,7 @@ El control de tipos que utiliza \emph{prvo}, es decir, el mecanismo por el cual 
 \end{figure}
 
 \begin{figure}
-	\lstinputlisting[basicstyle=\small, language=Java]{results/draft/TestExample.java}
+	\lstinputlisting[frame=single,basicstyle=\small, language=Java, tabsize=1,framexleftmargin=.073\textwidth,xleftmargin=.085\textwidth,xrightmargin=.012\textwidth,literate={\ \ }{{\ }}1]{results/draft/TestExample.java}
 	\caption{Ejemplo de tests afectados por la propiedad de timeout}
 	\label{figures.examples.confFile.testTimeout}
 \end{figure}
@@ -322,7 +323,7 @@ Sin embargo, la contribuci\'on en la pr\'actica puede no existir, \emph{las fall
 	\item \textbf{RQ2} Cual es el costo adicional de utilizar \emph{prvo}, en mutation testing?
 \end{itemize}
 
-La motivaci\'on para \textbf{RQ1} est\'a basada en que un nuevo operadores no ser\'ia \'util si fuera redundante con respecto a los existentes. Para responder \textbf{RQ1} vamos a utilizar \emph{dynamic mutant subsumption}. Este an\'alisis permite, para un programa particular y un conjunto de tests particulares, evaluar que mutantes resultan indispensables y cuales son redundantes para la evaluaci\'on del conjunto de tests. Vamos a utilizar principalmente como benchmark, implementaciones de estructuras de datos orientadas a objetos, en \emph{Java}. La raz\'on para considerar un benchmark as\'i, es que este tipo de implementaciones hace un uso substancial de expresiones de navegaci\'on, incluyendo tipos recursivos de datos. Nuestro benchmark va a estar compuesto entonces mayormente por implementaciones de collecciones:  \emph{Apache's TreeList}, una implementaci\'on de listas utilizando \'arboles; \emph{Apache's NodeCachingList}, una lista encadenada con una cach\'e de nodos; \emph{AvlTree}, una implementaci\'on cl\'asica de \'arboles balanceados; \emph{BinomialHeap}, una implementaci\'on basada en referencias de mont\'iculos; y \emph{TreeSet}, una implementaci\'on de conjuntos utilizando \'arboles red-black. %TODO: AGREGAR CASOS
+La motivaci\'on para \textbf{RQ1} est\'a basada en que un nuevo operadores no ser\'ia \'util si fuera redundante con respecto a los existentes. Para responder \textbf{RQ1} vamos a utilizar \emph{dynamic mutant subsumption}. Este an\'alisis permite, para un programa particular y un conjunto de tests particulares, evaluar que mutantes resultan indispensables y cuales son redundantes para la evaluaci\'on del conjunto de tests. Vamos a utilizar principalmente como benchmark, implementaciones de estructuras de datos orientadas a objetos, en \emph{Java}. La raz\'on para considerar un benchmark as\'i, es que este tipo de implementaciones hace un uso substancial de expresiones de navegaci\'on, incluyendo tipos recursivos de datos. Nuestro benchmark va a estar compuesto entonces mayormente por implementaciones de collecciones:  \emph{Apache's TreeList}, una implementaci\'on de listas utilizando \'arboles; \emph{Apache's NodeCachingList}, una lista encadenada con una cach\'e de nodos; \emph{AvlTree}, una implementaci\'on cl\'asica de \'arboles balanceados; \emph{BinomialHeap}, una implementaci\'on basada en referencias de mont\'iculos; \emph{TreeSet}, una implementaci\'on de conjuntos utilizando \'arboles red-black; \emph{OrdSet}, una implementaci\'on sobre arreglos de un conjunto ordenado de enteros, este caso propone un escenario donde no se utilizan tipos de datos complejos; y \emph{Queue}, una implementaci\'on de una cola, basada en el ejemplo de motivaci\'on (\ref{sec:intro.objetivos}).
 
 Para responder a \textbf{RQ1} vamos a utilizar mutation score, toughness (cuantos tests un mutante sobrevive antes de ser detectado), y dynamic mutant subsumption para detectar mutantes dominantes. Adem\'as se van a analizar los mutantes no detectados para detectar aquellos que son equivalentes, esto solo se va a realizar para aquellos generados por \emph{prvo}. A su vez, si bien en principio evaluar cuantos nodos dominantes involucran a \emph{prvo} parece una buena m\'edida, es importante destacar que un nodo puede contener varios mutantes equivalentes entre s\'i, entonces utilizar directamente la relaci\'on \texttt{(nodos dominantes que involucran a prvo)/total de nodos dominantes}, no sirve de mucho por que la informaci\'on obtenida no va a necesariamente reflejar cuanto domina \emph{prvo} sobre todos los mutantes. Por esto, vamos a utilizar el concepto de nodos puros descripto previamente en \ref{sec:implementation.dynamicSubsumption.graph} para poder medir la relaci\'on de nodos puros dominantes de \emph{prvo}.
 
@@ -341,11 +342,6 @@ Tal como describimos en la secci\'on \ref{sec:implementation.dynamicSubsumption.
 Para poder evitar casos donde el test suite utilizado es particularmente beneficioso o desfavorable para \emph{prvo}, vamos a realizar m\'ultiples experimentos para el mismo programa con distintas test suites generadas de manera autom\'atica. Dado que las herramientas utilizadas tienen ambas distintos grados de aleatoriedad, vamos a utilizar un conjunto fijo de ``semillas'' para garantizar cierto grado de replicaci\'on. Incluso con la misma semilla, al ser herramientas que se ejecutan con un presupuesto de tiempo determinado, la cantidad de operaciones que logran realizar bajo \'este, no siempre es la misma, generando no determinismo. Creemos que la repetici\'on de nuestros experimentos es suficiente para contrarrestar los efectos del mismo.
 
 Respecto a \textbf{RQ2}, el foco est\'a en la eficiencia; incluso si \emph{prvo} (o cualquier operador) resulta ser \'util en cuanto a los mutantes que genera, su uso se vuelve prohibitivo si los costos asociados a su utilizaci\'on son muy altos. Este costo est\'a t\'ipicamente asociado a dos factores: la complejidad en la generaci\'on de los mutantes, y el n\'umero de mutantes generados. El primero es com\'unmente ignorado, dado que salvo casos muy raros, los recursos utilizados son usualmente despreciables. Si bien \emph{prvo} tiene una complejidad mayor a la de los operadores com\'unmente utilizados, principalmente por los controles de alcanzabilidad y compatibilidad de tipos, \'esta no es significativa con respecto a los recursos extra que son necesario para analizar una mayor cantidad de mutantes. El segundo factor es en general el que representa la preocupaci\'on principal para el dise\~no de un operador de mutaci\'on, dado que en el peor caso, todos los tests deben ser ejecutados para todos los mutantes al computar el \emph{mutation score}, esto es por que en general un mutante al ser detectado por un test ya no requiere seguir ejecutando el resto, solo cuando se utilizan an\'alisis m\'as complejos (como dynamic mutant subsumption) es necesario ejecutar todos los tests por cada mutante. Es por eso que cuantos mutantes genera \emph{prvo} es la m\'etrica principal para analizar su costo. Si bien en el caso de \emph{prvo} la relaci\'on entre la configuraci\'on utilizada y la cantidad de mutantes generados est\'a directamente relacionada, lo que se puede apreciar en la Tabla-\ref{tables.prvoExpl.mutations}, la cantidad de mutantes va depender de la configuraci\'on y el c\'odigo bajo an\'alisis, no solo eso, sin\'o que estamos interesados en la cantidad de mutantes generados y cualquier an\'alisis posible para determinar a la misma va a tener la misma o mayor complejidad que realizar el an\'alisis de mutation testing y revisar la cantidad de mutantes generados.
-
-%Due to space restrictions, we only report here a summary of the experimental results. Further information, along with a replication package, can be found in:
-%\begin{center}
-%	\texttt{https://sites.google.com/view/prvo/}
-%\end{center}
 
 \section{Resultados experimentales}
 \label{sec:evaluation.results}
@@ -392,8 +388,8 @@ Los resultados de \emph{Toughness}, tanto si se consideran todos los mutantes o 
 
 \begin{table}[]
 	\centering
-	\small
-	\def\arraystretch{0.95}
+	\footnotesize
+	\def\arraystretch{1.1}
 	\setlength\tabcolsep{0.9mm}
 	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
 		\hline
@@ -453,8 +449,8 @@ Nuestro an\'alisis est\'a tambi\'en limitado a un conjunto arbitrario de operado
 
 \begin{table}[]
 	\centering
-	\small
-	\def\arraystretch{0.99}
+	\footnotesize
+	\def\arraystretch{1.1}
 	\setlength\tabcolsep{1.0mm}
 	\begin{tabular}{l|cccccccc|}
 		\cline{2-9}
@@ -468,8 +464,8 @@ Nuestro an\'alisis est\'a tambi\'en limitado a un conjunto arbitrario de operado
 
 \begin{table}[]
 	\centering
-	\small
-	\def\arraystretch{0.95}
+	\footnotesize
+	\def\arraystretch{1.1}
 	\setlength\tabcolsep{0.5mm}
 	\begin{tabular}{l|cccccccc|}
 		\cline{2-9}

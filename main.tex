@@ -4,6 +4,11 @@
 % Note: Make all your adjustments in here
 \input{classicthesis-config}
 
+\titleformat{\paragraph}[runin]
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}   {0pt}{3.25ex plus 1ex minus .2ex}{1em}
+\babelhyphenation[spanish]{Node-Caching-Linked-List}
+
 \begin{document}
 \frenchspacing
 \raggedbottom
@@ -29,7 +34,7 @@
 %\cleardoublepage
 % ********************************************************************
 % Mainmatter
-\lstset{basicstyle=\ttfamily}
+\lstset{basicstyle=\ttfamily,showstringspaces=false}
 \pagestyle{headings}
 \pagenumbering{arabic}
 %\part{?`Porqu\'e la Ingenier\'ia de los Requisitos de Software?} %\ctparttext{text}
