@@ -65,7 +65,7 @@ Actualmente existen numerosas aplicaciones cuyo objetivo principal es la generac
     intInputs.add(rndValue);
   }
 	\end{lstlisting}
-	\caption{Ejemplo de generaci\'on aleatoria de 10 valores enteros entre 10 y 20}
+	\caption[Generaci\'on aleatoria de valores enteros]{Ejemplo de generaci\'on aleatoria de 10 valores enteros entre 10 y 20}
 	\label{figures.examples.testing.random.primitive}
 \end{figure}
 
@@ -83,7 +83,7 @@ Actualmente existen numerosas aplicaciones cuyo objetivo principal es la generac
     structuredInputs.add(rndList);
   }
 	\end{lstlisting}
-	\caption{Ejemplo de generaci\'on aleatoria de 10 listas de enteros con tama\~no entre 0 a 10, y con valores entre 0 a 50}
+	\caption[Generaci\'on aleatoria de listas]{Ejemplo de generaci\'on aleatoria de 10 listas de enteros con tama\~no entre 0 a 10, y con valores entre 0 a 50}
 	\label{figures.examples.testing.random.structure}
 \end{figure}
 
@@ -151,7 +151,7 @@ A modo de ejemplo para criterios de cobertura de caja blanca, consideremos el c\
 
 \begin{figure}
 	\lstinputlisting[frame=single,basicstyle=\small, language=Java, tabsize=1,framexleftmargin=.068\textwidth,xleftmargin=.08\textwidth,xrightmargin=.01\textwidth,literate={\ \ }{{\ }}1]{results/draft/CoverageExample.java}
-	\caption{M\'etodo para contar n\'umeros pares en un arreglo de enteros.}
+	\caption[M\'etodo \emph{countEvenIn(int[])}]{M\'etodo para contar n\'umeros pares en un arreglo de enteros.}
 	\label{figures.code.coverageExample}
 \end{figure}
 
@@ -160,28 +160,28 @@ A modo de ejemplo para criterios de cobertura de caja blanca, consideremos el c\
 \begin{figure}
 	\centering
 	\includegraphics[width=.90\linewidth]{figures/stmtCoverageOrientedTests.JPG}
-	\caption{Tests orientados a satisfacer cobertura de sentencias para el c\'odigo de \emph{countEvenIn(int[])} \ref{figures.code.coverageExample}.}
+	\caption[Tests (cobertura de sentencias) para \emph{countEvenIn(int[])}]{Tests orientados a satisfacer cobertura de sentencias para el c\'odigo de \emph{countEvenIn(int[])} de la Figura~\ref{figures.code.coverageExample}.}
 	\label{figures.examples.coverage.stmtTests}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.90\linewidth]{figures/branchCoverageOrientedTests.JPG}
-	\caption{Tests orientados a satisfacer cobertura de ramas para el c\'odigo de \emph{countEvenIn(int[])} \ref{figures.code.coverageExample}.}
+	\caption[Tests (cobertura de ramas) para \emph{countEvenIn(int[])}]{Tests orientados a satisfacer cobertura de ramas para el c\'odigo de \emph{countEvenIn(int[])} de la Figura~\ref{figures.code.coverageExample}.}
 	\label{figures.examples.coverage.branchTests}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.90\linewidth]{figures/branchCoverageExampleComplete.JPG}
-	\caption{Medici\'on de cobertura de \emph{countEvenIn(int[])} \ref{figures.code.coverageExample} con una cobertura del 100\% tanto de sentencias como de ramas.}
+	\caption[Cobertura de ramas del 100\% para \emph{countEvenIn(int[])}]{Medici\'on de cobertura de \emph{countEvenIn(int[])} de la Figura~\ref{figures.code.coverageExample} con una cobertura del 100\% tanto de sentencias como de ramas.}
 	\label{figures.examples.coverage.fullCoverage}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.90\linewidth]{figures/branchCoverageExampleIncomplete.JPG}
-	\caption{Medici\'on de cobertura de \emph{countEvenIn(int[])} \ref{figures.code.coverageExample} con una cobertura del 100\% de sentencias pero no de ramas.}
+	\caption[Cobertura de sentencias del 100\% para \emph{countEvenIn(int[])}]{Medici\'on de cobertura de \emph{countEvenIn(int[])} de la Figura~\ref{figures.code.coverageExample} con una cobertura del 100\% de sentencias pero no de ramas.}
 	\label{figures.examples.coverage.stmtCoverage}
 \end{figure}
 
@@ -189,11 +189,13 @@ En el caso de criterios de caja negra, varios criterios com\'unmente utilizados 
 
 \begin{figure}
 	\lstinputlisting[basicstyle=\small, language=Java, tabsize=3]{results/draft/Replace.java}
-	\caption{M\'etodo para reemplazar todos los valores en un arreglo \emph{array} que son iguales a un valor especificado (\emph{what}) por otro valor especificado (\emph{with}) y retornar cuantos cambios se realizaron.}
+	\caption[M\'etodo \emph{replace(int[], int, int)}]{M\'etodo para reemplazar todos los valores en un arreglo \emph{array} que son iguales a un valor especificado (\emph{what}) por otro valor especificado (\emph{with}) y retornar cuantos cambios se realizaron.}
 	\label{figures.code.replaceExample}
 \end{figure}
 
 \begin{table}[]
+	\caption[Caracter\'isticas para las entradas de \emph{replace(int[], int, int)}]{Caracter\'isticas con las que se puede dividir los conjuntos de las entradas del programa \emph{replace(int{[]}, int, int)} de la Figura~\ref{figures.code.replaceExample}.}
+	\label{tables.example.codeCoverage}
 	\centering
 	\begin{tabular}{|c|ccc|}
 		\hline
@@ -201,20 +203,18 @@ En el caso de criterios de caja negra, varios criterios com\'unmente utilizados 
 		1 & T & T & T \\ \hline
 		2 & F & F & F \\ \hline
 	\end{tabular}
-	\caption{Caracter\'isticas con las que se puede dividir los conjuntos de las entradas del programa \emph{replace(int[], int, int)} \ref{figures.code.replaceExample}.}
-	\label{tables.example.codeCoverage}
 \end{table}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.90\linewidth]{figures/replaceTestsEachChoice.JPG}
-	\caption{Tests para satisfacer criterio de cobertura \emph{Each Choice Coverage} para \ref{figures.code.replaceExample} basado en las caracter\'isticas definidas en \ref{tables.example.codeCoverage}.}
+	\caption[Tests basados en \emph{ECC} para la Figura~\ref{figures.code.replaceExample} y las caracter\'isticas en la Tabla~\ref{tables.example.codeCoverage}]{Tests para satisfacer criterio de cobertura \emph{Each Choice Coverage} para \ref{figures.code.replaceExample} basado en las caracter\'isticas definidas en la Figura~\ref{tables.example.codeCoverage}.}
 	\label{figures.examples.coverage.eccTests}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{figures/replaceFullCoverage.JPG}
-	\caption{Cobertura de ramas lograda por los tests definidos en \ref{figures.examples.coverage.eccTests}.}
+	\caption[Cobertura de ramas para los tests de la Figura~\ref{figures.examples.coverage.eccTests}]{Cobertura de ramas lograda por los tests definidos en la Figura~\ref{figures.examples.coverage.eccTests}.}
 	\label{figures.examples.coverage.eccCoverage}
 \end{figure}

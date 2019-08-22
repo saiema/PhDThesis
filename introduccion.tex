@@ -56,7 +56,7 @@ Adem\'as de la aplicaci\'on tradicional de operadores de mutaci\'on para mutatio
     
   }
 	\end{lstlisting}
-	\caption{Una implementaci\'on de colas basada en referencias.}
+	\caption[Ejemplo de motivaci\'on]{Una implementaci\'on de colas basada en referencias.}
 	\label{figures.motivation.queue-class}
 \end{figure}
 
@@ -83,7 +83,7 @@ Consideremos una implementaci\'on de una cola sobre una lista simplemente encade
     q.dequeue();
   }
 	\end{lstlisting}
-	\caption{Tests para el m\'etodo dequeue \ref{figures.motivation.queue-class}}
+	\caption{Tests para el m\'etodo \emph{dequeue} de la Figura~\ref{figures.motivation.queue-class}}
 	\label{figures.motivation.queue-class-tests}
 \end{figure}
 
@@ -97,7 +97,7 @@ Consideremos una implementaci\'on de una cola sobre una lista simplemente encade
   }
   ...
 	\end{lstlisting}
-	\caption{Un mutante en donde se cambi\'o \lstinline{this.front.next} a \lstinline{this.last.next} en la sentencia que avanza el puntero \emph{front} al desencolar un elemento.}
+	\caption[Mutante de expresi\'on de navegaci\'on para \emph{dequeue}]{Un mutante en donde se cambi\'o \lstinline{this.front.next} a \lstinline{this.last.next} en la sentencia que avanza el puntero \emph{front} al desencolar un elemento.}
 	\label{figures.motivation.dequeue-prvo-mutant}
 \end{figure}
 
@@ -114,7 +114,7 @@ Consideremos una implementaci\'on de una cola sobre una lista simplemente encade
     assertEquals(size - 2, q.size());
   }
 	\end{lstlisting}
-	\caption{Test que detecta el mutante que afecta la sentencia de avance del puntero \emph{front} en el m\'etodo \emph{dequeue()} \ref{figures.motivation.dequeue-prvo-mutant}}
+	\caption[Test que detecta el mutante de la Figura~\ref{figures.motivation.dequeue-prvo-mutant}]{Test que detecta el mutante que afecta la sentencia de avance del puntero \emph{front} en el m\'etodo \emph{dequeue()} de la Figura~\ref{figures.motivation.dequeue-prvo-mutant}}
 	\label{figures.motivation.queue-class-tests-prvo}
 \end{figure}
 
@@ -232,5 +232,5 @@ La definici\'on e implementaci\'on de un operador de mutaci\'on, altamente confi
 \section{Organizaci\'on}
 \label{sec:intro.organizacion}
 
-El resto de esta tesis est\'a organizada de la siguiente manera. En el Cap\'itulo~\ref{cap:preliminares.testing} daremos una introducci\'on a \emph{testing} como t\'ecnica para comprobar parcialmente el correcto funcionamiento de un programa, la automatizaci\'on de esta t\'ecnica, y una breve introducci\'on a criterios de cobertura. En el Cap\'itulo~\ref{cap:preliminares.mutation} presentaremos \emph{mutation testing}, como un criterio de testing. En este cap\'itulo mostraremos cu\'ales son las propiedades que afectan a la calidad de este criterio para evaluar un conjunto de tests, y algunos mecanismos para evaluar estas propiedades. La presentaci\'on y definici\'on de \emph{prvo} como un operador de mutaci\'on para expresiones de navegaci\'on se introducir\'a en el Cap\'itulo~\ref{cap:prvo}, as\'i como la descripci\'on de las fallas reales que est\'an relacionadas a este operador. En el Cap\'itulo~\ref{cap:implementation} se presenta una versi\'on implementada de \emph{prvo}, considerando restricciones a su definici\'on general provista en el cap\'itulo anterior, y teniendo en cuenta las propiedades que identificamos para el dise\~no de operadores de mutaci\'on. Describiremos tambi\'en la plataforma sobre la que \emph{prvo} es implementado, y las caracter\'isticas principales de la misma, principalmente el an\'alisis din\'amico de subsumci\'on de mutantes, el cual ser\'a parte de nuestra evaluaci\'on. La evaluaci\'on en el contexto de mutation testing, se realiza en el Cap\'itulo~\ref{cap:evaluation}. Introduciremos brevemente el \'area de reparaci\'on autom\'atica de programas en el Cap\'itulo~\ref{cap:repair}, en conjunto con una descripci\'on de la herramienta que utilizaremos para poner a prueba a \emph{prvo}, el operador de mutaci\'on introducido en esta tesis, en dicho contexto. Las conclusiones se presentan en el Cap\'itulo~\ref{cap:conclutions}, y trabajos futuros son descriptos en el Cap\'itulo~\ref{cap:futurework}.
+El resto de esta tesis est\'a organizada de la siguiente manera. En el Cap\'itulo~\ref{cap:preliminares.testing} daremos una introducci\'on a \emph{testing} como t\'ecnica para comprobar parcialmente el correcto funcionamiento de un programa, la automatizaci\'on de esta t\'ecnica, y una breve introducci\'on a criterios de cobertura. En el Cap\'itulo~\ref{cap:preliminares.mutation} presentaremos \emph{mutation testing}, como un criterio de testing. En este cap\'itulo mostraremos cu\'ales son las propiedades que afectan a la calidad de este criterio para evaluar un conjunto de tests, y algunos mecanismos para evaluar estas propiedades. La presentaci\'on y definici\'on de \emph{PRVO} como un operador de mutaci\'on para expresiones de navegaci\'on se introducir\'a en el Cap\'itulo~\ref{cap:prvo}, as\'i como la descripci\'on de las fallas reales que est\'an relacionadas a este operador. En el Cap\'itulo~\ref{cap:implementation} se presenta una versi\'on implementada de \emph{PRVO}, considerando restricciones a su definici\'on general provista en el cap\'itulo anterior, y teniendo en cuenta las propiedades que identificamos para el dise\~no de operadores de mutaci\'on. Describiremos tambi\'en la plataforma sobre la que \emph{PRVO} es implementado, y las caracter\'isticas principales de la misma, principalmente el an\'alisis din\'amico de subsumci\'on de mutantes, el cual ser\'a parte de nuestra evaluaci\'on. La evaluaci\'on en el contexto de mutation testing, se realiza en el Cap\'itulo~\ref{cap:evaluation}. Introduciremos brevemente el \'area de reparaci\'on autom\'atica de programas en el Cap\'itulo~\ref{cap:repair}, en conjunto con una descripci\'on de la herramienta que utilizaremos para poner a prueba a \emph{PRVO}, el operador de mutaci\'on introducido en esta tesis, en dicho contexto. Las conclusiones se presentan en el Cap\'itulo~\ref{cap:conclutions}, y trabajos futuros son descriptos en el Cap\'itulo~\ref{cap:futurework}.
 

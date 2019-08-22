@@ -49,7 +49,7 @@ Las herramientas actuales, en general, utilizan tests como especificaciones parc
     return found;
   }
 	\end{lstlisting}
-	\caption{Un m\'etodo con un defecto que causa \emph{NullPointerException}}
+	\caption[Ejemplo de bug causando \emph{NullPointerException}]{Un m\'etodo con un defecto que causa \emph{NullPointerException}}
 	\label{figures.examples.repair.nullaccessexample}
 \end{figure}
 
@@ -70,7 +70,7 @@ Las herramientas actuales, en general, utilizan tests como especificaciones parc
     return found;
   }
 	\end{lstlisting}
-	\caption{Reparaci\'on que enmascara el defecto en \ref{figures.examples.repair.nullaccessexample}}
+	\caption{Reparaci\'on que enmascara el defecto en la Figura~\ref{figures.examples.repair.nullaccessexample}}
 	\label{figures.examples.repair.nullaccessexample.mask}
 \end{figure}
 
@@ -111,7 +111,7 @@ boolean add(Object arg) {
   return added;
 }
 \end{lstlisting}
-\caption{Ejemplo de c\'odigo con dos bugs que requieren modificaciones intra-sentencia}
+\caption[Programa con dos bugs intra-sentencia]{Ejemplo de c\'odigo con dos bugs que requieren modificaciones intra-sentencia}
 \label{figures.examples.repair.exampleCode}
 \end{figure}
 
@@ -168,7 +168,7 @@ La reparaci\'on de programas puede describirse como una b\'usqueda exhaustiva qu
 	\node[label=right: {\small Exitoso (Profundidad 2)},draw=blue,dotted,fit=(succ)] (Succ) {};
 	
 	\end{tikzpicture}
-	\caption{Reparaci\'on del un programa que calcula el m\'aximo de dos n\'umeros}
+	\caption[Reparaci\'on como b\'usqueda, ejemplo]{Reparaci\'on de un programa que calcula el m\'aximo de dos n\'umeros}
 	\label{figures.examples.repairWithMutation}
 \end{figure}
 
@@ -190,11 +190,13 @@ La definici\'on previa de reparaci\'on autom\'atica de programas deja en claro q
     return result;
   }
 	\end{lstlisting}
-	\caption{C\'odigo de ejemplo, m\'etodo que obtiene el i-\'esimo nodo de una lista}
+	\caption[M\'etodo de ejemplo, \emph{getNode(int)}]{C\'odigo de ejemplo, m\'etodo que obtiene el i-\'esimo nodo de una lista}
 	\label{figures.examples.repair.getNode}
 \end{figure}
 
 \begin{table}[t]
+	\caption[Mutantes para \emph{getNode} (Figura~\ref{figures.examples.repair.getNode}) a diferentes profundidades]{Mutantes generados para \emph{getNode} de la Figura~\ref{figures.examples.repair.getNode}, considerando 4 l\'ineas y 18 operadores, a medida que la profundidad aumenta.}
+	\label{tables.repair.mutation.explosion}
 	\begin{center}
 		\small
 		\begin{tabular}{c r}
@@ -207,8 +209,6 @@ La definici\'on previa de reparaci\'on autom\'atica de programas deja en claro q
 		\end{tabular}
 		\normalsize
 	\end{center}
-	\caption{Mutantes generados para \emph{getNode} \ref{figures.examples.repair.getNode}, considerando 4 l\'ineas y 18 operadores, a medida que la profundidad aumenta.}
-	\label{tables.repair.mutation.explosion}
 \end{table}
 
 \pagebreak
@@ -221,9 +221,9 @@ La definici\'on previa de reparaci\'on autom\'atica de programas deja en claro q
 \end{quote}
 Es necesario remarcar la necesidad de especificaciones asociadas al programa. As\'i tambi\'en, los errores que se consideran son defectos, o mutaciones, dentro de sentencias. En particular no se apunta a reparar programas que requieran agregar, o eliminar, c\'odigo. Algunos de los defectos reparables por \emph{Striker} se muestran en la Figura~\ref{figures.examples.repair.faultsGetNode}.
 
-Si bien muchas herramientas de reparaci\'on autom\'atica de programas utilizan mutaci\'on, \emph{Striker} es una de las m\'as flexibles con respecto a operadores soportados, entre ellos \emph{prvo}; soporte para modificaciones a partes de sentencias; y fallas que requieren las modificaci\'on de varias sentencias. Striker utiliza \emph{TACO} \cite{bibliography.mutation.tools.TACOGaleottiRPF13} para evaluar candidatos a reparaci\'on, lo que requiere proveer especificaciones formales en lugar de un test suite, y JML RAC \cite{bibliography.misc.JMLRAC.LeavensCCRC02} como t\'ecnica de evaluaci\'on r\'apida basada en escenarios previamente encontrados para los cuales un candidato a reparaci\'on no cumpl\'ia con las especificaciones. Sin entrar en detalles, esta herramienta es capaz de expandir las fallas soportadas para reparar, agregando varios operadores en los que se incluye a \emph{prvo}, y permitir la reparaci\'on de aquellas que requieren modificaciones intra-sentencias as\'i como en m\'ultiples sentencias, mediante el uso de t\'ecnicas de poda innovadoras.
+Si bien muchas herramientas de reparaci\'on autom\'atica de programas utilizan mutaci\'on, \emph{Striker} es una de las m\'as flexibles con respecto a operadores soportados, entre ellos \emph{PRVO}; soporte para modificaciones a partes de sentencias; y fallas que requieren las modificaci\'on de varias sentencias. Striker utiliza \emph{TACO} \cite{bibliography.mutation.tools.TACOGaleottiRPF13} para evaluar candidatos a reparaci\'on, lo que requiere proveer especificaciones formales en lugar de un test suite, y JML RAC \cite{bibliography.misc.JMLRAC.LeavensCCRC02} como t\'ecnica de evaluaci\'on r\'apida basada en escenarios previamente encontrados para los cuales un candidato a reparaci\'on no cumpl\'ia con las especificaciones. Sin entrar en detalles, esta herramienta es capaz de expandir las fallas soportadas para reparar, agregando varios operadores en los que se incluye a \emph{PRVO}, y permitir la reparaci\'on de aquellas que requieren modificaciones intra-sentencias as\'i como en m\'ultiples sentencias, mediante el uso de t\'ecnicas de poda innovadoras.
 
-Bajo esta herramienta es que se pudo observar como \emph{prvo} era capaz de reparar ciertas fallas que de otra forma no eran reparables, como por ejemplo el caso de \emph{add(int)} en la Figura~\ref{figures.examples.repair.exampleCode}, en donde si bien el segundo defecto es reparable por \emph{AORB} el cual reemplaza el operador incorrecto (\emph{-}) por el que corresponde (\emph{+}), el primer defecto solo puede ser reparado por \emph{prvo} al eliminar el acceso al campo \emph{next}. Si bien el enfoque principal de esta tesis se encuentra en \emph{prvo} como un operador de mutaci\'on en el contexto de mutation testing, es interesante mostrar su contribuci\'on en el contexto de reparaci\'on.
+Bajo esta herramienta es que se pudo observar como \emph{PRVO} era capaz de reparar ciertas fallas que de otra forma no eran reparables, como por ejemplo el caso de \emph{add(int)} en la Figura~\ref{figures.examples.repair.exampleCode}, en donde si bien el segundo defecto es reparable por \emph{AORB} el cual reemplaza el operador incorrecto (\emph{-}) por el que corresponde (\emph{+}), el primer defecto solo puede ser reparado por \emph{PRVO} al eliminar el acceso al campo \emph{next}. Si bien el enfoque principal de esta tesis se encuentra en \emph{PRVO} como un operador de mutaci\'on en el contexto de mutation testing, es interesante mostrar su contribuci\'on en el contexto de reparaci\'on.
 
 \begin{figure}[t]
 	\footnotesize
@@ -239,14 +239,14 @@ Bajo esta herramienta es que se pudo observar como \emph{prvo} era capaz de repa
 	\end{array}
 	$$
 	\normalsize
-	\caption{Algunos defectos en el m\'etodo \emph{getNode} \ref{figures.examples.repair.getNode} que pueden modelarse mediante mutaciones y ser reparados por \emph{prvo}.}
+	\caption[Defectos del algoritmo en la Figura~\ref{figures.examples.repair.getNode} reparables por \emph{PRVO}]{Algunos defectos en el m\'etodo \emph{getNode} de la Figura~\ref{figures.examples.repair.getNode} que pueden modelarse mediante mutaciones y ser reparados por \emph{PRVO}.}
 	\label{figures.examples.repair.faultsGetNode}
 \end{figure}
 
 \subsection{Evaluaci\'on de Stryker}
 \label{sec:repair.striker.evaluation}
 
-Si bien la evaluaci\'on de \emph{Stryker} se encuentra enfocada hacia la t\'ecnica de poda del espacio de b\'usqueda de candidatos a reparaci\'on, lo que a su vez permite la utilizaci\'on de una mayor cantidad de operadores de mutaci\'on orientados hacia la reparaci\'on de fallas intra-sentencia, en el contexto de esta tesis nos interesan los resultados asociados a \emph{prvo} y su utilidad en el campo de reparaci\'on autom\'atica de programas mediante operadores de mutaci\'on utilizados en mutation testing, los cuales son m\'as granulares en el tipo de cambios que realizan lo que permite incrementar la reparabilidad de programas.
+Si bien la evaluaci\'on de \emph{Stryker} se encuentra enfocada hacia la t\'ecnica de poda del espacio de b\'usqueda de candidatos a reparaci\'on, lo que a su vez permite la utilizaci\'on de una mayor cantidad de operadores de mutaci\'on orientados hacia la reparaci\'on de fallas intra-sentencia, en el contexto de esta tesis nos interesan los resultados asociados a \emph{PRVO} y su utilidad en el campo de reparaci\'on autom\'atica de programas mediante operadores de mutaci\'on utilizados en mutation testing, los cuales son m\'as granulares en el tipo de cambios que realizan lo que permite incrementar la reparabilidad de programas.
 
 En los experimentos realizados para la evaluaci\'on de \emph{Stryker}, se utilizaron implementaciones en \emph{Java} de estructuras que representan colecciones. Estas clases, para las cuales se definieron especificaciones en forma de contratos \emph{JML}, incluyendo clausulas \texttt{requires/ensures}, funciones de variantes de ciclos e invariantes de clases, son las siguientes:
 \begin{itemize}
@@ -265,37 +265,37 @@ Por cada sentencia (o l\'inea) mutada se agrego un comentario de l\'inea \texttt
 
 \begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/BinomialHeap_extractMin_orig.java}
-	\caption{Versi\'on original del m\'etodo \emph{extractMin} de \emph{BinomialHeap} con los contratos asociados al m\'etodo.}
+	\caption[\emph{BinomialHeap\#extractMin}, original con contratos]{Versi\'on original del m\'etodo \emph{extractMin} de \emph{BinomialHeap} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.binheap_extractMin_orig}
 \end{figure}
 
 \begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/BinomialHeap_extractMin_4bugs.java}
-	\caption{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{extractMin} de \emph{BinomialHeap}.}
+	\caption[\emph{BinomialHeap\#extractMin}, $4$ bugs]{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{extractMin} de \emph{BinomialHeap}.}
 	\label{figures.code.repair.binheap_extractMin_4bugs}
 \end{figure}
 
 \begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/BinTree_insert_orig.java}
-	\caption{Versi\'on original del m\'etodo \emph{insert} de \emph{BinarySearchTree} con los contratos asociados al m\'etodo.}
+	\caption[\emph{BinarySearchTree\#insert}, original con contratos]{Versi\'on original del m\'etodo \emph{insert} de \emph{BinarySearchTree} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.bintree_insert_orig}
 \end{figure}
 
 \begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/BinTree_insert_3bugs.java}
-	\caption{Versi\'on con $3$ bugs artificiales del m\'etodo \emph{insert} de \emph{BinarySearchTree}.}
+	\caption[\emph{BinarySearchTree\#insert}, $3$ bugs]{Versi\'on con $3$ bugs artificiales del m\'etodo \emph{insert} de \emph{BinarySearchTree}.}
 	\label{figures.code.repair.bintree_insert_3bugs}
 \end{figure}
 
 \begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/NCLL_contains_orig.java}
-	\caption{Versi\'on original del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList} con los contratos asociados al m\'etodo.}
+	\caption[\emph{NodeCachingLinkedList\#contains}, original con contratos]{Versi\'on original del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList} con los contratos asociados al m\'etodo.}
 	\label{figures.code.repair.ncll_contains_orig}
 \end{figure}
 
 \begin{figure}[H]
 	\lstinputlisting[basicstyle=\footnotesize, language=Java, tabsize=1,literate={\ \ }{{\ }}1]{results/repair/NCLL_contains_4bugs.java}
-	\caption{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList}.}
+	\caption[\emph{NodeCachingLinkedList\#contains}, $4$ bugs]{Versi\'on con $4$ bugs artificiales del m\'etodo \emph{contains} de \emph{NodeCachingLinkedList}.}
 	\label{figures.code.repair.ncll_contains_4bugs}
 \end{figure}
 
